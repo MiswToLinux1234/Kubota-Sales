@@ -65,12 +65,15 @@ if "cart" not in st.session_state:
     st.session_state.cart = []
 
 def register_windows_fonts():
-    font_path = "C:/Windows/Fonts/arial.ttf"
-    font_bold_path = "C:/Windows/Fonts/arialbd.ttf"
+    # Χρησιμοποιούμε τα αρχεία που βρίσκονται απευθείας στον φάκελο του project μας
+    font_path = "times.ttf"       # ή times.ttf ανάλογα ποια θες να χρησιμοποιήσεις
+    font_bold_path = "timesbd.ttf" # ή timesbd.ttf
+
     if os.path.exists(font_path) and os.path.exists(font_bold_path):
         pdfmetrics.registerFont(TTFont('WinArial', font_path))
         pdfmetrics.registerFont(TTFont('WinArial-Bold', font_bold_path))
         return True
+    
     return False
 
 def generate_pdf_bytes(client_data, cart_items, company):
