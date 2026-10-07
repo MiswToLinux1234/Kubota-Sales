@@ -6,6 +6,13 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+
+# Καταχώρηση των γραμματοσειρών Times New Roman
+pdfmetrics.registerFont(TTFont('Times-Roman', 'times.ttf'))
+pdfmetrics.registerFont(TTFont('Times-Bold', 'timesbd.ttf'))
+pdfmetrics.registerFont(TTFont('Times-Italic', 'timesi.ttf'))
+pdfmetrics.registerFont(TTFont('Times-BoldItalic', 'timesbi.ttf'))
+
 # ΡΥΘΜΙΣΗ ΣΕΛΙΔΑΣ
 st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_icon="🚜", layout="centered")
 
@@ -17,7 +24,7 @@ database = {
     
     # --- Σειρά B2 - Stage V ---
     "B2261DB-M5-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 17500, "info": "25 HP - Σειρά B2"},
-    "B2261 HDB-C-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 27000, "info": "25 HP - Υδροστατικό, Καμπίνα"},
+    "B2261 HDB-C-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25,"price": 27000, "info": "25 HP - Υδροστατικό, Καμπίνα"},
     
     # --- Σειρά LX - Stage V ---
     "LX351-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 33500, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS"},
@@ -265,4 +272,3 @@ if st.button("📄 Δημιουργία Συγκεντρωτικού PDF", type=
             mime="application/pdf",
             use_container_width=True
         )
-        
