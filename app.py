@@ -7,15 +7,16 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 import io
+import datetime
 
-# 1. Βασική διαμόρφωση σελίδας και PWA Icon με το σωστό όνομα αρχείου
+# 1. Βασική διαμόρφωση σελίδας και PWA Icon
 st.set_page_config(
-    page_title="Kubota Sales Quotes",
+    page_title="Εφαρμογή Προσφορών Τρακτέρ", 
     page_icon="KUBOTA ICON.png",  
-    layout="wide"
+    layout="centered"
 )
 
-# 2. Εγγραφή γραμματοσειρών Times New Roman τοπικά (συμβατότητα με Cloud/Linux & Windows)
+# 2. Εγγραφή γραμματοσειρών Times New Roman τοπικά (για υποστήριξη ελληνικών σε Cloud/Linux & Windows)
 def register_local_fonts():
     font_path = "times.ttf"
     font_bold_path = "timesbd.ttf"
@@ -28,61 +29,88 @@ def register_local_fonts():
 
 register_local_fonts()
 
-# 3. Πλαϊνό μενού για επιλογή γλώσσας
-st.sidebar.header("⚙️ Ρυθμίσεις / Settings")
-lang_option = st.sidebar.selectbox("Γλώσσα Εκτύπωσης / PDF Language", ["Ελληνικά", "English"])
+st.title("🚜 Γεννήτρια Προσφορών Τρακτέρ & Μηχανημάτων")
+st.write("Επιλέξτε εταιρεία και συμπληρώστε τα στοιχεία της νέας προσφοράς!")
 
-# Ορισμός μεταφράσεων ανάλογα με τη γλώσσα
-if lang_option == "English":
-    t_title = "COMMERCIAL QUOTATION"
-    t_client = "Client Name:"
-    t_model = "Select Model:"
-    t_btn = "Generate PDF Offer"
-    t_success = "PDF successfully generated!"
-    t_col_model = "Model"
-    t_col_series = "Series"
-    t_col_hp = "HP"
-    t_col_price = "Price (€)"
-else:
-    t_title = "ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ KUBOTA"
-    t_client = "Όνομα Πελάτη:"
-    t_model = "Επιλογή Μοντέλου:"
-    t_btn = "Δημιουργία PDF Προσφοράς"
-    t_success = "Η προσφορά δημιουργήθηκε με επιτυχία!"
-    t_col_model = "Μοντέλο"
-    t_col_series = "Σειρά"
-    t_col_hp = "HP"
-    t_col_price = "Τιμή (€)"
+# 1. Επιλογή Εταιρείας
+company = st.selectbox(
+    "Επιλέξτε Εταιρεία:",
+    ["Φίλης Βασίλειος", "Πέτρος Πετρόπουλος ΑΕΒΕ", "Κάμπος Α.Ε."]
+)
 
-st.title("🚜 Kubota Sales Quote Generator")
+st.divider()
 
-# Ενδεικτική βάση δεδομένων τρακτέρ
-tractors_db = {
-    "B2261DB-M5-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 17000},
-    "B2261 HDB-C-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 27000},
-    "LX4510": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 45, "price": 34000}
-}
+# 2. Στοιχεία Πελάτη
+st.subheader("Στοιχεία Πελάτη")
+col1, col2 = st.columns(2)
+with col1:
+    client_name = st.text_input("Ονοματεπώνυμο Πελάτη", "")
+    client_address = st.text_input("Διεύθυνση", "")
+    client_job = st.text_input("Επάγγελμα", "")
+with col2:
+    client_afm = st.text_input("ΑΦΜ / ΔΟΥ", "")
+    client_tel = st.text_input("Τηλέφωνο", "")
+    offer_date = st.text_input("Ημερομηνία", f"Αθήνα, {datetime.date.today().strftime('%d/%m/%Y')}")
 
-# Φόρμα εισαγωγής στοιχείων
-client_name = st.text_input(t_client, "Γιώργος Παπαδόπουλος")
-selected_model = st.selectbox(t_model, list(tractors_db.keys()))
+st.divider()
 
-item = tractors_db[selected_model]
+# 3. Εισαγωγικό Κείμενο
+st.subheader("Εισαγωγικό Κείμενο")
+editable_text = st.text_area(
+    "Κείμενο προσφώνησης / εισαγωγής:", 
+    value="", 
+    height=80, 
+    key="intro_text", 
+    placeholder="Π.χ. Κατόπιν επιθυμίας σας για την αγορά γεωργικού εξοπλισμού..."
+)
 
-if st.button(t_btn):
-    # Δημιουργία PDF στη μνήμη
+st.divider()
+
+# 4. Δυναμική Επιλογή Πλήθους Προσφορών / Ειδών
+st.subheader("Αναλυτικά Είδη / Προσφορές")
+num_offers = st.number_input(
+    "Πόσες προσφορές/είδη θέλετε να προσθέσετε;", 
+    min_value=1, 
+    max_value=10, 
+    value=1, 
+    step=1
+)
+
+offers_list = []
+for i in range(1, int(num_offers) + 1):
+    st.markdown("---")
+    st.markdown(f"**Προσφορά {i}**")
+    desc = st.text_area(
+        f"Περιγραφή {i}", 
+        value="", 
+        height=100, 
+        key=f"desc_{i}", 
+        placeholder="Γράψτε την περιγραφή του είδους..."
+    )
+    price = st.text_input(
+        f"Αξία Προσφοράς {i}", 
+        value="", 
+        key=f"price_{i}", 
+        placeholder="Π.χ. 45.600€ + Φ.Π.Α."
+    )
+    offers_list.append({"desc": desc, "price": price})
+
+st.divider()
+
+# 5. Δημιουργία PDF με ReportLab
+if st.button("Δημιουργία & Λήψη Οικονομικής Προσφοράς PDF", type="primary"):
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=A4, rightMargin=30, leftMargin=30, topMargin=30, bottomMargin=30)
     story = []
     
-    # Στυλ με χρήση της γραμματοσειράς WinTimes για σωστή εμφάνιση ελληνικών
     styles = getSampleStyleSheet()
     
+    # Ορισμός στυλ με τις τοπικές γραμματοσειρές Times
     title_style = ParagraphStyle(
         'TitleStyle',
         fontName='WinTimes-Bold',
-        fontSize=18,
-        leading=22,
+        fontSize=14,
+        leading=18,
         alignment=1, # Κέντρο
         textColor=colors.HexColor("#1b4d3e")
     )
@@ -90,46 +118,68 @@ if st.button(t_btn):
     body_style = ParagraphStyle(
         'BodyStyle',
         fontName='WinTimes',
-        fontSize=12,
-        leading=16
+        fontSize=10,
+        leading=14
+    )
+    
+    body_bold_style = ParagraphStyle(
+        'BodyBoldStyle',
+        fontName='WinTimes-Bold',
+        fontSize=10,
+        leading=14
     )
 
-    # Προσθήκη τίτλου στο PDF
-    story.append(Paragraph(t_title, title_style))
-    story.append(Spacer(1, 20))
+    # Ημερομηνία δεξιά πάνω
+    date_style = ParagraphStyle(
+        'DateStyle',
+        fontName='WinTimes',
+        fontSize=10,
+        alignment=2 # Δεξιά
+    )
+    story.append(Paragraph(offer_date, date_style))
+    story.append(Spacer(1, 10))
     
-    # Στοιχεία πελάτη
-    story.append(Paragraph(f"<b>{t_client}</b> {client_name}", body_style))
+    # Τίτλος Εγγράφου
+    story.append(Paragraph("ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ", title_style))
     story.append(Spacer(1, 15))
     
-    # Πίνακας προσφοράς
-    table_data = [
-        [Paragraph(f"<b>{t_col_model}</b>", body_style), Paragraph(f"<b>{t_col_series}</b>", body_style), Paragraph(f"<b>{t_col_hp}</b>", body_style), Paragraph(f"<b>{t_col_price}</b>", body_style)],
-        [Paragraph(selected_model, body_style), Paragraph(item['series'], body_style), Paragraph(str(item['hp']), body_style), Paragraph(f"{item['price']:,} €", body_style)]
-    ]
+    # Στοιχεία πελάτη
+    client_text = f"""
+    <b>ΠΡΟΣ:</b> {client_name}<br/>
+    <b>ΔΙΕΥΘΥΝΣΗ:</b> {client_address}<br/>
+    <b>ΑΦΜ / ΔΟΥ:</b> {client_afm}<br/>
+    <b>ΕΠΑΓΓΕΛΜΑ:</b> {client_job}<br/>
+    <b>ΤΗΛ:</b> {client_tel}
+    """
+    story.append(Paragraph(client_text, body_style))
+    story.append(Spacer(1, 12))
     
-    t = Table(table_data, colWidths=[150, 150, 80, 100])
-    t.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#e2e8f0")),
-        ('ALIGN', (0,0), (-1,-1), 'LEFT'),
-        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 8),
-        ('TOPPADDING', (0,0), (-1,-1), 8),
-        ('GRID', (0,0), (-1,-1), 0.5, colors.grey),
-    ]))
+    # Προσφώνηση
+    story.append(Paragraph("Αγαπητέ κύριε,", body_style))
+    story.append(Spacer(1, 8))
     
-    story.append(t)
+    # Εισαγωγικό κείμενο (αν έχει συμπληρωθεί)
+    if editable_text.strip():
+        story.append(Paragraph(editable_text, body_style))
+        story.append(Spacer(1, 12))
+        
+    # Εκτύπωση προσφορών δυναμικά
+    for idx, offer in enumerate(offers_list, start=1):
+        if offer["desc"].strip():
+            offer_block = f"<b>{idx})</b> {offer['desc']}<br/><b>Αξία προσφοράς:</b> {offer['price']}"
+            story.append(Paragraph(offer_block, body_style))
+            story.append(Spacer(1, 10))
+            
+    # Χτισίμο PDF
     doc.build(story)
-    
     buffer.seek(0)
     
-    st.success(t_success)
+    st.success("Η οικονομική προσφορά δημιουργήθηκε με επιτυχία!")
     
-    # Κουμπί λήψης PDF
     st.download_button(
-        label="📥 Download PDF Offer",
+        label="📥 Κατεβάστε το PDF τώρα",
         data=buffer,
-        file_name=f"Kubota_Offer_{selected_model}.pdf",
+        file_name="oikonomiki_prosfora.pdf",
         mime="application/pdf"
     )
     
