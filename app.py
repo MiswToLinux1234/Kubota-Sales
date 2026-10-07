@@ -13,48 +13,223 @@ st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_i
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ
+# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (Με διπλή περιγραφή GR / EN για τα χαρακτηριστικά)
 database = {
     # --- Σειρά B1 - Stage V ---
-    "B1181D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 17, "price": 14500, "info": "17 HP - Σειρά B1"},
-    "B1241D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 22, "price": 15500, "info": "22 HP - Mid ROPS"},
+    "B1181D-EC": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά B1 - Stage V", 
+        "hp": 17, 
+        "price": 14500, 
+        "info": "17 HP - Σειρά B1",
+        "info_en": "17 HP - B1 Series"
+    },
+    "B1241D-EC": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά B1 - Stage V", 
+        "hp": 22, 
+        "price": 15500, 
+        "info": "22 HP - Mid ROPS",
+        "info_en": "22 HP - Mid ROPS"
+    },
     
     # --- Σειρά B2 - Stage V ---
-    "B2261DB-M5-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 17500, "info": "25 HP - Σειρά B2"},
-    "B2261 HDB-C-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 27000, "info": "25 HP - Υδροστατικό, Καμπίνα"},
+    "B2261DB-M5-S5": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά B2 - Stage V", 
+        "hp": 25, 
+        "price": 17500, 
+        "info": "25 HP - Σειρά B2",
+        "info_en": "25 HP - B2 Series"
+    },
+    "B2261 HDB-C-S5": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά B2 - Stage V", 
+        "hp": 25, 
+        "price": 27000, 
+        "info": "25 HP - Υδροστατικό, Καμπίνα",
+        "info_en": "25 HP - Hydrostatic, Cabin"
+    },
     
     # --- Σειρά LX - Stage V ---
-    "LX351-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 33500, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS"},
-    "LX351-M": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 29500, "info": "35 HP - 12/12 Mid ROPS"},
-    "LX351-C-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 40000, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
-    "LX401-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 40, "price": 43500, "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS"},
-    "LX401-C-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 40, "price": 50000, "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
+    "LX351-F-R": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά LX - Stage V", 
+        "hp": 35, 
+        "price": 33500, 
+        "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS",
+        "info_en": "35 HP - Hydrostatic transmission, ROPS"
+    },
+    "LX351-M": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά LX - Stage V", 
+        "hp": 35, 
+        "price": 29500, 
+        "info": "35 HP - 12/12 Mid ROPS",
+        "info_en": "35 HP - 12/12 Mid ROPS"
+    },
+    "LX351-C-R": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά LX - Stage V", 
+        "hp": 35, 
+        "price": 40000, 
+        "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα",
+        "info_en": "35 HP - Hydrostatic transmission, Cabin"
+    },
+    "LX401-F-R": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά LX - Stage V", 
+        "hp": 40, 
+        "price": 43500, 
+        "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS",
+        "info_en": "40 HP - Hydrostatic transmission, ROPS"
+    },
+    "LX401-C-R": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά LX - Stage V", 
+        "hp": 40, 
+        "price": 50000, 
+        "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα",
+        "info_en": "40 HP - Hydrostatic transmission, Cabin"
+    },
     
     # --- Νέα Σειρά L2 - Stage V ---
-    "L2372DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 37, "price": 35500, "info": "37 HP - (16/16)"},
-    "L2452DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 45, "price": 36500, "info": "45 HP - (16/16)"},
-    "L2522DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 52, "price": 37500, "info": "52 HP - (16/16)"},
-    "L2452DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 47, "price": 45000, "info": "47 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
-    "L2552DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 54, "price": 50000, "info": "54 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
-    "L2622DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 62, "price": 58000, "info": "62 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
+    "L2372DM": {
+        "cat": "Τρακτέρ", 
+        "series": "Νέα Σειρά L2 - Stage V", 
+        "hp": 37, 
+        "price": 35500, 
+        "info": "37 HP - (16/16)",
+        "info_en": "37 HP - (16/16)"
+    },
+    "L2452DM": {
+        "cat": "Τρακτέρ", 
+        "series": "Νέα Σειρά L2 - Stage V", 
+        "hp": 45, 
+        "price": 36500, 
+        "info": "45 HP - (16/16)",
+        "info_en": "45 HP - (16/16)"
+    },
+    "L2522DM": {
+        "cat": "Τρακτέρ", 
+        "series": "Νέα Σειρά L2 - Stage V", 
+        "hp": 52, 
+        "price": 37500, 
+        "info": "52 HP - (16/16)",
+        "info_en": "52 HP - (16/16)"
+    },
+    "L2452DHC": {
+        "cat": "Τρακτέρ", 
+        "series": "Νέα Σειρά L2 - Stage V", 
+        "hp": 47, 
+        "price": 45000, 
+        "info": "47 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα",
+        "info_en": "47 HP - Hydrostatic transmission, Cabin"
+    },
+    "L2552DHC": {
+        "cat": "Τρακτέρ", 
+        "series": "Νέα Σειρά L2 - Stage V", 
+        "hp": 54, 
+        "price": 50000, 
+        "info": "54 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα",
+        "info_en": "54 HP - Hydrostatic transmission, Cabin"
+    },
+    "L2622DHC": {
+        "cat": "Τρακτέρ", 
+        "series": "Νέα Σειρά L2 - Stage V", 
+        "hp": 62, 
+        "price": 58000, 
+        "info": "62 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα",
+        "info_en": "62 HP - Hydrostatic transmission, Cabin"
+    },
     
     # --- Σειρά M5002-NARROW - Stage V ---
-    "M5072N": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 74, "price": 57500, "info": "74 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36"},
-    "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36"},
-    "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36"},
+    "M5072N": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά M5002-NARROW - Stage V", 
+        "hp": 74, 
+        "price": 57500, 
+        "info": "74 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36",
+        "info_en": "74 HP - Electro-hydraulic reverser 36/36"
+    },
+    "M5-092N36-EC": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά M5002-NARROW - Stage V", 
+        "hp": 94, 
+        "price": 67500, 
+        "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36",
+        "info_en": "94 HP - Electro-hydraulic reverser 36/36"
+    },
+    "M5-112NQ-EC": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά M5002-NARROW - Stage V", 
+        "hp": 115, 
+        "price": 78000, 
+        "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36",
+        "info_en": "115 HP - Electro-hydraulic reverser 36/36"
+    },
     
     # --- Σειρά M4003 - Stage V ---
-    "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18"},
-    "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36"},
+    "M4063 DTH": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά M4003 - Stage V", 
+        "hp": 66, 
+        "price": 47500, 
+        "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18",
+        "info_en": "66 HP - Electro-hydraulic reverser 18/18"
+    },
+    "M4073 DTH": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά M4003 - Stage V", 
+        "hp": 74, 
+        "price": 51500, 
+        "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36",
+        "info_en": "74 HP - Electro-hydraulic reverser 36/36"
+    },
     
     # --- Σειρά M5002 - Stage V ---
-    "M5-092 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 94, "price": 64500, "info": "94 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36"},
-    "M5-112 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 107, "price": 65500, "info": "107 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36"},
+    "M5-092 DTH": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά M5002 - Stage V", 
+        "hp": 94, 
+        "price": 64500, 
+        "info": "94 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36",
+        "info_en": "94 HP - Electro-hydraulic reverser 36/36"
+    },
+    "M5-112 DTH": {
+        "cat": "Τρακτέρ", 
+        "series": "Σειρά M5002 - Stage V", 
+        "hp": 107, 
+        "price": 65500, 
+        "info": "107 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36",
+        "info_en": "107 HP - Electro-hydraulic reverser 36/36"
+    },
     
     # --- Χωματουργικά ---
-    "K008-5 VHG": {"cat": "Χωματουργικό", "series": "Εκσκαφείς", "weight": "975 kg", "price": 15700, "info": "Βασική Αξία Εκσκαφέα 975 kg"},
-    "U10-5 VHG": {"cat": "Χωματουργικό", "series": "Εκσκαφείς", "weight": "1050 kg", "price": 17600, "info": "Βασική Αξία Εκσκαφέα 1050 kg"},
-    "U27-4 HGL": {"cat": "Χωματουργικό", "series": "Εκσκαφείς", "weight": "2490 kg", "price": 32800, "info": "Σκέπαστρο 2490 kg"}
+    "K008-5 VHG": {
+        "cat": "Χωματουργικό", 
+        "series": "Εκσκαφείς", 
+        "weight": "975 kg", 
+        "price": 15700, 
+        "info": "Βασική Αξία Εκσκαφέα 975 kg",
+        "info_en": "Basic Excavator Value 975 kg"
+    },
+    "U10-5 VHG": {
+        "cat": "Χωματουργικό", 
+        "series": "Εκσκαφείς", 
+        "weight": "1050 kg", 
+        "price": 17600, 
+        "info": "Βασική Αξία Εκσκαφέα 1050 kg",
+        "info_en": "Basic Excavator Value 1050 kg"
+    },
+    "U27-4 HGL": {
+        "cat": "Χωματουργικό", 
+        "series": "Εκσκαφείς", 
+        "weight": "2490 kg", 
+        "price": 32800, 
+        "info": "Σκέπαστρο 2490 kg",
+        "info_en": "Canopy 2490 kg"
+    }
 }
 
 # Διαχείριση καλαθιού στη μνήμη της εφαρμογής
@@ -85,6 +260,12 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
     c = canvas.Canvas(pdf_filename, pagesize=letter)
     width, height = letter
     
+    # Μετάφραση ονόματος εταιρείας για το PDF/Logo
+    if is_english:
+        comp_display = "Petropoulos" if company == "Πετρόπουλος" else ("Filis" if company == "Φίλης" else "Kampos")
+    else:
+        comp_display = company
+
     if company == "Πετρόπουλος":
         logo_path = "petropoulos_logo.jpeg"
         if os.path.exists(logo_path):
@@ -92,7 +273,7 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
 
     # Επικεφαλίδα Εταιρείας
     c.setFont(font_bld, 16)
-    comp_label = f"COMPANY: {company}" if is_english else f"ΕΤΑΙΡΕΙΑ: {company}"
+    comp_label = f"COMPANY: {comp_display}" if is_english else f"ΕΤΑΙΡΕΙΑ: {comp_display}"
     c.drawString(50, height - 50, comp_label)
     
     c.setFont(font_reg, 10)
@@ -137,13 +318,14 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
     total_net = 0
     
     for idx, item in enumerate(cart_items, 1):
+        item_info = item['info_en'] if is_english and 'info_en' in item else item['info']
         if is_english:
             noun = "KUBOTA tractor" if item["cat"] == "Τρακτέρ" else "KUBOTA excavator"
-            desc_text = f"A brand new and unused {noun} ({item['info']})"
+            desc_text = f"A brand new and unused {noun} ({item_info})"
             cat_display = "Tractor" if item["cat"] == "Τρακτέρ" else "Excavator"
         else:
             noun = "ελκυστήρα KUBOTA" if item["cat"] == "Τρακτέρ" else "εκσκαφέα KUBOTA"
-            desc_text = f"Ένα καινούριο και αμεταχειριστό {noun} ({item['info']})"
+            desc_text = f"Ένα καινούριο και αμεταχειριστό {noun} ({item_info})"
             cat_display = item["cat"]
         
         y -= 20
@@ -179,7 +361,7 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
     
     y -= 35
     c.setFont(font_reg, 10)
-    close_text = f"At your disposal for any clarification from {company}!" if is_english else f"Στη διάθεσή σας για οποιαδήποτε διευκρίνιση από την εταιρεία {company}!"
+    close_text = f"At your disposal for any clarification from {comp_display}!" if is_english else f"Στη διάθεσή σας για οποιαδήποτε διευκρίνιση από την εταιρεία {comp_display}!"
     c.drawString(50, y, close_text)
     
     c.save()
@@ -194,7 +376,13 @@ st.markdown("Create commercial quotes easily!" if is_english else "Δημιου�
 
 # 1. Στοιχεία Πελάτη
 with st.expander("👤 " + ("1. Client Details (All Mandatory)" if is_english else "1. Στοιχεία Πελάτη (Υποχρεωτικά Όλα)"), expanded=True):
-    company = st.selectbox("Company / Εταιρεία", ["Πετρόπουλος", "Φίλης", "Κάμπος"])
+    company_options = ["Πετρόπουλος", "Φίλης", "Κάμπος"]
+    if is_english:
+        company_ui = st.selectbox("Company / Εταιρεία", ["Petropoulos", "Filis", "Kampos"])
+        company = "Πετρόπουλος" if company_ui == "Petropoulos" else ("Φίλης" if company_ui == "Filis" else "Κάμπος")
+    else:
+        company = st.selectbox("Company / Εταιρεία", company_options)
+
     client_name = st.text_input("Client Name / Όνομα Πελάτη")
     client_profession = st.text_input("Profession / Επάγγελμα")
     col1, col2 = st.columns(2)
@@ -206,7 +394,6 @@ with st.expander("👤 " + ("1. Client Details (All Mandatory)" if is_english el
 
 # 2. Επιλογή Προϊόντος & Χαρακτηριστικά
 with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english else "2. Επιλογή Προϊόντος & Χαρακτηριστικά"), expanded=True):
-    # Μετάφραση κατηγοριών στην οθόνη αν είναι στα αγγλικά
     raw_categories = sorted(list(set(item["cat"] for item in database.values())))
     if is_english:
         categories = ["Tractor" if c == "Τρακτέρ" else "Excavator" for c in raw_categories]
@@ -215,7 +402,6 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
         
     selected_cat_ui = st.selectbox("Category / Κατηγορία", categories)
     
-    # Αντιστοίχιση πίσω στη βάση
     selected_cat = "Τρακτέρ" if (is_english and selected_cat_ui == "Tractor") or (not is_english and selected_cat_ui == "Τρακτέρ") else "Χωματουργικό"
     
     series_list = sorted(list(set(item["series"] for item in database.values() if item["cat"] == selected_cat)))
@@ -226,8 +412,9 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
     
     if selected_model:
         current_item = database[selected_model]
+        default_info = current_item["info_en"] if is_english else current_item["info"]
         st.markdown(f"**{'Model Price' if is_english else 'Τιμή Μοντέλου'}:** :red[{current_item['price']:,.2f} EUR]")
-        custom_info = st.text_input("Description / Info / Περιγραφή", value=current_item["info"])
+        custom_info = st.text_input("Description / Info / Περιγραφή", value=default_info)
     else:
         custom_info = ""
 
@@ -237,7 +424,8 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
                 "model": selected_model,
                 "cat": current_item["cat"],
                 "price": current_item["price"],
-                "info": custom_info
+                "info": custom_info,
+                "info_en": custom_info if is_english else current_item.get("info_en", custom_info)
             })
             st.success("Product added!" if is_english else f"Το προϊόν {selected_model} προστέθηκε στην προσφορά!")
         else:
