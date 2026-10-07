@@ -13,7 +13,7 @@ st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_i
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (Ακριβώς η δική σου)
+# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ
 database = {
     # --- Σειρά B1 - Stage V ---
     "B1181D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 17, "price": 14500, "info": "17 HP - Σειρά B1"},
@@ -140,14 +140,16 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
         if is_english:
             noun = "KUBOTA tractor" if item["cat"] == "Τρακτέρ" else "KUBOTA excavator"
             desc_text = f"A brand new and unused {noun} ({item['info']})"
+            cat_display = "Tractor" if item["cat"] == "Τρακτέρ" else "Excavator"
         else:
             noun = "ελκυστήρα KUBOTA" if item["cat"] == "Τρακτέρ" else "εκσκαφέα KUBOTA"
             desc_text = f"Ένα καινούριο και αμεταχειριστό {noun} ({item['info']})"
+            cat_display = item["cat"]
         
         y -= 20
         c.setFont(font_bld, 10)
         net_lbl = "Net Value" if is_english else "Καθαρή Αξία"
-        c.drawString(50, y, f"{idx}. Model: {item['model']} — {net_lbl}: {item['price']:,.2f} EUR")
+        c.drawString(50, y, f"{idx}. {cat_display} | Model: {item['model']} — {net_lbl}: {item['price']:,.2f} EUR")
         
         y -= 15
         c.setFont(font_reg, 10)
@@ -204,8 +206,17 @@ with st.expander("👤 " + ("1. Client Details (All Mandatory)" if is_english el
 
 # 2. Επιλογή Προϊόντος & Χαρακτηριστικά
 with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english else "2. Επιλογή Προϊόντος & Χαρακτηριστικά"), expanded=True):
-    categories = sorted(list(set(item["cat"] for item in database.values())))
-    selected_cat = st.selectbox("Category / Κατηγορία", categories)
+    # Μετάφραση κατηγοριών στην οθόνη αν είναι στα αγγλικά
+    raw_categories = sorted(list(set(item["cat"] for item in database.values())))
+    if is_english:
+        categories = ["Tractor" if c == "Τρακτέρ" else "Excavator" for c in raw_categories]
+    else:
+        categories = raw_categories
+        
+    selected_cat_ui = st.selectbox("Category / Κατηγορία", categories)
+    
+    # Αντιστοίχιση πίσω στη βάση
+    selected_cat = "Τρακτέρ" if (is_english and selected_cat_ui == "Tractor") or (not is_english and selected_cat_ui == "Τρακτέρ") else "Χωματουργικό"
     
     series_list = sorted(list(set(item["series"] for item in database.values() if item["cat"] == selected_cat)))
     selected_series = st.selectbox("Series / Σειρά", series_list)
@@ -236,9 +247,10 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
 with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Επιλεγμένα Είδη Προσφοράς"), expanded=True):
     if st.session_state.cart:
         for idx, cart_item in enumerate(st.session_state.cart):
+            display_cat = "Tractor" if (is_english and cart_item['cat'] == "Τρακτέρ") else ("Excavator" if is_english else cart_item['cat'])
             col_a, col_b = st.columns([4, 1])
             with col_a:
-                st.write(f"**{idx+1}. {cart_item['cat']} | {cart_item['model']}** — {cart_item['price']:,.2f} EUR")
+                st.write(f"**{idx+1}. {display_cat} | {cart_item['model']}** — {cart_item['price']:,.2f} EUR")
             with col_b:
                 if st.button("❌", key=f"del_{idx}"):
                     st.session_state.cart.pop(idx)
