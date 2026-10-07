@@ -6,14 +6,14 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-# ΡΥΘΜΙΣΗ ΣΕΛΙΔΑΣ (Προσθήκη PWA Icon)
-st.set_page_config(
-    page_title="Σύστημα Προσφορών Kubota", 
-    page_icon="KUBOTA ICON.png", 
-    layout="centered"
-)
+# ΡΥΘΜΙΣΗ ΣΕΛΙΔΑΣ (PWA Icon & Τίτλος)
+st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_icon="KUBOTA ICON.png", layout="centered")
 
-# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (Μπορείτε να προσθέσετε όσα δεδομένα θέλετε εδώ)
+# ΕΠΙΛΟΓΗ ΓΛΩΣΣΑΣ (UI & PDF)
+lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
+is_english = (lang_option == "English")
+
+# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (Ακριβώς η δική σου)
 database = {
     # --- Σειρά B1 - Stage V ---
     "B1181D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 17, "price": 14500, "info": "17 HP - Σειρά B1"},
@@ -61,13 +61,11 @@ database = {
 if "cart" not in st.session_state:
     st.session_state.cart = []
 
-# Συνάρτηση εγγραφής γραμματοσειρών Times New Roman (τοπικά ή Windows fallback)
 def register_local_fonts():
     font_path = "times.ttf"
     font_bold_path = "timesbd.ttf"
     win_font_path = "C:/Windows/Fonts/times.ttf"
     win_bold_path = "C:/Windows/Fonts/timesbd.ttf"
-    
     if os.path.exists(font_path) and os.path.exists(font_bold_path):
         pdfmetrics.registerFont(TTFont('WinTimes', font_path))
         pdfmetrics.registerFont(TTFont('WinTimes-Bold', font_bold_path))
@@ -78,7 +76,7 @@ def register_local_fonts():
         return True
     return False
 
-def generate_pdf_bytes(client_data, cart_items, company):
+def generate_pdf_bytes(client_data, cart_items, company, is_english):
     pdf_filename = "temp_profora.pdf"
     has_font = register_local_fonts()
     font_reg = 'WinTimes' if has_font else 'Helvetica'
@@ -94,9 +92,12 @@ def generate_pdf_bytes(client_data, cart_items, company):
 
     # Επικεφαλίδα Εταιρείας
     c.setFont(font_bld, 16)
-    c.drawString(50, height - 50, f"ΕΤΑΙΡΕΙΑ: {company}")
+    comp_label = f"COMPANY: {company}" if is_english else f"ΕΤΑΙΡΕΙΑ: {company}"
+    c.drawString(50, height - 50, comp_label)
+    
     c.setFont(font_reg, 10)
-    c.drawString(50, height - 65, "Τμήμα Γεωργικών & Χωματουργικών Μηχανημάτων Kubota")
+    dept_label = "Agricultural & Construction Machinery Department" if is_english else "Τμήμα Γεωργικών & Χωματουργικών Μηχανημάτων Kubota"
+    c.drawString(50, height - 65, dept_label)
     
     c.setStrokeColorRGB(0.2, 0.3, 0.5)
     c.setLineWidth(1)
@@ -104,18 +105,18 @@ def generate_pdf_bytes(client_data, cart_items, company):
     
     # Στοιχεία Πελάτη
     c.setFont(font_bld, 12)
-    c.drawString(50, height - 100, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:")
+    c.drawString(50, height - 100, "CLIENT DETAILS:" if is_english else "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:")
     c.setFont(font_reg, 10)
     y_client = height - 118
-    c.drawString(50, y_client, f"Ονοματεπώνυμο / Επωνυμία: {client_data['name']}")
+    c.drawString(50, y_client, f"{'Name' if is_english else 'Ονοματεπώνυμο / Επωνυμία'}: {client_data['name']}")
     y_client -= 16
-    c.drawString(50, y_client, f"Επάγγελμα: {client_data['profession']}")
+    c.drawString(50, y_client, f"{'Profession' if is_english else 'Επάγγελμα'}: {client_data['profession']}")
     y_client -= 16
-    c.drawString(50, y_client, f"ΑΦΜ: {client_data['afm']}")
+    c.drawString(50, y_client, f"{'VAT No' if is_english else 'ΑΦΜ'}: {client_data['afm']}")
     y_client -= 16
-    c.drawString(50, y_client, f"Τηλέφωνο: {client_data['phone']}")
+    c.drawString(50, y_client, f"{'Phone' if is_english else 'Τηλέφωνο'}: {client_data['phone']}")
     y_client -= 16
-    c.drawString(50, y_client, f"Διεύθυνση: {client_data['address']}")
+    c.drawString(50, y_client, f"{'Address' if is_english else 'Διεύθυνση'}: {client_data['address']}")
         
     y_client -= 12
     c.setStrokeColorRGB(0.7, 0.7, 0.7)
@@ -125,25 +126,32 @@ def generate_pdf_bytes(client_data, cart_items, company):
     # Τίτλος Προσφοράς
     y = y_client - 25
     c.setFont(font_bld, 13)
-    c.drawString(50, y, "ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ")
+    c.drawString(50, y, "COMMERCIAL OFFER" if is_english else "ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ")
     
     y -= 22
     c.setFont(font_reg, 10)
-    c.drawString(50, y, f"Αξιότιμε/η κ. {client_data['name']}, σας αποστέλλουμε την προσφορά μας:")
+    greet_text = f"Dear {client_data['name']}," if is_english else f"Αξιότιμε/η κ. {client_data['name']}, σας αποστέλλουμε την προσφορά μας:"
+    c.drawString(50, y, greet_text)
     
     y -= 15
     total_net = 0
     
     for idx, item in enumerate(cart_items, 1):
-        noun = "ελκυστήρα KUBOTA" if item["cat"] == "Τρακτέρ" else "εκσκαφέα KUBOTA"
+        if is_english:
+            noun = "KUBOTA tractor" if item["cat"] == "Τρακτέρ" else "KUBOTA excavator"
+            desc_text = f"A brand new and unused {noun} ({item['info']})"
+        else:
+            noun = "ελκυστήρα KUBOTA" if item["cat"] == "Τρακτέρ" else "εκσκαφέα KUBOTA"
+            desc_text = f"Ένα καινούριο και αμεταχειριστό {noun} ({item['info']})"
         
         y -= 20
         c.setFont(font_bld, 10)
-        c.drawString(50, y, f"{idx}. Μοντέλο: {item['model']} — Καθαρή Αξία: {item['price']:,.2f} EUR")
+        net_lbl = "Net Value" if is_english else "Καθαρή Αξία"
+        c.drawString(50, y, f"{idx}. Model: {item['model']} — {net_lbl}: {item['price']:,.2f} EUR")
         
         y -= 15
         c.setFont(font_reg, 10)
-        c.drawString(70, y, f"Ένα καινούριο και αμεταχειριστό {noun} ({item['info']})")
+        c.drawString(70, y, desc_text)
         
         total_net += item['price']
         
@@ -160,16 +168,17 @@ def generate_pdf_bytes(client_data, cart_items, company):
     c.line(50, y + 15, width - 50, y + 15)
     
     c.setFont(font_reg, 10)
-    c.drawString(50, y, f"Συνολική Καθαρή Αξία: {total_net:,.2f} EUR")
+    c.drawString(50, y, f"{'Total Net Value' if is_english else 'Συνολική Καθαρή Αξία'}: {total_net:,.2f} EUR")
     y -= 18
-    c.drawString(50, y, f"ΦΠΑ (24%): {vat:,.2f} EUR")
+    c.drawString(50, y, f"{'VAT (24%)' if is_english else 'ΦΠΑ (24%)'}: {vat:,.2f} EUR")
     y -= 20
     c.setFont(font_bld, 12)
-    c.drawString(50, y, f"ΓΕΝΙΚΟ ΣΥΝΟΛΟ ΜΕ ΦΠΑ: {total_with_vat:,.2f} EUR")
+    c.drawString(50, y, f"{'GRAND TOTAL WITH VAT' if is_english else 'ΓΕΝΙΚΟ ΣΥΝΟΛΟ ΜΕ ΦΠΑ'}: {total_with_vat:,.2f} EUR")
     
     y -= 35
     c.setFont(font_reg, 10)
-    c.drawString(50, y, f"Στη διάθεσή σας για οποιαδήποτε διευκρίνιση από την εταιρεία {company}!")
+    close_text = f"At your disposal for any clarification from {company}!" if is_english else f"Στη διάθεσή σας για οποιαδήποτε διευκρίνιση από την εταιρεία {company}!"
+    c.drawString(50, y, close_text)
     
     c.save()
     
@@ -178,40 +187,40 @@ def generate_pdf_bytes(client_data, cart_items, company):
     return pdf_data
 
 # ΕΜΦΑΝΙΣΗ ΣΤΟ UI
-st.title("🚜 Σύστημα Προσφορών Kubota")
-st.markdown("Δημιουργήστε οικονομικές προσφορές εύκολα από το PC ή το κινητό σας!")
+st.title("🚜 " + ("Kubota Quotation System" if is_english else "Σύστημα Προσφορών Kubota"))
+st.markdown("Create commercial quotes easily!" if is_english else "Δημιουργήστε οικονομικές προσφορές εύκολα από το PC ή το κινητό σας!")
 
 # 1. Στοιχεία Πελάτη
-with st.expander("👤 1. Στοιχεία Πελάτη (Υποχρεωτικά Όλα)", expanded=True):
-    company = st.selectbox("Εταιρεία", ["Πετρόπουλος", "Φίλης", "Κάμπος"])
-    client_name = st.text_input("Όνομα Πελάτη")
-    client_profession = st.text_input("Επάγγελμα")
+with st.expander("👤 " + ("1. Client Details (All Mandatory)" if is_english else "1. Στοιχεία Πελάτη (Υποχρεωτικά Όλα)"), expanded=True):
+    company = st.selectbox("Company / Εταιρεία", ["Πετρόπουλος", "Φίλης", "Κάμπος"])
+    client_name = st.text_input("Client Name / Όνομα Πελάτη")
+    client_profession = st.text_input("Profession / Επάγγελμα")
     col1, col2 = st.columns(2)
     with col1:
-        client_afm = st.text_input("ΑΦΜ")
+        client_afm = st.text_input("VAT No / ΑΦΜ")
     with col2:
-        client_phone = st.text_input("Τηλέφωνο")
-    client_address = st.text_input("Διεύθυνση")
+        client_phone = st.text_input("Phone / Τηλέφωνο")
+    client_address = st.text_input("Address / Διεύθυνση")
 
 # 2. Επιλογή Προϊόντος & Χαρακτηριστικά
-with st.expander("⚙️ 2. Επιλογή Προϊόντος & Χαρακτηριστικά", expanded=True):
+with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english else "2. Επιλογή Προϊόντος & Χαρακτηριστικά"), expanded=True):
     categories = sorted(list(set(item["cat"] for item in database.values())))
-    selected_cat = st.selectbox("Κατηγορία", categories)
+    selected_cat = st.selectbox("Category / Κατηγορία", categories)
     
     series_list = sorted(list(set(item["series"] for item in database.values() if item["cat"] == selected_cat)))
-    selected_series = st.selectbox("Σειρά", series_list)
+    selected_series = st.selectbox("Series / Σειρά", series_list)
     
     model_list = [model for model, item in database.items() if item["cat"] == selected_cat and item["series"] == selected_series]
-    selected_model = st.selectbox("Μοντέλο", model_list)
+    selected_model = st.selectbox("Model / Μοντέλο", model_list)
     
     if selected_model:
         current_item = database[selected_model]
-        st.markdown(f"**Τιμή Μοντέλου:** :red[{current_item['price']:,.2f} EUR]")
-        custom_info = st.text_input("Περιγραφή / Info", value=current_item["info"])
+        st.markdown(f"**{'Model Price' if is_english else 'Τιμή Μοντέλου'}:** :red[{current_item['price']:,.2f} EUR]")
+        custom_info = st.text_input("Description / Info / Περιγραφή", value=current_item["info"])
     else:
         custom_info = ""
 
-    if st.button("➕ Προσθήκη στην Προσφορά"):
+    if st.button("➕ " + ("Add to Quote" if is_english else "Προσθήκη στην Προσφορά")):
         if selected_model:
             st.session_state.cart.append({
                 "model": selected_model,
@@ -219,12 +228,12 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος & Χαρακτηρ
                 "price": current_item["price"],
                 "info": custom_info
             })
-            st.success(f"Το προϊόν {selected_model} προστέθηκε στην προσφορά!")
+            st.success("Product added!" if is_english else f"Το προϊόν {selected_model} προστέθηκε στην προσφορά!")
         else:
-            st.error("Επιλέξτε έγκυρο μοντέλο.")
+            st.error("Select valid model." if is_english else "Επιλέξτε έγκυρο μοντέλο.")
 
 # 3. Επιλεγμένα Είδη Προσφοράς
-with st.expander("🛒 3. Επιλεγμένα Είδη Προσφοράς", expanded=True):
+with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Επιλεγμένα Είδη Προσφοράς"), expanded=True):
     if st.session_state.cart:
         for idx, cart_item in enumerate(st.session_state.cart):
             col_a, col_b = st.columns([4, 1])
@@ -235,27 +244,27 @@ with st.expander("🛒 3. Επιλεγμένα Είδη Προσφοράς", exp
                     st.session_state.cart.pop(idx)
                     st.rerun()
         
-        if st.button("🗑️ Εκκαθάριση Καλαθιού"):
+        if st.button("🗑️ " + ("Clear Cart" if is_english else "Εκκαθάριση Καλαθιού")):
             st.session_state.cart = []
             st.rerun()
     else:
-        st.info("Το καλάθι είναι κενό.")
+        st.info("Cart is empty." if is_english else "Το καλάθι είναι κενό.")
 
 # Δημιουργία PDF
 st.markdown("---")
-if st.button("📄 Δημιουργία Συγκεντρωτικού PDF", type="primary", use_container_width=True):
+if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιουργία Συγκεντρωτικού PDF"), type="primary", use_container_width=True):
     if not client_name:
-        st.warning("Παρακαλώ συμπληρώστε το όνομα του πελάτη!")
+        st.warning("Please fill in the client's name!" if is_english else "Παρακαλώ συμπληρώστε το όνομα του πελάτη!")
     elif not client_profession:
-        st.warning("Παρακαλώ συμπληρώστε το επάγγελμα του πελάτη!")
+        st.warning("Please fill in the profession!" if is_english else "Παρακαλώ συμπληρώστε το επάγγελμα του πελάτη!")
     elif not client_afm:
-        st.warning("Παρακαλώ συμπληρώστε το ΑΦΜ του πελάτη!")
+        st.warning("Please fill in the VAT No!" if is_english else "Παρακαλώ συμπληρώστε το ΑΦΜ του πελάτη!")
     elif not client_phone:
-        st.warning("Παρακαλώ συμπληρώστε το τηλέφωνο του πελάτη!")
+        st.warning("Please fill in the phone!" if is_english else "Παρακαλώ συμπληρώστε το τηλέφωνο του πελάτη!")
     elif not client_address:
-        st.warning("Παρακαλώ συμπληρώστε τη διεύθυνση του πελάτη!")
+        st.warning("Please fill in the address!" if is_english else "Παρακαλώ συμπληρώστε τη διεύθυνση του πελάτη!")
     elif not st.session_state.cart:
-        st.warning("Το καλάθι προσφοράς είναι κενό! Προσθέστε τουλάχιστον ένα προϊόν.")
+        st.warning("The cart is empty!" if is_english else "Το καλάθι προσφοράς είναι κενό! Προσθέστε τουλάχιστον ένα προϊόν.")
     else:
         client_data = {
             "name": client_name,
@@ -264,14 +273,14 @@ if st.button("📄 Δημιουργία Συγκεντρωτικού PDF", type=
             "phone": client_phone,
             "address": client_address
         }
-        pdf_data = generate_pdf_bytes(client_data, st.session_state.cart, company)
+        pdf_data = generate_pdf_bytes(client_data, st.session_state.cart, company, is_english)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         safe_company = company.replace(" ", "_")
         safe_client = client_name.replace(" ", "_")
         pdf_filename = f"Profora_{safe_company}_{safe_client}_{timestamp}.pdf"
         
         st.download_button(
-            label="📥 Λήψη Αρχείου PDF",
+            label="📥 " + ("Download PDF File" if is_english else "Λήψη Αρχείου PDF"),
             data=pdf_data,
             file_name=pdf_filename,
             mime="application/pdf",
