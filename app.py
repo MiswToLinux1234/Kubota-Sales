@@ -13,7 +13,7 @@ st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_i
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (Με αυτόματη απόδοση στα Αγγλικά μέσω συνάρτησης μετάφρασης)
+# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ
 database = {
     # --- Σειρά B1 - Stage V ---
     "B1181D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 17, "price": 14500, "info": "17 HP - Σειρά B1"},
@@ -57,12 +57,12 @@ database = {
     "U27-4 HGL": {"cat": "Χωματουργικό", "series": "Εκσκαφείς", "weight": "2490 kg", "price": 32800, "info": "Σκέπαστρο 2490 kg"}
 }
 
-# Συνάρτηση αυτόματης μετάφρασης χαρακτηριστικών και σειρών στα Αγγλικά
+# Συνάρτηση αυτόματης μετάφρασης
 def translate_info(text, is_en):
     if not is_en:
         return text
     
-    translations = {
+    translations_map = {
         "Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα": "Hydrostatic transmission, Cabin",
         "Υδροστατικό κιβώτιο ταχυτήτων, ROPS": "Hydrostatic transmission, ROPS",
         "Υδροστατικό, Καμπίνα": "Hydrostatic, Cabin",
@@ -72,8 +72,6 @@ def translate_info(text, is_en):
         "Βασική Αξία Εκσκαφέα 975 kg": "Basic Excavator Value 975 kg",
         "Βασική Αξία Εκσκαφέα 1050 kg": "Basic Excavator Value 1050 kg",
         "Σκέπαστρο 2490 kg": "Canopy 2490 kg",
-        "Σειρά B1": "B1 Series",
-        "Σειρά B2": "B2 Series",
         "Σειρά B1 - Stage V": "B1 Series - Stage V",
         "Σειρά B2 - Stage V": "B2 Series - Stage V",
         "Σειρά LX - Stage V": "LX Series - Stage V",
@@ -84,49 +82,65 @@ def translate_info(text, is_en):
         "Εκσκαφείς": "Excavators"
     }
     
-    # Αντικατάσταση γνωστών φράσεων
-    for gr_term, en_term in translations.items():
+    for gr_term, en_term in translations_map.items():
         text = text.replace(gr_term, en_term)
-    
-    # Γενικές αντικαταστάσεις λέξεων αν χρειαστεί
-    text = text.replace("Σειρά", "Series").replace("Σκέπαστρο", "Canopy")
     return text
 
-# Διαχείριση καλαθιού στη μνήμη της εφαρμογής
+# Καταχώρηση Γραμματοσειρών
+def register_fonts():
+    # Times New Roman
+    if os.path.exists("times.ttf") and os.path.exists("timesbd.ttf"):
+        pdfmetrics.registerFont(TTFont('WinTimes', 'times.ttf'))
+        pdfmetrics.registerFont(TTFont('WinTimes-Bold', 'timesbd.ttf'))
+    elif os.path.exists("C:/Windows/Fonts/times.ttf"):
+        pdfmetrics.registerFont(TTFont('WinTimes', 'C:/Windows/Fonts/times.ttf'))
+        pdfmetrics.registerFont(TTFont('WinTimes-Bold', 'C:/Windows/Fonts/timesbd.ttf'))
+
+    # Arial
+    if os.path.exists("arial.ttf") and os.path.exists("arialbd.ttf"):
+        pdfmetrics.registerFont(TTFont('WinArial', 'arial.ttf'))
+        pdfmetrics.registerFont(TTFont('WinArial-Bold', 'arialbd.ttf'))
+    elif os.path.exists("C:/Windows/Fonts/arial.ttf"):
+        pdfmetrics.registerFont(TTFont('WinArial', 'C:/Windows/Fonts/arial.ttf'))
+        pdfmetrics.registerFont(TTFont('WinArial-Bold', 'C:/Windows/Fonts/arialbd.ttf'))
+
+# Επιλογή κατάλληλης γραμματοσειράς βάσει εταιρείας
+def get_company_fonts(company):
+    register_fonts()
+    
+    if company in ["Πετρόπουλος", "Petropoulos"]:
+        # Times New Roman για Πετρόπουλο
+        reg = 'WinTimes' if 'WinTimes' in pdfmetrics.getRegisteredFontNames() else 'Helvetica'
+        bld = 'WinTimes-Bold' if 'WinTimes-Bold' in pdfmetrics.getRegisteredFontNames() else 'Helvetica-Bold'
+    elif company in ["Φίλης", "Filis"]:
+        # Arial για Φίλη
+        reg = 'WinArial' if 'WinArial' in pdfmetrics.getRegisteredFontNames() else 'Helvetica'
+        bld = 'WinArial-Bold' if 'WinArial-Bold' in pdfmetrics.getRegisteredFontNames() else 'Helvetica-Bold'
+    else:
+        # Courier / Helvetica για Κάμπο
+        reg = 'Helvetica'
+        bld = 'Helvetica-Bold'
+        
+    return reg, bld
+
 if "cart" not in st.session_state:
     st.session_state.cart = []
 
-def register_local_fonts():
-    font_path = "times.ttf"
-    font_bold_path = "timesbd.ttf"
-    win_font_path = "C:/Windows/Fonts/times.ttf"
-    win_bold_path = "C:/Windows/Fonts/timesbd.ttf"
-    if os.path.exists(font_path) and os.path.exists(font_bold_path):
-        pdfmetrics.registerFont(TTFont('WinTimes', font_path))
-        pdfmetrics.registerFont(TTFont('WinTimes-Bold', font_bold_path))
-        return True
-    elif os.path.exists(win_font_path) and os.path.exists(win_bold_path):
-        pdfmetrics.registerFont(TTFont('WinTimes', win_font_path))
-        pdfmetrics.registerFont(TTFont('WinTimes-Bold', win_bold_path))
-        return True
-    return False
-
 def generate_pdf_bytes(client_data, cart_items, company, is_english):
     pdf_filename = "temp_profora.pdf"
-    has_font = register_local_fonts()
-    font_reg = 'WinTimes' if has_font else 'Helvetica'
-    font_bld = 'WinTimes-Bold' if has_font else 'Helvetica-Bold'
+    
+    # Λήψη γραμματοσειράς βάσει εταιρείας
+    font_reg, font_bld = get_company_fonts(company)
 
     c = canvas.Canvas(pdf_filename, pagesize=letter)
     width, height = letter
     
-    # Μετάφραση ονόματος εταιρείας για το PDF
     if is_english:
         comp_display = "Petropoulos" if company == "Πετρόπουλος" else ("Filis" if company == "Φίλης" else "Kampos")
     else:
         comp_display = company
 
-    if company == "Πετρόπουλος":
+    if company in ["Πετρόπουλος", "Petropoulos"]:
         logo_path = "petropoulos_logo.jpeg"
         if os.path.exists(logo_path):
             c.drawImage(logo_path, width - 180, height - 70, width=130, height=45, preserveAspectRatio=True, mask='auto')
@@ -271,8 +285,6 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
         display_series_list = series_list
         
     selected_series_ui = st.selectbox("Series / Σειρά", display_series_list)
-    
-    # Αντιστοίχιση σειράς πίσω στη βάση
     selected_series = series_list[display_series_list.index(selected_series_ui)]
     
     model_list = [model for model, item in database.items() if item["cat"] == selected_cat and item["series"] == selected_series]
@@ -292,7 +304,7 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
                 "model": selected_model,
                 "cat": current_item["cat"],
                 "price": current_item["price"],
-                "info": current_item["info"] # Αποθηκεύουμε την αρχική και μεταφράζεται δυναμικά στο PDF
+                "info": current_item["info"]
             })
             st.success("Product added!" if is_english else f"Το προϊόν {selected_model} προστέθηκε στην προσφορά!")
         else:
@@ -353,3 +365,4 @@ if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιου�
             mime="application/pdf",
             use_container_width=True
         )
+        
