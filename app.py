@@ -96,7 +96,7 @@ def register_fonts():
         pdfmetrics.registerFont(TTFont('WinTimes', 'C:/Windows/Fonts/times.ttf'))
         pdfmetrics.registerFont(TTFont('WinTimes-Bold', 'C:/Windows/Fonts/timesbd.ttf'))
 
-    # 2. Arial (Φίλης / Κάμπος) - Υποστηρίζει ελληνικά στα Windows
+    # 2. Arial (Φίλης)
     if os.path.exists("arial.ttf") and os.path.exists("arialbd.ttf"):
         pdfmetrics.registerFont(TTFont('WinArial', 'arial.ttf'))
         pdfmetrics.registerFont(TTFont('WinArial-Bold', 'arialbd.ttf'))
@@ -104,23 +104,31 @@ def register_fonts():
         pdfmetrics.registerFont(TTFont('WinArial', 'C:/Windows/Fonts/arial.ttf'))
         pdfmetrics.registerFont(TTFont('WinArial-Bold', 'C:/Windows/Fonts/arialbd.ttf'))
 
-# Επιλογή κατάλληλης γραμματοσειράς βάσει εταιρείας (με fallback σε Times αν δεν βρεθεί Arial)
+    # 3. Verdana / Tahoma (Κάμπος)
+    if os.path.exists("verdana.ttf") and os.path.exists("verdanab.ttf"):
+        pdfmetrics.registerFont(TTFont('WinVerdana', 'verdana.ttf'))
+        pdfmetrics.registerFont(TTFont('WinVerdana-Bold', 'verdanab.ttf'))
+    elif os.path.exists("C:/Windows/Fonts/verdana.ttf") and os.path.exists("C:/Windows/Fonts/verdanab.ttf"):
+        pdfmetrics.registerFont(TTFont('WinVerdana', 'C:/Windows/Fonts/verdana.ttf'))
+        pdfmetrics.registerFont(TTFont('WinVerdana-Bold', 'C:/Windows/Fonts/verdanab.ttf'))
+
+# Επιλογή κατάλληλης γραμματοσειράς βάσει εταιρείας
 def get_company_fonts(company):
     register_fonts()
     registered = pdfmetrics.getRegisteredFontNames()
     
     if company in ["Πετρόπουλος", "Petropoulos"]:
         # Times New Roman
-        reg = 'WinTimes' if 'WinTimes' in registered else ('WinArial' if 'WinArial' in registered else 'Helvetica')
-        bld = 'WinTimes-Bold' if 'WinTimes-Bold' in registered else ('WinArial-Bold' if 'WinArial-Bold' in registered else 'Helvetica-Bold')
+        reg = 'WinTimes' if 'WinTimes' in registered else 'WinArial'
+        bld = 'WinTimes-Bold' if 'WinTimes-Bold' in registered else 'WinArial-Bold'
     elif company in ["Φίλης", "Filis"]:
         # Arial
-        reg = 'WinArial' if 'WinArial' in registered else ('WinTimes' if 'WinTimes' in registered else 'Helvetica')
-        bld = 'WinArial-Bold' if 'WinArial-Bold' in registered else ('WinTimes-Bold' if 'WinTimes-Bold' in registered else 'Helvetica-Bold')
+        reg = 'WinArial' if 'WinArial' in registered else 'WinTimes'
+        bld = 'WinArial-Bold' if 'WinArial-Bold' in registered else 'WinTimes-Bold'
     else:
-        # Κάμπος - Arial ή Times New Roman (Όχι Helvetica γιατί βγάζει τετραγωνάκια στα ελληνικά!)
-        reg = 'WinArial' if 'WinArial' in registered else ('WinTimes' if 'WinTimes' in registered else 'Helvetica')
-        bld = 'WinArial-Bold' if 'WinArial-Bold' in registered else ('WinTimes-Bold' if 'WinTimes-Bold' in registered else 'Helvetica-Bold')
+        # Κάμπος (Verdana / Tahoma)
+        reg = 'WinVerdana' if 'WinVerdana' in registered else ('WinArial' if 'WinArial' in registered else 'WinTimes')
+        bld = 'WinVerdana-Bold' if 'WinVerdana-Bold' in registered else ('WinArial-Bold' if 'WinArial-Bold' in registered else 'WinTimes-Bold')
         
     return reg, bld
 
