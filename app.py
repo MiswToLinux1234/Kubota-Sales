@@ -88,38 +88,39 @@ def translate_info(text, is_en):
 
 # Καταχώρηση Γραμματοσειρών
 def register_fonts():
-    # Times New Roman
+    # 1. Times New Roman (Πετρόπουλος)
     if os.path.exists("times.ttf") and os.path.exists("timesbd.ttf"):
         pdfmetrics.registerFont(TTFont('WinTimes', 'times.ttf'))
         pdfmetrics.registerFont(TTFont('WinTimes-Bold', 'timesbd.ttf'))
-    elif os.path.exists("C:/Windows/Fonts/times.ttf"):
+    elif os.path.exists("C:/Windows/Fonts/times.ttf") and os.path.exists("C:/Windows/Fonts/timesbd.ttf"):
         pdfmetrics.registerFont(TTFont('WinTimes', 'C:/Windows/Fonts/times.ttf'))
         pdfmetrics.registerFont(TTFont('WinTimes-Bold', 'C:/Windows/Fonts/timesbd.ttf'))
 
-    # Arial
+    # 2. Arial (Φίλης / Κάμπος) - Υποστηρίζει ελληνικά στα Windows
     if os.path.exists("arial.ttf") and os.path.exists("arialbd.ttf"):
         pdfmetrics.registerFont(TTFont('WinArial', 'arial.ttf'))
         pdfmetrics.registerFont(TTFont('WinArial-Bold', 'arialbd.ttf'))
-    elif os.path.exists("C:/Windows/Fonts/arial.ttf"):
+    elif os.path.exists("C:/Windows/Fonts/arial.ttf") and os.path.exists("C:/Windows/Fonts/arialbd.ttf"):
         pdfmetrics.registerFont(TTFont('WinArial', 'C:/Windows/Fonts/arial.ttf'))
         pdfmetrics.registerFont(TTFont('WinArial-Bold', 'C:/Windows/Fonts/arialbd.ttf'))
 
-# Επιλογή κατάλληλης γραμματοσειράς βάσει εταιρείας
+# Επιλογή κατάλληλης γραμματοσειράς βάσει εταιρείας (με fallback σε Times αν δεν βρεθεί Arial)
 def get_company_fonts(company):
     register_fonts()
+    registered = pdfmetrics.getRegisteredFontNames()
     
     if company in ["Πετρόπουλος", "Petropoulos"]:
-        # Times New Roman για Πετρόπουλο
-        reg = 'WinTimes' if 'WinTimes' in pdfmetrics.getRegisteredFontNames() else 'Helvetica'
-        bld = 'WinTimes-Bold' if 'WinTimes-Bold' in pdfmetrics.getRegisteredFontNames() else 'Helvetica-Bold'
+        # Times New Roman
+        reg = 'WinTimes' if 'WinTimes' in registered else ('WinArial' if 'WinArial' in registered else 'Helvetica')
+        bld = 'WinTimes-Bold' if 'WinTimes-Bold' in registered else ('WinArial-Bold' if 'WinArial-Bold' in registered else 'Helvetica-Bold')
     elif company in ["Φίλης", "Filis"]:
-        # Arial για Φίλη
-        reg = 'WinArial' if 'WinArial' in pdfmetrics.getRegisteredFontNames() else 'Helvetica'
-        bld = 'WinArial-Bold' if 'WinArial-Bold' in pdfmetrics.getRegisteredFontNames() else 'Helvetica-Bold'
+        # Arial
+        reg = 'WinArial' if 'WinArial' in registered else ('WinTimes' if 'WinTimes' in registered else 'Helvetica')
+        bld = 'WinArial-Bold' if 'WinArial-Bold' in registered else ('WinTimes-Bold' if 'WinTimes-Bold' in registered else 'Helvetica-Bold')
     else:
-        # Courier / Helvetica για Κάμπο
-        reg = 'Helvetica'
-        bld = 'Helvetica-Bold'
+        # Κάμπος - Arial ή Times New Roman (Όχι Helvetica γιατί βγάζει τετραγωνάκια στα ελληνικά!)
+        reg = 'WinArial' if 'WinArial' in registered else ('WinTimes' if 'WinTimes' in registered else 'Helvetica')
+        bld = 'WinArial-Bold' if 'WinArial-Bold' in registered else ('WinTimes-Bold' if 'WinTimes-Bold' in registered else 'Helvetica-Bold')
         
     return reg, bld
 
@@ -365,4 +366,3 @@ if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιου�
             mime="application/pdf",
             use_container_width=True
         )
-        
