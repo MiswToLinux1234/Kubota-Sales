@@ -170,7 +170,7 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
 
     # Επικεφαλίδα Εταιρείας
     c.setFont(font_bld, 16)
-    comp_label = f"COMPANY: {comp_display}" if is_english else f"ΕΤΑΙΡΕΙΑ: {comp_display}"
+    comp_label = comp_display
     c.drawString(50, height - 50, comp_label)
     
     c.setFont(font_reg, 10)
