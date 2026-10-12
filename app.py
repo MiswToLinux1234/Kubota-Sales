@@ -88,29 +88,43 @@ def translate_info(text, is_en):
 
 # Καταχώρηση Γραμματοσειρών
 def register_fonts():
+    registered = pdfmetrics.getRegisteredFontNames()
+
     # 1. Times New Roman (Πετρόπουλος)
-    if os.path.exists("times.ttf") and os.path.exists("timesbd.ttf"):
-        pdfmetrics.registerFont(TTFont('WinTimes', 'times.ttf'))
-        pdfmetrics.registerFont(TTFont('WinTimes-Bold', 'timesbd.ttf'))
-    elif os.path.exists("C:/Windows/Fonts/times.ttf") and os.path.exists("C:/Windows/Fonts/timesbd.ttf"):
-        pdfmetrics.registerFont(TTFont('WinTimes', 'C:/Windows/Fonts/times.ttf'))
-        pdfmetrics.registerFont(TTFont('WinTimes-Bold', 'C:/Windows/Fonts/timesbd.ttf'))
+    if 'WinTimes' not in registered:
+        for f, fb in [("times.ttf", "timesbd.ttf"), ("TIMES.TTF", "TIMESBD.TTF"), ("Times.ttf", "Timesbd.ttf")]:
+            if os.path.exists(f) and os.path.exists(fb):
+                pdfmetrics.registerFont(TTFont('WinTimes', f))
+                pdfmetrics.registerFont(TTFont('WinTimes-Bold', fb))
+                break
+        else:
+            if os.path.exists("C:/Windows/Fonts/times.ttf"):
+                pdfmetrics.registerFont(TTFont('WinTimes', 'C:/Windows/Fonts/times.ttf'))
+                pdfmetrics.registerFont(TTFont('WinTimes-Bold', 'C:/Windows/Fonts/timesbd.ttf'))
 
     # 2. Arial (Φίλης)
-    if os.path.exists("arial.ttf") and os.path.exists("arialbd.ttf"):
-        pdfmetrics.registerFont(TTFont('WinArial', 'arial.ttf'))
-        pdfmetrics.registerFont(TTFont('WinArial-Bold', 'arialbd.ttf'))
-    elif os.path.exists("C:/Windows/Fonts/arial.ttf") and os.path.exists("C:/Windows/Fonts/arialbd.ttf"):
-        pdfmetrics.registerFont(TTFont('WinArial', 'C:/Windows/Fonts/arial.ttf'))
-        pdfmetrics.registerFont(TTFont('WinArial-Bold', 'C:/Windows/Fonts/arialbd.ttf'))
+    if 'WinArial' not in registered:
+        for f, fb in [("arial.ttf", "arialbd.ttf"), ("ARIAL.TTF", "ARIALBD.TTF"), ("Arial.ttf", "Arialbd.ttf")]:
+            if os.path.exists(f) and os.path.exists(fb):
+                pdfmetrics.registerFont(TTFont('WinArial', f))
+                pdfmetrics.registerFont(TTFont('WinArial-Bold', fb))
+                break
+        else:
+            if os.path.exists("C:/Windows/Fonts/arial.ttf"):
+                pdfmetrics.registerFont(TTFont('WinArial', 'C:/Windows/Fonts/arial.ttf'))
+                pdfmetrics.registerFont(TTFont('WinArial-Bold', 'C:/Windows/Fonts/arialbd.ttf'))
 
-    # 3. Verdana / Tahoma (Κάμπος)
-    if os.path.exists("verdana.ttf") and os.path.exists("verdanab.ttf"):
-        pdfmetrics.registerFont(TTFont('WinVerdana', 'verdana.ttf'))
-        pdfmetrics.registerFont(TTFont('WinVerdana-Bold', 'verdanab.ttf'))
-    elif os.path.exists("C:/Windows/Fonts/verdana.ttf") and os.path.exists("C:/Windows/Fonts/verdanab.ttf"):
-        pdfmetrics.registerFont(TTFont('WinVerdana', 'C:/Windows/Fonts/verdana.ttf'))
-        pdfmetrics.registerFont(TTFont('WinVerdana-Bold', 'C:/Windows/Fonts/verdanab.ttf'))
+    # 3. Verdana (Κάμπος)
+    if 'WinVerdana' not in registered:
+        for f, fb in [("verdana.ttf", "verdanab.ttf"), ("VERDANA.TTF", "VERDANAB.TTF"), ("Verdana.ttf", "Verdanab.ttf")]:
+            if os.path.exists(f) and os.path.exists(fb):
+                pdfmetrics.registerFont(TTFont('WinVerdana', f))
+                pdfmetrics.registerFont(TTFont('WinVerdana-Bold', fb))
+                break
+        else:
+            if os.path.exists("C:/Windows/Fonts/verdana.ttf"):
+                pdfmetrics.registerFont(TTFont('WinVerdana', 'C:/Windows/Fonts/verdana.ttf'))
+                pdfmetrics.registerFont(TTFont('WinVerdana-Bold', 'C:/Windows/Fonts/verdanab.ttf'))
 
 # Επιλογή κατάλληλης γραμματοσειράς βάσει εταιρείας
 def get_company_fonts(company):
