@@ -7,57 +7,123 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
 # ΡΥΘΜΙΣΗ ΣΕΛΙΔΑΣ (PWA Icon & Τίτλος)
-st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_icon="KUBOTA ICON.png", layout="centered")
+st.set_page_config(page_title="Σύστημα Προσφορών Kubota & Manez Lozano", page_icon="KUBOTA ICON.png", layout="centered")
 
 # ΕΠΙΛΟΓΗ ΓΛΩΣΣΑΣ (UI & PDF)
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ
+# ΠΛΗΡΗΣ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (Kubota + Manez Lozano)
 database = {
-    # --- Σειρά B1 - Stage V ---
+    # --- Κουμπότα (Τρακτέρ, Χωματουργικά, Utility Vehicles) ---
     "B1181D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 17, "price": 14500, "info": "17 HP - Σειρά B1"},
     "B1241D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 22, "price": 15500, "info": "22 HP - Mid ROPS"},
-    
-    # --- Σειρά B2 - Stage V ---
     "B2261DB-M5-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 17500, "info": "25 HP - Σειρά B2"},
     "B2261 HDB-C-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 27000, "info": "25 HP - Υδροστατικό, Καμπίνα"},
-    
-    # --- Σειρά LX - Stage V ---
     "LX351-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 33500, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS"},
     "LX351-M": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 29500, "info": "35 HP - 12/12 Mid ROPS"},
     "LX351-C-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 40000, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
     "LX401-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 40, "price": 43500, "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS"},
     "LX401-C-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 40, "price": 50000, "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
-    
-    # --- Νέα Σειρά L2 - Stage V ---
     "L2372DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 37, "price": 35500, "info": "37 HP - (16/16)"},
     "L2452DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 45, "price": 36500, "info": "45 HP - (16/16)"},
     "L2522DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 52, "price": 37500, "info": "52 HP - (16/16)"},
     "L2452DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 47, "price": 45000, "info": "47 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
     "L2552DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 54, "price": 50000, "info": "54 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
     "L2622DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 62, "price": 58000, "info": "62 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα"},
-    
-    # --- Σειρά M5002-NARROW - Stage V ---
     "M5072N": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 74, "price": 57500, "info": "74 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36"},
     "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36"},
     "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36"},
-    
-    # --- Σειρά M4003 - Stage V ---
     "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18"},
     "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36"},
-    
-    # --- Σειρά M5002 - Stage V ---
     "M5-092 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 94, "price": 64500, "info": "94 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36"},
     "M5-112 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 107, "price": 65500, "info": "107 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36"},
+    "M6-121-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 131, "price": 89000, "info": "131 HP - Κιβώτιο Powershift, Καμπίνα"},
+    "M6-141-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 142, "price": 96000, "info": "142 HP - Κιβώτιο Powershift, Καμπίνα"},
+    "K008-5 VHG": {"cat": "Χωματουργικό", "series": "Μικροί Εκσκαφείς", "weight": "975 kg", "price": 15700, "info": "Βασική Αξία Εκσκαφέα 975 kg"},
+    "U10-5 VHG": {"cat": "Χωματουργικό", "series": "Μικροί Εκσκαφείς", "weight": "1050 kg", "price": 17600, "info": "Βασική Αξία Εκσκαφέα 1050 kg"},
+    "U27-4 HGL": {"cat": "Χωματουργικό", "series": "Εκσκαφείς Μεσαίας Κατηγορίας", "weight": "2490 kg", "price": 32800, "info": "Σκέπαστρο 2490 kg"},
+    "KX060-5": {"cat": "Χωματουργικό", "series": "Εκσκαφείς Μεσαίας Κατηγορίας", "weight": "5555 kg", "price": 62000, "info": "5555 kg - Καμπίνα, Υδραυλική Ταχυσύνδεση"},
+    "RTV-X900": {"cat": "Επαγγελματικά Οχήματα", "series": "Σειρά RTV", "hp": 21.6, "price": 22000, "info": "21.6 HP - Πετρελαιοκινητήρας, 4x4, Καρότσα ανατρεπόμενη"},
+    "RTV-X1110": {"cat": "Επαγγελματικά Οχήματα", "series": "Σειρά RTV", "hp": 24.8, "price": 26500, "info": "24.8 HP - Υδροστατικό σύστημα, Καμπίνα & Θέρμανση"},
+
+    # --- Μανέζ Λοζάνο (Manez Lozano) - Ψεκαστικά & Παρελκόμενα ---
+    "NTW10S/4": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S4-S5", "price": 15400, "info": "Ψεκαστικό NARROW TW S4-S5 — Φτερωτή Ø 820 — 1000 λίτρα"},
+    "NTW15S/5": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S4-S5", "price": 17700, "info": "Ψεκαστικό NARROW TW S4-S5 — Φτερωτή Ø 920 — 1500 λίτρα"},
+    "NTW20S/5": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S4-S5", "price": 18600, "info": "Ψεκαστικό NARROW TW S4-S5 — Φτερωτή Ø 920 — 2000 λίτρα"},
+    "NTW30S/5": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S4-S5", "price": 21900, "info": "Ψεκαστικό NARROW TW S4-S5 — Φτερωτή Ø 920 — 3000 λίτρα"},
     
-    # --- Χωματουργικά ---
-    "K008-5 VHG": {"cat": "Χωματουργικό", "series": "Εκσκαφείς", "weight": "975 kg", "price": 15700, "info": "Βασική Αξία Εκσκαφέα 975 kg"},
-    "U10-5 VHG": {"cat": "Χωματουργικό", "series": "Εκσκαφείς", "weight": "1050 kg", "price": 17600, "info": "Βασική Αξία Εκσκαφέα 1050 kg"},
-    "U27-4 HGL": {"cat": "Χωματουργικό", "series": "Εκσκαφείς", "weight": "2490 kg", "price": 32800, "info": "Σκέπαστρο 2490 kg"}
+    "NTW15S/6": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6", "price": 18600, "info": "Ψεκαστικό NARROW TW S6 (NORMAL) — Φτερωτή Ø 920 — 1500 λίτρα"},
+    "NTW20S/6": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6", "price": 19600, "info": "Ψεκαστικό NARROW TW S6 (NORMAL) — Φτερωτή Ø 920 — 2000 λίτρα"},
+    "NTW30S/6": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6", "price": 22800, "info": "Ψεκαστικό NARROW TW S6 (NORMAL) — Φτερωτή Ø 920 — 3000 λίτρα"},
+    "NTW15S/6TOP": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6 TOP", "price": 20500, "info": "Ψεκαστικό NARROW TW S6 (TOP MANUAL) — Φτερωτή Ø 920 — 1500 λίτρα"},
+    "NTW20S/6TOP": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6 TOP", "price": 21300, "info": "Ψεκαστικό NARROW TW S6 (TOP MANUAL) — Φτερωτή Ø 920 — 2000 λίτρα"},
+    "NTW30S/6TOP": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6 TOP", "price": 24600, "info": "Ψεκαστικό NARROW TW S6 (TOP MANUAL) — Φτερωτή Ø 920 — 3000 λίτρα"},
+    "NTW15S/6TOPH": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6 TOPH", "price": 21200, "info": "Ψεκαστικό NARROW TW S6 (TOP ΥΔΡΑΥΛΙΚΟ) — Φτερωτή Ø 920 — 1500 λίτρα"},
+    "NTW20S/6TOPH": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6 TOPH", "price": 22000, "info": "Ψεκαστικό NARROW TW S6 (TOP ΥΔΡΑΥΛΙΚΟ) — Φτερωτή Ø 920 — 2000 λίτρα"},
+    "NTW30S/6TOPH": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S6 TOPH", "price": 25300, "info": "Ψεκαστικό NARROW TW S6 (TOP ΥΔΡΑΥΛΙΚΟ) — Φτερωτή Ø 920 — 3000 λίτρα"},
+
+    "NTWESP08": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW ESPALDERA", "price": 16400, "info": "Ψεκαστικό ESPALDERA — Φτερωτή Ø 720 — 1000 λίτρα"},
+    "NTWESP10": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW ESPALDERA", "price": 16700, "info": "Ψεκαστικό ESPALDERA — Φτερωτή Ø 820 — 1000 λίτρα"},
+    "NTWESP15": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW ESPALDERA", "price": 18600, "info": "Ψεκαστικό ESPALDERA — Φτερωτή Ø 820 — 1500 λίτρα"},
+    "NTWESP20": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW ESPALDERA", "price": 19500, "info": "Ψεκαστικό ESPALDERA — Φτερωτή Ø 820 — 2000 λίτρα"},
+    "NTWESP30": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW ESPALDERA", "price": 22800, "info": "Ψεκαστικό ESPALDERA — Φτερωτή Ø 820 — 3000 λίτρα"},
+    "NTWESP209": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW ESPALDERA", "price": 20800, "info": "Ψεκαστικό ESPALDERA — Φτερωτή Ø 920 — 2000 λίτρα"},
+    "NTWESP309": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW ESPALDERA", "price": 24000, "info": "Ψεκαστικό ESPALDERA — Φτερωτή Ø 920 — 3000 λίτρα"},
+
+    "NTWMOON10": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW MOON", "price": 15700, "info": "Ψεκαστικό MOON — Φτερωτή Ø 820 — 1000 λίτρα"},
+    "NTWMOON15": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW MOON", "price": 17100, "info": "Ψεκαστικό MOON — Φτερωτή Ø 820 — 1500 λίτρα"},
+    "NTWMOON20/8": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW MOON", "price": 18000, "info": "Ψεκαστικό MOON — Φτερωτή Ø 820 — 2000 λίτρα"},
+    "NTWMOON20": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW MOON", "price": 19700, "info": "Ψεκαστικό MOON — Φτερωτή Ø 920 — 2000 λίτρα"},
+    "NTWMOON30": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW MOON", "price": 21700, "info": "Ψεκαστικό MOON — Φτερωτή Ø 920 — 3000 λίτρα"},
+
+    "NTWTOWER20": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW TOWER DF", "price": 15700, "info": "Ψεκαστικό TOWER DF — Φτερωτή 2 X 720 — 2000 λίτρα"},
+    "NTWTOWER30": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW TOWER DF", "price": 17100, "info": "Ψεκαστικό TOWER DF — Φτερωτή 2 X 720 — 3000 λίτρα"},
+    "NTWTOWER20-S8": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S8", "price": 35600, "info": "Ψεκαστικό S8 — Φτερωτή Ø 920 — 2000 λίτρα"},
+
+    # Παρελκόμενα & Αξεσουάρ Manez Lozano
+    "RANT720": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 390, "info": "Πλέγμα προστασίας από D720"},
+    "RANT820": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 440, "info": "Πλέγμα προστασίας από D820"},
+    "RANT920": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 500, "info": "Πλέγμα προστασίας από D920"},
+    "FANTHO": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 180, "info": "Προστατευτικό φτερωτής (φύλλα)"},
+    "PTWS/5": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 270, "info": "Προστατευτικά ακροφυσίων TW S5"},
+    "PTWS/6": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 270, "info": "Προστατευτικά ακροφυσίων TW S6"},
+    "PTWMOON": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 290, "info": "Προστατευτικά ακροφυσίων TW Moon"},
+    "LARTREP": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 870, "info": "Σπαστή κοτσάνδουρα (1000-2000λ)"},
+    "LARTREG": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 1100, "info": "Σπαστή κοτσάνδουρα (3000-4000λ)"},
+    "LARTRAEP": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 870, "info": "Σπαστή κοτσάνδουρα με δαχτυλίδι (1000-2000λ)"},
+    "LARTRAEG": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 1100, "info": "Σπαστή κοτσάνδουρα με δαχτυλίδι (3000-4000λ)"},
+    "ADAPEA": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 350, "info": "Εξάρτημα / σύνδεσμος κοτσάνδουρας"},
+    "LARTVEP": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 980, "info": "Σπαστό τιμόνι στα μπράτσα του ελκυστήρα (1000-2000λ)"},
+    "LARTVEG": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 1210, "info": "Σπαστό τιμόνι στα μπράτσα του ελκυστήρα (3000-4000λ)"},
+    "LFA+ET": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 870, "info": "Τρίγωνο σύνδεσης 3ων σημείων ελκυστήρα"},
+    "DR261080": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 390, "info": "Χαμήλωμα με 26\"x12-12 (από 10.80/12)"},
+    "DR261075": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 390, "info": "Χαμήλωμα με 26\"x12-12 (από 10.75/15)"},
+    "DR341075": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 500, "info": "Ελαστικά 34/55-16\""},
+    "DR111075": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 390, "info": "Ελαστικά 11.580/11 αντί για 10.75/15"},
+    "DR4001075": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 650, "info": "Ελαστικά 400/60-15.5\""},
+    "PARLIGHT": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 330, "info": "Προφυλακτήρας με φώτα"},
+    "CFLIGHT": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 590, "info": "Κουτί + Φώτα"},
+    "CVLIGHT": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 650, "info": "Κατασκευή για ESPALDERA για Κουτί & Φώτα"},
+    "KITFRENR": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 770, "info": "Υδραυλικά φρένα με ρυθμιστική βαλβίδα"},
+    "PMFRUTEP": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 650, "info": "Προμίξερ 1500-2000λ"},
+    "PMFRUTEG": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 770, "info": "Προμίξερ 3000λ"},
+    "SUSPBPAR": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 770, "info": "Ανάρτηση με σούστα"},
+    "KITVALRP": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 590, "info": "Κιτ ηλεκτροβαλβίδα ρύθμισης πίεσης (ρύθμιση μέσα από την καμπίνα)"},
+    "KON/OFF2+FLOW": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 1270, "info": "2-περιοχών ON-OFF ηλ.χειριστήριο με ροόμετρο"},
+    "KON/OFF4+FLOW": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 1500, "info": "4-περιοχών ON-OFF ηλ.χειριστήριο με ροόμετρο"},
+    "KITRONIC": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 2540, "info": "TRONIC-Ογκομετρικό χειριστήριο"},
+    "KITSIST": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 2190, "info": "SITOMATIC χειριστήριο χωρίς ροόμετρο"},
+    "FLOWMET": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 530, "info": "Ανοξείδωτο ροόμετρο (για SISTROMATIC)"},
+    "4.0SCSTT": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 3690, "info": "SISTRONIC για λίτρα/στρέμμα"},
+    "4.0SCSTTS": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 4610, "info": "SISTRONIC για λίτρα/στρέμμα + ανίχνευση κόμης (σόναρ)"},
+    "4.0SCSTTISO": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 5190, "info": "SISTRONIC λίτρα/στρέμμα + ISOBUS"},
+    "4.0SCSTTISO+S": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 6110, "info": "SISTRONIC λίτρα/στρέμμα + ISOBUS + Σόναρ"},
+    "ABRBG": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": -580, "info": "Αλλαγή αντλίας από ML-A1-EP σε ML-A (χωρίς μειωτήρα)"},
+    "ABRBP": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": -980, "info": "Αλλαγή αντλίας από ML-A1-EP σε ML-D"}
 }
 
-# Συνάρτηση αυτόματης μετάφρασης
+# Συνάρτηση αυτόματης μετάφρασης χαρακτηριστικών και σειρών στα Αγγλικά
 def translate_info(text, is_en):
     if not is_en:
         return text
@@ -72,6 +138,9 @@ def translate_info(text, is_en):
         "Βασική Αξία Εκσκαφέα 975 kg": "Basic Excavator Value 975 kg",
         "Βασική Αξία Εκσκαφέα 1050 kg": "Basic Excavator Value 1050 kg",
         "Σκέπαστρο 2490 kg": "Canopy 2490 kg",
+        "Καμπίνα, Υδραυλική Ταχυσύνδεση": "Cabin, Hydraulic Quick Coupler",
+        "Πετρελαιοκινητήρας, 4x4, Καρότσα ανατρεπόμενη": "Diesel engine, 4x4, Hydraulic dump bed",
+        "Υδροστατικό σύστημα, Καμπίνα & Θέρμανση": "Hydrostatic system, Cabin & Heater",
         "Σειρά B1 - Stage V": "B1 Series - Stage V",
         "Σειρά B2 - Stage V": "B2 Series - Stage V",
         "Σειρά LX - Stage V": "LX Series - Stage V",
@@ -79,14 +148,18 @@ def translate_info(text, is_en):
         "Σειρά M5002-NARROW - Stage V": "M5002-NARROW Series - Stage V",
         "Σειρά M4003 - Stage V": "M4003 Series - Stage V",
         "Σειρά M5002 - Stage V": "M5002 Series - Stage V",
-        "Εκσκαφείς": "Excavators"
+        "Σειρά M6 - Stage V": "M6 Series - Stage V",
+        "Μικροί Εκσκαφείς": "Mini Excavators",
+        "Εκσκαφείς Μεσαίας Κατηγορίας": "Mid-Size Excavators",
+        "Σειρά RTV": "RTV Series",
+        "Παρελκόμενα & Αξεσουάρ": "Accessories & Options"
     }
     
     for gr_term, en_term in translations_map.items():
         text = text.replace(gr_term, en_term)
     return text
 
-# Καταχώρηση Γραμματοσειρών
+# Καταχώρηση Γραμματοσειρών με υποστήριξη πεζών/κεφαλαίων για Streamlit Cloud
 def register_fonts():
     registered = pdfmetrics.getRegisteredFontNames()
 
@@ -126,21 +199,18 @@ def register_fonts():
                 pdfmetrics.registerFont(TTFont('WinVerdana', 'C:/Windows/Fonts/verdana.ttf'))
                 pdfmetrics.registerFont(TTFont('WinVerdana-Bold', 'C:/Windows/Fonts/verdanab.ttf'))
 
-# Επιλογή κατάλληλης γραμματοσειράς βάσει εταιρείας
+# Επιλογή γραμματοσειράς βάσει εταιρείας
 def get_company_fonts(company):
     register_fonts()
     registered = pdfmetrics.getRegisteredFontNames()
     
     if company in ["Πετρόπουλος", "Petropoulos"]:
-        # Times New Roman
         reg = 'WinTimes' if 'WinTimes' in registered else 'WinArial'
         bld = 'WinTimes-Bold' if 'WinTimes-Bold' in registered else 'WinArial-Bold'
     elif company in ["Φίλης", "Filis"]:
-        # Arial
         reg = 'WinArial' if 'WinArial' in registered else 'WinTimes'
         bld = 'WinArial-Bold' if 'WinArial-Bold' in registered else 'WinTimes-Bold'
     else:
-        # Κάμπος (Verdana / Tahoma)
         reg = 'WinVerdana' if 'WinVerdana' in registered else ('WinArial' if 'WinArial' in registered else 'WinTimes')
         bld = 'WinVerdana-Bold' if 'WinVerdana-Bold' in registered else ('WinArial-Bold' if 'WinArial-Bold' in registered else 'WinTimes-Bold')
         
@@ -152,7 +222,6 @@ if "cart" not in st.session_state:
 def generate_pdf_bytes(client_data, cart_items, company, is_english):
     pdf_filename = "temp_profora.pdf"
     
-    # Λήψη γραμματοσειράς βάσει εταιρείας
     font_reg, font_bld = get_company_fonts(company)
 
     c = canvas.Canvas(pdf_filename, pagesize=letter)
@@ -168,10 +237,9 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
         if os.path.exists(logo_path):
             c.drawImage(logo_path, width - 180, height - 70, width=130, height=45, preserveAspectRatio=True, mask='auto')
 
-    # Επικεφαλίδα Εταιρείας
+    # Επικεφαλίδα Εταιρείας (Χωρίς τη λέξη "ΕΤΑΙΡΕΙΑ:")
     c.setFont(font_bld, 16)
-    comp_label = comp_display
-    c.drawString(50, height - 50, comp_label)
+    c.drawString(50, height - 50, comp_display)
     
     c.setFont(font_reg, 10)
     dept_label = "Agricultural & Construction Machinery Department" if is_english else "Τμήμα Γεωργικών & Χωματουργικών Μηχανημάτων Kubota"
@@ -217,12 +285,33 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
     for idx, item in enumerate(cart_items, 1):
         translated_info = translate_info(item['info'], is_english)
         if is_english:
-            noun = "KUBOTA tractor" if item["cat"] == "Τρακτέρ" else "KUBOTA excavator"
+            if item["cat"] == "Τρακτέρ":
+                noun = "KUBOTA tractor"
+                cat_display = "Tractor"
+            elif item["cat"] == "Χωματουργικό":
+                noun = "KUBOTA excavator"
+                cat_display = "Excavator"
+            elif item["cat"] == "Επαγγελματικά Οχήματα":
+                noun = "KUBOTA utility vehicle"
+                cat_display = "Utility Vehicle"
+            else:
+                noun = "MANEZ LOZANO equipment"
+                cat_display = "Manez Lozano"
             desc_text = f"A brand new and unused {noun} ({translated_info})"
-            cat_display = "Tractor" if item["cat"] == "Τρακτέρ" else "Excavator"
         else:
-            noun = "ελκυστήρα KUBOTA" if item["cat"] == "Τρακτέρ" else "εκσκαφέα KUBOTA"
-            desc_text = f"Ένα καινούριο και αμεταχειριστό {noun} ({translated_info})"
+            if item["cat"] == "Τρακτέρ":
+                noun = "ελκυστήρα KUBOTA"
+            elif item["cat"] == "Χωματουργικό":
+                noun = "εκσκαφέα KUBOTA"
+            elif item["cat"] == "Επαγγελματικά Οχήματα":
+                noun = "επαγγελματικού οχήματος KUBOTA"
+            else:
+                noun = "εξοπλισμού MANEZ LOZANO"
+            
+            if item['series'] == "Παρελκόμενα & Αξεσουάρ":
+                desc_text = f"Παρελκόμενο / Εξάρτημα MANEZ LOZANO: {translated_info}"
+            else:
+                desc_text = f"Ένα καινούριο και αμεταχειριστό {noun} ({translated_info})"
             cat_display = item["cat"]
         
         y -= 20
@@ -268,7 +357,7 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
     return pdf_data
 
 # ΕΜΦΑΝΙΣΗ ΣΤΟ UI
-st.title("🚜 " + ("Kubota Quotation System" if is_english else "Σύστημα Προσφορών Kubota"))
+st.title("🚜 " + ("Kubota & Manez Lozano Quotation System" if is_english else "Σύστημα Προσφορών Kubota & Manez Lozano"))
 st.markdown("Create commercial quotes easily!" if is_english else "Δημιουργήστε οικονομικές προσφορές εύκολα από το PC ή το κινητό σας!")
 
 # 1. Στοιχεία Πελάτη
@@ -293,13 +382,18 @@ with st.expander("👤 " + ("1. Client Details (All Mandatory)" if is_english el
 with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english else "2. Επιλογή Προϊόντος & Χαρακτηριστικά"), expanded=True):
     raw_categories = sorted(list(set(item["cat"] for item in database.values())))
     if is_english:
-        categories = ["Tractor" if c == "Τρακτέρ" else "Excavator" for c in raw_categories]
+        cat_map = {"Τρακτέρ": "Tractor", "Χωματουργικό": "Excavator", "Επαγγελματικά Οχήματα": "Utility Vehicles", "Μανέζ Λοζάνο": "Manez Lozano"}
+        categories = [cat_map.get(c, c) for c in raw_categories]
     else:
         categories = raw_categories
         
     selected_cat_ui = st.selectbox("Category / Κατηγορία", categories)
     
-    selected_cat = "Τρακτέρ" if (is_english and selected_cat_ui == "Tractor") or (not is_english and selected_cat_ui == "Τρακτέρ") else "Χωματουργικό"
+    if is_english:
+        inv_cat_map = {"Tractor": "Τρακτέρ", "Excavator": "Χωματουργικό", "Utility Vehicles": "Επαγγελματικά Οχήματα", "Manez Lozano": "Μανέζ Λοζάνο"}
+        selected_cat = inv_cat_map.get(selected_cat_ui, selected_cat_ui)
+    else:
+        selected_cat = selected_cat_ui
     
     series_list = sorted(list(set(item["series"] for item in database.values() if item["cat"] == selected_cat)))
     if is_english:
@@ -326,6 +420,7 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
             st.session_state.cart.append({
                 "model": selected_model,
                 "cat": current_item["cat"],
+                "series": current_item["series"],
                 "price": current_item["price"],
                 "info": current_item["info"]
             })
@@ -337,7 +432,11 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
 with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Επιλεγμένα Είδη Προσφοράς"), expanded=True):
     if st.session_state.cart:
         for idx, cart_item in enumerate(st.session_state.cart):
-            display_cat = "Tractor" if (is_english and cart_item['cat'] == "Τρακτέρ") else ("Excavator" if is_english else cart_item['cat'])
+            if is_english:
+                display_cat = "Tractor" if cart_item['cat'] == "Τρακτέρ" else ("Excavator" if cart_item['cat'] == "Χωματουργικό" else ("Utility Vehicle" if cart_item['cat'] == "Επαγγελματικά Οχήματα" else "Manez Lozano"))
+            else:
+                display_cat = cart_item['cat']
+                
             col_a, col_b = st.columns([4, 1])
             with col_a:
                 st.write(f"**{idx+1}. {display_cat} | {cart_item['model']}** — {cart_item['price']:,.2f} EUR")
@@ -388,3 +487,4 @@ if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιου�
             mime="application/pdf",
             use_container_width=True
         )
+        
