@@ -13,7 +13,7 @@ st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_i
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΠΛΗΡΗΣ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (Kubota + Manez Lozano + Niubo)
+# ΠΛΗΡΗΣ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (Kubota + Manez Lozano + Niubo + ID David)
 database = {
     # --- Κουμπότα (Τρακτέρ & Χωματουργικά) ---
     "B1181D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 17, "price": 14500, "info": "17 HP - Σειρά B1"},
@@ -120,28 +120,23 @@ database = {
     "TLG160": {"cat": "Νιούμπο", "series": "LIGHT", "price": 4300, "info": "Καταστροφέας LIGHT 1600mm — 370kg — 30-40 Hp"},
     "TLG180": {"cat": "Νιούμπο", "series": "LIGHT", "price": 4400, "info": "Καταστροφέας LIGHT 1800mm — 390kg — 35-50 Hp"},
     "NIUBO_HYD_LIGHT": {"cat": "Νιούμπο", "series": "LIGHT (Έξτρα)", "price": 310, "info": "Υδραυλική Μετατόπιση (για LIGHT)"},
-
     "TGD130": {"cat": "Νιούμπο", "series": "GLIDER (Ημιβαρέου Τύπου Σταθερός)", "price": 5100, "info": "Καταστροφέας GLIDER 1300mm — 420kg — 28-38 Hp"},
     "TGD160": {"cat": "Νιούμπο", "series": "GLIDER (Ημιβαρέου Τύπου Σταθερός)", "price": 5300, "info": "Καταστροφέας GLIDER 1600mm — 450kg — 48-58 Hp"},
     "TGD180": {"cat": "Νιούμπο", "series": "GLIDER (Ημιβαρέου Τύπου Σταθερός)", "price": 5500, "info": "Καταστροφέας GLIDER 1800mm — 480kg — 50-60 Hp"},
     "TGD200": {"cat": "Νιούμπο", "series": "GLIDER (Ημιβαρέου Τύπου Σταθερός)", "price": 5700, "info": "Καταστροφέας GLIDER 2000mm — 510kg — 55-65 Hp"},
     "NIUBO_HYD_GLIDER": {"cat": "Νιούμπο", "series": "GLIDER (Έξτρα)", "price": 260, "info": "Υδραυλική Μετατόπιση (για GLIDER)"},
-
     "TSP150": {"cat": "Νιούμπο", "series": "SPEED (Βαρέου Τύπου Σταθερός)", "price": 5550, "info": "Καταστροφέας SPEED 1500mm — 530kg — 38-48 Hp — Υδραυλική μετατόπιση STANDART"},
     "TSP180": {"cat": "Νιούμπο", "series": "SPEED (Βαρέου Τύπου Σταθερός)", "price": 5780, "info": "Καταστροφέας SPEED 1800mm — 600kg — 55-68 Hp — Υδραυλική μετατόπιση STANDART"},
     "TSP200": {"cat": "Νιούμπο", "series": "SPEED (Βαρέου Τύπου Σταθερός)", "price": 5890, "info": "Καταστροφέας SPEED 2000mm — 655kg — 65-70 Hp — Υδραυλική μετατόπιση STANDART"},
     "TSP220": {"cat": "Νιούμπο", "series": "SPEED (Βαρέου Τύπου Σταθερός)", "price": 6220, "info": "Καταστροφέας SPEED 2200mm — 705kg — 75-85 Hp — Υδραυλική μετατόπιση STANDART"},
-
     "TSPR150": {"cat": "Νιούμπο", "series": "SPEED REVERS (Βαρέου Τύπου Σταθερός)", "price": 6200, "info": "Καταστροφέας SPEED REVERS 1500mm — 530kg — 38-48 Hp"},
     "TSPR180": {"cat": "Νιούμπο", "series": "SPEED REVERS (Βαρέου Τύπου Σταθερός)", "price": 6430, "info": "Καταστροφέας SPEED REVERS 1800mm — 600kg — 55-68 Hp"},
     "TSPR200": {"cat": "Νιούμπο", "series": "SPEED REVERS (Βαρέου Τύπου Σταθερός)", "price": 6540, "info": "Καταστροφέας SPEED REVERS 2000mm — 655kg — 65-70 Hp"},
     "TSPR220": {"cat": "Νιούμπο", "series": "SPEED REVERS (Βαρέου Τύπου Σταθερός)", "price": 6870, "info": "Καταστροφέας SPEED REVERS 2200mm — 705kg — 75-85 Hp"},
     "NIUBO_TSR_SPEED": {"cat": "Νιούμπο", "series": "SPEED / SPEED REVERS (Έξτρα)", "price": 650, "info": "Διπλή Ζεύξη (TSR +40kg)"},
-
     "TDP140": {"cat": "Νιούμπο", "series": "DRAGON PLUS", "price": 5800, "info": "Καταστροφέας DRAGON PLUS 1400mm — 525kg — 40-60 Hp — Υδραυλική μετατόπιση & πόρτα με διπλή μπουκάλα"},
     "TDP160": {"cat": "Νιούμπο", "series": "DRAGON PLUS", "price": 6000, "info": "Καταστροφέας DRAGON PLUS 1600mm — 550kg — 40-60 Hp — Υδραυλική μετατόπιση & πόρτα με διπλή μπουκάλα"},
     "TDP180": {"cat": "Νιούμπο", "series": "DRAGON PLUS", "price": 6200, "info": "Καταστροφέας DRAGON PLUS 1800mm — 575kg — 40-60 Hp — Υδραυλική μετατόπιση & πόρτα με διπλή μπουκάλα"},
-
     "TKM130": {"cat": "Νιούμπο", "series": "KOMPACT (Βαρέου Τύπου Υδραυλικός Χαμηλός 49cm)", "price": 7800, "info": "Καταστροφέας KOMPACT 1300mm — 530kg — 38-48 Hp"},
     "TKM150": {"cat": "Νιούμπο", "series": "KOMPACT (Βαρέου Τύπου Υδραυλικός Χαμηλός 49cm)", "price": 7900, "info": "Καταστροφέας KOMPACT 1500mm — 570kg — 48-58 Hp"},
     "TKM160": {"cat": "Νιούμπο", "series": "KOMPACT (Βαρέου Τύπου Υδραυλικός Χαμηλός 49cm)", "price": 7950, "info": "Καταστροφέας KOMPACT 1600mm — 605kg — 55-68 Hp"},
@@ -150,20 +145,53 @@ database = {
     "TKM220": {"cat": "Νιούμπο", "series": "KOMPACT (Βαρέου Τύπου Υδραυλικός Χαμηλός 49cm)", "price": 8700, "info": "Καταστροφέας KOMPACT 2200mm — 745kg — 85-90 Hp"},
     "TKM250": {"cat": "Νιούμπο", "series": "KOMPACT (Βαρέου Τύπου Υδραυλικός Χαμηλός 49cm)", "price": 8900, "info": "Καταστροφέας KOMPACT 2500mm — 830kg — 90-95 Hp"},
     "NIUBO_KOMPACT_DOOR": {"cat": "Νιούμπο", "series": "KOMPACT (Έξτρα)", "price": 750, "info": "Υδραυλική Ανοιγόμενη Πίσω Πόρτα"},
-
     "TXM150": {"cat": "Νιούμπο", "series": "MAX FRUIT", "price": 15200, "info": "Καταστροφέας MAX FRUIT 1460mm — 960kg — 70-100 Hp"},
     "TXM175": {"cat": "Νιούμπο", "series": "MAX FRUIT", "price": 15900, "info": "Καταστροφέας MAX FRUIT 1730mm — 1070kg — 90-100 Hp"},
     "TXM200": {"cat": "Νιούμπο", "series": "MAX FRUIT", "price": 16600, "info": "Καταστροφέας MAX FRUIT 2000mm — 1180kg — 90-110 Hp"},
     "NIUBO_MAXFRUIT_DOUBLE": {"cat": "Νιούμπο", "series": "MAX FRUIT (Έξτρα)", "price": 1980, "info": "Διπλή Ζεύξη 540"},
     "NIUBO_MAXFRUIT_LIFT": {"cat": "Νιούμπο", "series": "MAX FRUIT (Έξτρα)", "price": 1320, "info": "Ακτίνες Ανύψωσης"},
-
     "TJE160": {"cat": "Νιούμπο", "series": "JOLLY-E (Εξωτερικό Group)", "price": 8850, "info": "Καταστροφέας JOLLY-E 1600mm — 615kg — 40-90 Hp"},
     "TJE180": {"cat": "Νιούμπο", "series": "JOLLY-E (Εξωτερικό Group)", "price": 8960, "info": "Καταστροφέας JOLLY-E 1800mm — 645kg — 40-90 Hp"},
     "TJE200": {"cat": "Νιούμπο", "series": "JOLLY-E (Εξωτερικό Group)", "price": 9630, "info": "Καταστροφέας JOLLY-E 2000mm — 675kg — 50-100 Hp"},
     "NIUBO_JOLLY_VALVE": {"cat": "Νιούμπο", "series": "JOLLY-E (Προαιρετικός Εξοπλισμός)", "price": 380, "info": "Βαλβίδα Ασφαλείας"},
     "NIUBO_JOLLY_SHAFT1": {"cat": "Νιούμπο", "series": "JOLLY-E (Προαιρετικός Εξοπλισμός)", "price": 800, "info": "Ομοκινητικός Άξονας Μεγάλης Γωνίας"},
     "NIUBO_JOLLY_SHAFT2": {"cat": "Νιούμπο", "series": "JOLLY-E (Προαιρετικός Εξοπλισμός)", "price": 1220, "info": "Ομοκινητικός Άξονας Διπλής Μεγάλης Γωνίας"},
-    "NIUBO_JOLLY_CTRL": {"cat": "Νιούμπο", "series": "JOLLY-E (Προαιρετικός Εξοπλισμός)", "price": 1350, "info": "Ηλεκτρικό Χειριστήριο 2 Κινήσεων"}
+    "NIUBO_JOLLY_CTRL": {"cat": "Νιούμπο", "series": "JOLLY-E (Προαιρετικός Εξοπλισμός)", "price": 1350, "info": "Ηλεκτρικό Χειριστήριο 2 Κινήσεων"},
+
+    # --- Κοπροδιανομείς ID DAVID (SURFEED / ECOFEED) ---
+    "DES-2525-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED (Direct to Tractor)", "price": 13700, "info": "Κοπροδιανομέας SURFEED 2.5m³ — Πλάτος 1.46m — 40 HP"},
+    "DES-4535-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED (Direct to Tractor)", "price": 15200, "info": "Κοπροδιανομέας SURFEED 3.5m³ — Πλάτος 1.50m — 50 HP"},
+    "DES-5540-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED (Direct to Tractor)", "price": 16800, "info": "Κοπροδιανομέας SURFEED 4.0m³ — Πλάτος 1.80m — 55 HP"},
+    "DES-7560-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED (Direct to Tractor)", "price": 21800, "info": "Κοπροδιανομέας SURFEED 6.0m³ — Πλάτος 2.04m — 75 HP"},
+    "DES-8580-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED (Direct to Tractor)", "price": 24650, "info": "Κοπροδιανομέας SURFEED 8.0m³ — Πλάτος 2.09m — 85 HP"},
+    "DES-100100-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED (Direct to Tractor)", "price": 32000, "info": "Κοπροδιανομέας SURFEED 10.0m³ — Πλάτος 2.09m — 100 HP"},
+    "DES-130130-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED (Direct to Tractor)", "price": 36700, "info": "Κοπροδιανομέας SURFEED 13.0m³ — Πλάτος 2.46m — 130 HP"},
+
+    # Επιλογές Χειριστηρίων & Έξτρα Κοπροδιανομέων ID DAVID
+    "ID_CABIN_E": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 700, "info": "Electric Cabin Χειριστήριο (+700€)"},
+    "ID_TOUCHSCREEN": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1500, "info": "Touchscreen Οθόνη Αφής 7\" με υπολογιστή επεξεργασίας δεδομένων (+1500€)"},
+    "ID_NARROW_VER": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 0, "info": "Στρογγυλή \"Στενή\" Έκδοση (-18% χωρητικότητα)"},
+    "ID_SONAR": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1650, "info": "Σόναρ ανίχνευσης δέντρων"},
+    "ID_SHREDDER": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 2400, "info": "Τεμαχιστής κοπριάς"},
+    "ID_CAMERA_DISP": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1000, "info": "Κάμερα & Οθόνη 7\" (για απλή έκδοση)"},
+    "ID_ANALOG_VALVE": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1500, "info": "Κιτ Ρυθμ. βαλβίδας αναλογικές ρυθμίσεις"},
+    "ID_CAMERA": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 560, "info": "Κάμερα"},
+    "ID_HITCH_EXT": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 380, "info": "Εξάρτημα / Μάτι Κοτσαδούρας"},
+
+    # Εξαρτήματα Επιφανειακής Χρήσης (SURFEED & ECOFEED)
+    "ID_DISC_GREENHOUSE": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 4800, "info": "Δίσκος με άξονα για θερμοκήπια (Για 2.5m³ — Ø900 mm)"},
+    "ID_DISC_NO_AXLE_1": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 6850, "info": "Δίσκος χωρίς άξονα (Από 3.5 έως 4m³ — Ø1100 mm)"},
+    "ID_DISC_NO_AXLE_2": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 7200, "info": "Δίσκος χωρίς άξονα (Από 6 έως 8m³ — Ø1250 mm)"},
+    "ID_DISC_NO_AXLE_3": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 8100, "info": "Δίσκος χωρίς άξονα (Από 10m³ και άνω — Ø1500 mm)"},
+    "ID_SPECIAL_VINEYARD": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 5200, "info": "Ειδικό για αμπέλια (Ειδικό για λίπασμα ή πέλετ)"},
+    "ID_VIB_RAMP_TREES": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 6600, "info": "Με δονούμενη ράμπα (Για δέντρα)"},
+    "ID_SIMPLE_RAMP": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 900, "info": "Απλή ράμπα"},
+    "ID_RUBBER_RAMP": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 200, "info": "Ελαστική ράμπα"},
+    "ID_TAPE_DISC_700": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 2100, "info": "Δίσκος για ταινία Ø700"},
+    "ID_THROW_CYLINDER": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 1900, "info": "Κύλινδρος ρίψης"},
+    "ID_BELT_050M": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 6500, "info": "Ταινία μεταφοράς x = 0,50m"},
+    "ID_BELT_075M": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 6600, "info": "Ταινία μεταφοράς x = 0,75m"},
+    "ID_BELT_100M": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 7000, "info": "Ταινία μεταφοράς x = 1,00m"}
 }
 
 # Συνάρτηση αυτόματης μετάφρασης χαρακτηριστικών και σειρών στα Αγγλικά
@@ -193,7 +221,8 @@ def translate_info(text, is_en):
         "Μικροί Εκσκαφείς": "Mini Excavators",
         "Εκσκαφείς Μεσαίας Κατηγορίας": "Mid-Size Excavators",
         "Παρελκόμενα & Αξεσουάρ": "Accessories & Options",
-        "Νιούμπο": "Niubo"
+        "Νιούμπο": "Niubo",
+        "Κοπροδιανομείς ID DAVID": "ID DAVID Manure Spreaders"
     }
     
     for gr_term, en_term in translations_map.items():
@@ -335,9 +364,12 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
             elif item["cat"] == "Μανέζ Λοζάνο":
                 noun = "MANEZ LOZANO equipment"
                 cat_display = "Manez Lozano"
-            else:
+            elif item["cat"] == "Νιούμπο":
                 noun = "NIUBO equipment"
                 cat_display = "Niubo"
+            else:
+                noun = "ID DAVID manure spreader"
+                cat_display = "ID David"
             desc_text = f"A brand new and unused {noun} ({translated_info})"
         else:
             if item["cat"] == "Τρακτέρ":
@@ -346,10 +378,12 @@ def generate_pdf_bytes(client_data, cart_items, company, is_english):
                 noun = "εκσκαφέα KUBOTA"
             elif item["cat"] == "Μανέζ Λοζάνο":
                 noun = "εξοπλισμού MANEZ LOZANO"
-            else:
+            elif item["cat"] == "Νιούμπο":
                 noun = "μηχανήματος NIUBO"
+            else:
+                noun = "κοπροδιανομέα ID DAVID"
             
-            if "Έξτρα" in item['series'] or "Προαιρετικός" in item['series'] or item['series'] == "Παρελκόμενα & Αξεσουάρ":
+            if "Έξτρα" in item['series'] or "Προαιρετικός" in item['series'] or "Εξοπλισμός" in item['series'] or "Επιφανειακή" in item['series'] or item['series'] == "Παρελκόμενα & Αξεσουάρ":
                 desc_text = f"Εξάρτημα / Παρελκόμενο {item['cat']}: {translated_info}"
             else:
                 desc_text = f"Ένα καινούριο και αμεταχειριστό {noun} ({translated_info})"
@@ -423,7 +457,7 @@ with st.expander("👤 " + ("1. Client Details (All Mandatory)" if is_english el
 with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english else "2. Επιλογή Προϊόντος & Χαρακτηριστικά"), expanded=True):
     raw_categories = sorted(list(set(item["cat"] for item in database.values())))
     if is_english:
-        cat_map = {"Τρακτέρ": "Tractor", "Χωματουργικό": "Excavator", "Μανέζ Λοζάνο": "Manez Lozano", "Νιούμπο": "Niubo"}
+        cat_map = {"Τρακτέρ": "Tractor", "Χωματουργικό": "Excavator", "Μανέζ Λοζάνο": "Manez Lozano", "Νιούμπο": "Niubo", "Κοπροδιανομείς ID DAVID": "ID DAVID Manure Spreaders"}
         categories = [cat_map.get(c, c) for c in raw_categories]
     else:
         categories = raw_categories
@@ -431,7 +465,7 @@ with st.expander("⚙️ " + ("2. Product Selection & Features" if is_english el
     selected_cat_ui = st.selectbox("Category / Κατηγορία", categories)
     
     if is_english:
-        inv_cat_map = {"Tractor": "Τρακτέρ", "Excavator": "Χωματουργικό", "Manez Lozano": "Μανέζ Λοζάνο", "Niubo": "Νιούμπο"}
+        inv_cat_map = {"Tractor": "Τρακτέρ", "Excavator": "Χωματουργικό", "Manez Lozano": "Μανέζ Λοζάνο", "Niubo": "Νιούμπο", "ID DAVID Manure Spreaders": "Κοπροδιανομείς ID DAVID"}
         selected_cat = inv_cat_map.get(selected_cat_ui, selected_cat_ui)
     else:
         selected_cat = selected_cat_ui
@@ -474,7 +508,7 @@ with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Ε�
     if st.session_state.cart:
         for idx, cart_item in enumerate(st.session_state.cart):
             if is_english:
-                display_cat = "Tractor" if cart_item['cat'] == "Τρακτέρ" else ("Excavator" if cart_item['cat'] == "Χωματουργικό" else ("Manez Lozano" if cart_item['cat'] == "Μανέζ Λοζάνο" else "Niubo"))
+                display_cat = "Tractor" if cart_item['cat'] == "Τρακτέρ" else ("Excavator" if cart_item['cat'] == "Χωματουργικό" else ("Manez Lozano" if cart_item['cat'] == "Μανέζ Λοζάνο" else ("Niubo" if cart_item['cat'] == "Νιούμπο" else "ID David Spreader")))
             else:
                 display_cat = cart_item['cat']
                 
