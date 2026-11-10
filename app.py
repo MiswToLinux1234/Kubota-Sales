@@ -32,7 +32,7 @@ database = {
     "L2552DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 54, "price": 50000, "info": "54 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2552DHC με καμπίνα."},
     "L2622DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 62, "price": 58000, "info": "62 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2622DHC με καμπίνα."},
     "M5072N": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 74, "price": 57500, "info": "74 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072N."},
-    "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου M5092N36-EC με αψίδα προστασίας εγκεκριμένου τύπου. Διαθέτει διπλό διαφορικό, τετρακύλινδρο κινητήρα diesel κατηγορίας ρύπων φάση V, υδρόψυκτο, με ισχύ κινητήρα 94hp, σασμάν 6 ταχυτήτων με 3 ομάδες και Hi-Lo συνολικών ταχυτήτων 36/36 (εμπρός/πίσω). Ηλεκτρο-υδραυλική ρεβέρσα, ηλεκτρο-υδραυλική εμπλοκή μπροστινού διαφορικού και ηλεκτρο-υδραυλική ενεργοποίηση δυναμοδότη (PTO)."},
+    "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου M5092N36-EC με αψίδα προστασίας εγκεκριμένου τύπου. Διαθέτει διπλό διαφορικό, τετρακύλινδρο κινητήρα diesel κατηγορίας ρύπων φάση V, υδρόψυκτο, με ισχύ κινητήρα 94hp, σασμάν 6 ταχυτήτων με 3 ομάδες και Hi-Lo συνολικών ταχυτήτων 36/36 (εμπρός/πίσω). Ηλεκτρο-υδραυλική ρεβέρσα, ηλεκτρο-υδραυλική εμπλοκή μπροστινού διαφορικού και ηλεκτρο-υδραυλική ενεργοποίηση δυναμοδότη (PTO). 2 μνήμες στροφών και σύστημα σταθεροποίησης στροφών."},
     "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-112NQ-EC."},
     "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 DTH."},
     "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 DTH."},
@@ -194,6 +194,33 @@ database = {
     "ID_BELT_100M": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Επιφανειακή Χρήση", "price": 7000, "info": "Ταινία 1.00m", "desc": "Ταινία μεταφοράς x = 1,00m."}
 }
 
+# --- ΕΞΥΠΝΗ ΑΥΤΟΜΑΤΗ ΔΗΜΙΟΥΡΓΙΑ ΠΕΡΙΓΡΑΦΗΣ ΑΝΑ ΚΑΤΗΓΟΡΙΑ ---
+def generate_auto_description(model_key, item_data):
+    if "desc" in item_data and len(item_data["desc"]) > 60:
+        return item_data["desc"]
+
+    cat_name = item_data.get("cat", "Μηχάνημα")
+    series_name = item_data.get("series", "")
+    info_text = item_data.get("info", "")
+
+    if cat_name == "Τρακτέρ":
+        mach_desc = f"γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου {model_key}"
+    elif cat_name == "Χωματουργικό":
+        mach_desc = f"χωματουργικό μηχάνημα KUBOTA τύπου {model_key}"
+    elif cat_name == "Μανέζ Λοζάνο":
+        mach_desc = f"ψεκαστικό μηχάνημα Manez Lozano τύπου {model_key} ({info_text})"
+    elif cat_name == "Νιούμπο":
+        mach_desc = f"καταστροφέα Niubo τύπου {model_key} ({info_text})"
+    elif cat_name == "Κοπροδιανομείς ID DAVID":
+        mach_desc = f"κοπροδιανομέα ID DAVID τύπου {model_key} ({info_text})"
+    else:
+        mach_desc = f"μηχάνημα {model_key}"
+
+    text = f"Ένα καινούριο και αμεταχείριστο {mach_desc} με αψίδα προστασίας εγκεκριμένου τύπου. "
+    text += f"Διαθέτει βασικό εξοπλισμό σειράς {series_name} και τεχνικά χαρακτηριστικά: {info_text}."
+
+    return text
+
 def translate_info(text, is_en):
     if not is_en:
         return text
@@ -271,14 +298,20 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     
     comp_display = "Petropoulos" if (is_english and company == "Πετρόπουλος") else company
 
-    # Επικεφαλίδα & Λογότυπο (Αριστερά)
+    # Λογότυπο (Πετρόπουλος)
+    if company in ["Πετρόπουλος", "Petropoulos"]:
+        logo_path = "petropoulos_logo.jpeg"
+        if os.path.exists(logo_path):
+            c.drawImage(logo_path, width - 180, height - 70, width=130, height=45, preserveAspectRatio=True, mask='auto')
+
+    # Επικεφαλίδα (Αριστερά)
     c.setFont(font_bld, 14)
     c.drawString(50, height - 40, "ΠΕΤΡΟΣ ΠΕΤΡΟΠΟΥΛΟΣ ΑΕΒΕ" if not is_english else comp_display)
     
     c.setFont(font_reg, 9)
     c.drawString(50, height - 55, "Τμήμα Γεωργικών & Χωματουργικών Μηχανημάτων" if not is_english else "Machinery Department")
     
-    # Στοιχεία Επικοινωνίας / Πωλητή (Δεξιά)[cite: 2, 4]
+    # Στοιχεία Επικοινωνίας / Πωλητή (Δεξιά)
     c.drawRightString(width - 50, height - 40, "Τηλέφωνα : 210 - 3499333")
     c.drawRightString(width - 50, height - 55, f"E-mail : {seller_data['email']}")
     formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
@@ -288,7 +321,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     c.setLineWidth(1)
     c.line(50, height - 80, width - 50, height - 80)
     
-    # Στοιχεία Πελάτη[cite: 2]
+    # Στοιχεία Πελάτη
     c.setFont(font_bld, 11)
     c.drawString(50, height - 102, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:" if not is_english else "CLIENT DETAILS:")
     c.setFont(font_reg, 9)
@@ -306,7 +339,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     c.setLineWidth(0.5)
     c.line(50, y_client, width - 50, y_client)
     
-    # Τίτλος Προσφοράς[cite: 2]
+    # Τίτλος Προσφοράς
     y = y_client - 20
     c.setFont(font_bld, 12)
     c.drawCentredString(width / 2.0, y, "ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ" if not is_english else "COMMERCIAL OFFER")
@@ -320,7 +353,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     y -= 10
     total_net = 0
     
-    # Εκτύπωση ειδών με πλήρη περιγραφή[cite: 2]
+    # Εκτύπωση ειδών με πλήρη περιγραφή
     for idx, item in enumerate(cart_items, 1):
         y -= 16
         c.setFont(font_bld, 9)
@@ -337,7 +370,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
         total_net += item['price']
         y -= 8
 
-    # Προαιρετικός εξοπλισμός (αν υπάρχει)[cite: 3]
+    # Προαιρετικός εξοπλισμός (αν υπάρχει)
     if optional_equipment:
         y -= 12
         c.setFont(font_bld, 9)
@@ -351,7 +384,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     vat_amount = total_net * (vat_rate / 100.0)
     total_with_vat = total_net + vat_amount
 
-    # Πίνακας Οικονομικών Στοιχείων[cite: 3]
+    # Πίνακας Οικονομικών Στοιχείων
     y -= 28
     c.setStrokeColorRGB(0.2, 0.3, 0.5)
     c.setLineWidth(1)
@@ -367,17 +400,17 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     c.drawString(270, y - 18, f"{vat_amount:,.2f} €")
     c.drawString(440, y - 18, f"{total_with_vat:,.2f} €")
 
-    # Σημειώσεις κάτω από τον πίνακα[cite: 3]
+    # Σημειώσεις κάτω από τον πίνακα
     y -= 38
     c.setFont(font_reg, 8)
-    c.drawString(50, y, "• Ο γεωργικός ελκυστήρας διαθέτει ελληνική και ευρωπαϊκή έγκριση τύπου & καλύπτεται από εργοστασιακή εγγύηση ενός έτους.")
+    c.drawString(50, y, "• Ο εξοπλισμός διαθέτει ελληνική και ευρωπαϊκή έγκριση τύπου & καλύπτεται από εργοστασιακή εγγύηση ενός έτους.")
 
-    # Υπογραφή και Στοιχεία Πωλητή[cite: 4]
+    # Υπογραφή και Στοιχεία Πωλητή
     y -= 32
     c.setFont(font_bld, 9)
     c.drawString(50, y, f"{seller_data['name']} - {seller_data['title']}")
 
-    # Footer εταιρείας κάτω-κάτω[cite: 4]
+    # Footer εταιρείας κάτω-κάτω
     c.setStrokeColorRGB(0.7, 0.7, 0.7)
     c.setLineWidth(0.5)
     c.line(50, 42, width - 50, 42)
@@ -403,8 +436,8 @@ with st.sidebar:
     offer_date = st.date_input("Ημερομηνία Προσφοράς", value=datetime.today())
     vat_rate = st.selectbox("Ποσοστό ΦΠΑ (%)", [13, 24], index=0)
 
-# 2. Στοιχεία Πελάτη
-with st.expander("👤 1. Στοιχεία Πελάτη (Υποχρεωτικά Όλα)", expanded=True):
+# 2. Στοιχεία Πελάτη (ΚΕΝΑ για εύκολη συμπλήρωση)
+with st.expander("👤 1. Στοιχεία Πελάτη (Συμπληρώστε τα στοιχεία)", expanded=True):
     company_options = ["Πετρόπουλος", "Φίλης", "Κάμπος"]
     if is_english:
         company_ui = st.selectbox("Company / Εταιρεία", ["Petropoulos", "Filis", "Kampos"])
@@ -412,14 +445,14 @@ with st.expander("👤 1. Στοιχεία Πελάτη (Υποχρεωτικά 
     else:
         company = st.selectbox("Company / Εταιρεία", company_options)
 
-    client_name = st.text_input("Client Name / Όνομα Πελάτη", value="ΚΑΡΑΜΠΟΙΚΗΣ ΔΗΜΗΤΡΙΟΣ ΤΟΥ ΠΑΝΑΓΙΩΤΗ")
-    client_profession = st.text_input("Profession / Επάγγελμα", value="ΑΓΡΟΤΗΣ ΚΑΝΟΝΙΚΟΥ ΚΑΘΕΣΤΩΤΟΣ")
+    client_name = st.text_input("Client Name / Όνομα Πελάτη", value="")
+    client_profession = st.text_input("Profession / Επάγγελμα", value="")
     col1, col2 = st.columns(2)
     with col1:
-        client_afm = st.text_input("VAT No / ΑΦΜ", value="125589070")
+        client_afm = st.text_input("VAT No / ΑΦΜ", value="")
     with col2:
-        client_phone = st.text_input("Phone / Τηλέφωνο", value="6970000000")
-    client_address = st.text_input("Address / Διεύθυνση", value="ΞΥΛΟΚΑΙΡΑ ΗΛΕΙΑΣ")
+        client_phone = st.text_input("Phone / Τηλέφωνο", value="")
+    client_address = st.text_input("Address / Διεύθυνση", value="")
 
 # 3. Επιλογή Προϊόντος & Χαρακτηριστικά
 with st.expander("⚙️ 2. Επιλογή Προϊόντος & Χαρακτηριστικά", expanded=True):
@@ -452,9 +485,10 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος & Χαρακτηρ
     
     if selected_model:
         current_item = database[selected_model]
-        default_desc = current_item.get("desc", current_item["info"])
+        auto_desc = generate_auto_description(selected_model, current_item)
+        
         st.markdown(f"**{'Model Price' if is_english else 'Τιμή Μοντέλου'}:** :red[{current_item['price']:,.2f} EUR]")
-        custom_desc = st.text_area("Αναλυτική Περιγραφή Μηχανήματος στο PDF", value=default_desc)
+        custom_desc = st.text_area("Αναλυτική Περιγραφή Μηχανήματος στο PDF (Προσαρμόζεται αυτόματα)", value=auto_desc, height=120)
     else:
         custom_desc = ""
 
