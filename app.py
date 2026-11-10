@@ -13,9 +13,9 @@ st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_i
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (ΟΛΑ ΤΑ ΜΗΧΑΝΗΜΑΤΑ ΧΩΡΙΣ ΚΑΜΙΑ ΠΑΡΑΛΕΙΨΗ)
+# ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (ΟΛΑ ΤΑ ΜΗΧΑΝΗΜΑΤΑ)
 database = {
-    # --- 1. ΝΕΑ ΤΡΑΚΤΕΡ & ΟΧΗΜΑΤΑ (από τις φωτογραφίες σου) ---
+    # --- 1. ΝΕΑ ΤΡΑΚΤΕΡ & ΟΧΗΜΑΤΑ ---
     "B1181": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 17.00, "price": 14500, "info": "17.00 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1181."},
     "B1241": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 21.35, "price": 15500, "info": "21.35 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1241."},
     "B2261": {"cat": "Τρακτέρ", "series": "Σειρά B2 - T2a", "hp": 24.75, "price": 17500, "info": "24.75 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B2261."},
@@ -109,13 +109,13 @@ database = {
 
     # --- 6. ΚΟΠΡΟΔΙΑΝΟΜΕΙΣ ID DAVID ---
     "DES-2525-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 13700, "info": "Κοπροδιανομέας SURFEED 2.5m³", "desc": "Κοπροδιανομέας SURFEED 2.5m³ — Πλάτος 1.46m — 40 HP."},
-    "DES-4535-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 15200, "info": "Κοπροδιανομέας SURFEED 3.5m³", "desc": "Κοπροδιανομέας SURFEED 3.5m³ — Πλάτος 1.50m — 50 HP."},
+    "DES-4535-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 15200, "info": "Ψεκαστικό/Κοπροδιανομέας SURFEED 3.5m³", "desc": "Κοπροδιανομέας SURFEED 3.5m³ — Πλάτος 1.50m — 50 HP."},
     "DES-5540-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 16800, "info": "Κοπροδιανομέας SURFEED 4.0m³", "desc": "Κοπροδιανομέας SURFEED 4.0m³ — Πλάτος 1.80m — 55 HP."},
     "DES-7560-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 21800, "info": "Κοπροδιανομέας SURFEED 6.0m³", "desc": "Κοπροδιανομέας SURFEED 6.0m³ — Πλάτος 2.04m — 75 HP."},
     "ID_TOUCHSCREEN": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1500, "info": "Touchscreen 7\"", "desc": "Touchscreen Οθόνη Αφής 7\" με υπολογιστή επεξεργασίας δεδομένων."}
 }
 
-# --- ΕΞΥΠΝΗ ΑΥΤΟΜΑΤΗ ΔΗΜΙΟΥΡΓΙΑ ΠΕΡΙΓΡΑΦΗΣ (Υποστηρίζει Ελληνικά & Αγγλικά) ---
+# --- ΕΞΥΠΝΗ ΑΥΤΟΜΑΤΗ ΔΗΜΙΟΥΡΓΙΑ ΠΕΡΙΓΡΑΦΗΣ ---
 def generate_auto_description(model_key, item_data, is_en=False):
     cat_name = item_data.get("cat", "Μηχάνημα")
     series_name = item_data.get("series", "")
@@ -244,37 +244,51 @@ def get_company_fonts(company):
 if "cart" not in st.session_state:
     st.session_state.cart = []
 
-def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date, vat_rate, optional_equipment=""):
+# ==============================================================================
+# ΓΕΝΝΗΤΡΙΑ PDF ΜΕ MULTI-PAGE & ΑΝΑΛΥΤΙΚΑ ΠΙΝΑΚΑΚΙΑ ΑΝΑ ΠΡΟΪΟΝ
+# ==============================================================================
+def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date, vat_rate):
     pdf_filename = "temp_profora.pdf"
     font_reg, font_bld = get_company_fonts(company)
 
     c = canvas.Canvas(pdf_filename, pagesize=letter)
     width, height = letter
     
-    # ----------------------------------------------------
-    # ΔΙΑΧΕΙΡΙΣΗ ΛΟΓΟΤΥΠΩΝ ΣΤΗΝ ΚΟΡΥΦΗ (ΠΕΤΡΟΠΟΥΛΟΣ)
-    # ----------------------------------------------------
-    if company in ["Πετρόπουλος", "Petropoulos"]:
-        # 1. Το δεύτερο λογότυπο (PETROPOULOS GROUP) πάνω αριστερά
-        logo2_path = "PETROPOULOS_GROUP_Logo_Colour-1.jpg"
-        if os.path.exists(logo2_path):
-            c.drawImage(logo2_path, 50, height - 60, width=120, height=35, preserveAspectRatio=True, mask='auto')
-        
-        # 2. Το πρώτο λογότυπο (ΕΛΞΙΣ) πάνω δεξιά (πιο αριστερά από την ημερομηνία)
-        logo1_path = "ΕΛΞΙΣ-03.png"
-        if os.path.exists(logo1_path):
-            c.drawImage(logo1_path, width - 290, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
+    page_num = 1
 
-    # Στοιχεία Επικοινωνίας / Πωλητή (Δεξιά)
-    c.setFont(font_reg, 9)
-    c.drawRightString(width - 50, height - 35, "Τηλέφωνα : 210 - 3499333")
-    c.drawRightString(width - 50, height - 48, f"E-mail : {seller_data['email']}")
-    formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
-    c.drawRightString(width - 50, height - 62, formatted_date_str)
-    
-    c.setStrokeColorRGB(0.2, 0.3, 0.5)
-    c.setLineWidth(1)
-    c.line(50, height - 78, width - 50, height - 78)
+    def draw_header_footer():
+        nonlocal page_num
+        # Λογότυπα στην κορυφή (Μόνο για Πετρόπουλος)
+        if company in ["Πετρόπουλος", "Petropoulos"]:
+            logo2_path = "PETROPOULOS_GROUP_Logo_Colour-1.jpg"
+            if os.path.exists(logo2_path):
+                c.drawImage(logo2_path, 50, height - 60, width=120, height=35, preserveAspectRatio=True, mask='auto')
+            
+            logo1_path = "ΕΛΞΙΣ-03.png"
+            if os.path.exists(logo1_path):
+                c.drawImage(logo1_path, width - 290, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
+
+        # Στοιχεία Επικοινωνίας / Πωλητή (Δεξιά)
+        c.setFont(font_reg, 9)
+        c.drawRightString(width - 50, height - 35, "Τηλέφωνα : 210 - 3499333")
+        c.drawRightString(width - 50, height - 48, f"E-mail : {seller_data['email']}")
+        formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
+        c.drawRightString(width - 50, height - 62, formatted_date_str)
+        
+        c.setStrokeColorRGB(0.2, 0.3, 0.5)
+        c.setLineWidth(1)
+        c.line(50, height - 78, width - 50, height - 78)
+
+        # Footer (Σε κάθε σελίδα)
+        c.setStrokeColorRGB(0.7, 0.7, 0.7)
+        c.setLineWidth(0.5)
+        c.line(50, 45, width - 50, 45)
+        c.setFont(font_reg, 7)
+        c.drawString(50, 32, "Πέτρος Πετρόπουλος ΑΕΒΕ   |   Ιερά Οδός 96-104, 10447 Αθήνα   |   Τηλ: 2103499200   |   ΑΦΜ: 094043269")
+        c.drawRightString(width - 50, 32, f"Σελίδα {page_num}" if not is_english else f"Page {page_num}")
+
+    # Σχεδίαση Header Πρώτης Σελίδας
+    draw_header_footer()
     
     # Στοιχεία Πελάτη
     c.setFont(font_bld, 11)
@@ -304,78 +318,93 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     y -= 14
     c.drawString(50, y, "Κατόπιν επιθυμίας σας για την αγορά εξοπλισμού από την εταιρεία μας είμαστε στην ευχάριστη θέση να σας προσφέρουμε τα εξής:" if not is_english else "Following your request for equipment purchase, we are pleased to offer you the following:")
     
-    y -= 10
-    total_net = 0
-    
+    y -= 15
+
+    # Συνάρτηση ελέγχου χώρου για αλλαγή σελίδας
+    def check_new_page(needed_space=100):
+        nonlocal y, page_num
+        if y < needed_space:
+            c.showPage()
+            page_num += 1
+            draw_header_footer()
+            y = height - 90  # Επαναφορά ύψους στην νέα σελίδα
+
+    # Εκτύπωση κάθε προϊόντος με το δικό του πινακάκι και εξοπλισμό
     for idx, item in enumerate(cart_items, 1):
-        y -= 16
-        c.setFont(font_bld, 9)
-        model_label = f"{idx})  Μοντέλο: {item['model']} — Καθαρή Αξία: {item['price']:,.2f} EUR" if not is_english else f"{idx})  Model: {item['model']} — Net Value: {item['price']:,.2f} EUR"
-        c.drawString(50, y, model_label)
+        check_new_page(120)
         
+        c.setFont(font_bld, 10)
+        model_title = f"{idx}) Μοντέλο: {item['model']}" if not is_english else f"{idx}) Model: {item['model']}"
+        c.drawString(50, y, model_title)
         y -= 14
+        
         c.setFont(font_reg, 9)
         desc_full = item.get('desc', item['info'])
         c.drawString(65, y, desc_full[:110])
         if len(desc_full) > 110:
             y -= 12
             c.drawString(65, y, desc_full[110:])
-            
-        total_net += item['price']
-        y -= 8
+        y -= 10
 
-    if optional_equipment:
-        y -= 12
-        c.setFont(font_bld, 9)
-        c.drawString(50, y, "Περιλαμβάνει τον παρακάτω προαιρετικό εξοπλισμό:" if not is_english else "Includes the following optional equipment:")
-        for line in optional_equipment.split('\n'):
-            if line.strip():
-                y -= 12
-                c.setFont(font_reg, 9)
-                c.drawString(65, y, f"- {line.strip()}")
+        # Προαιρετικός εξοπλισμός συγκεκριμένα για ΑΥΤΟ το προϊόν
+        opt_eq = item.get('optional_eq', '')
+        if opt_eq:
+            check_new_page(60)
+            c.setFont(font_bld, 9)
+            c.drawString(65, y, "Προαιρετικός Εξοπλισμός:" if not is_english else "Optional Equipment:")
+            y -= 12
+            for line in opt_eq.split('\n'):
+                if line.strip():
+                    check_new_page(40)
+                    c.setFont(font_reg, 9)
+                    c.drawString(80, y, f"- {line.strip()}")
+                    y -= 12
+            y -= 4
 
-    vat_amount = total_net * (vat_rate / 100.0)
-    total_with_vat = total_net + vat_amount
+        # Αναλυτικό Πινακάκι Αξίας & ΦΠΑ για ΤΟ ΣΥΓΚΕΚΡΙΜΕΝΟ προϊόν
+        check_new_page(50)
+        net_val = item['price']
+        v_amount = net_val * (vat_rate / 100.0)
+        tot_val = net_val + v_amount
 
-    y -= 28
-    c.setStrokeColorRGB(0.2, 0.3, 0.5)
-    c.setLineWidth(1)
-    c.rect(50, y - 22, width - 100, 32)
-    
-    c.setFont(font_bld, 9)
-    c.drawString(90, y - 4, "Αξία Προσφοράς" if not is_english else "Offer Value")
-    c.drawString(275, y - 4, f"ΦΠΑ {vat_rate}%" if not is_english else f"VAT {vat_rate}%")
-    c.drawString(450, y - 4, "Σύνολο" if not is_english else "Total")
-    
-    c.setFont(font_reg, 10)
-    c.drawString(85, y - 18, f"{total_net:,.2f} €")
-    c.drawString(270, y - 18, f"{vat_amount:,.2f} €")
-    c.drawString(440, y - 18, f"{total_with_vat:,.2f} €")
+        c.setStrokeColorRGB(0.3, 0.4, 0.6)
+        c.setLineWidth(0.75)
+        c.rect(65, y - 18, width - 130, 24)
 
-    y -= 38
+        c.setFont(font_bld, 8)
+        c.drawString(80, y - 3, "Καθαρή Αξία" if not is_english else "Net Value")
+        c.drawString(230, y - 3, f"ΦΠΑ {vat_rate}%")
+        c.drawString(380, y - 3, "Σύνολο" if not is_english else "Total")
+
+        c.setFont(font_reg, 9)
+        c.drawString(80, y - 14, f"{net_val:,.2f} €")
+        c.drawString(230, y - 14, f"{v_amount:,.2f} €")
+        c.drawString(380, y - 14, f"{tot_val:,.2f} €")
+
+        y -= 35
+
+    # Σημείωση & Υπογραφή στο τέλος
+    check_new_page(80)
+    y -= 10
     c.setFont(font_reg, 8)
     note_text = "• Ο εξοπλισμός διαθέτει ελληνική και ευρωπαϊκή έγκριση τύπου & καλύπτεται από εργοστασιακή εγγύηση ενός έτους." if not is_english else "• The equipment has Greek and European type approval & is covered by a one-year factory warranty."
     c.drawString(50, y, note_text)
 
-    y -= 32
+    y -= 30
+    check_new_page(50)
     c.setFont(font_bld, 9)
     c.drawString(50, y, f"{seller_data['name']} - {seller_data['title']}")
-
-    c.setStrokeColorRGB(0.7, 0.7, 0.7)
-    c.setLineWidth(0.5)
-    c.line(50, 42, width - 50, 42)
-    
-    c.setFont(font_reg, 7)
-    c.drawString(50, 30, "Πέτρος Πετρόπουλος ΑΕΒΕ   |   Ιερά Οδός 96-104, 10447 Αθήνα   |   Τηλ: 2103499200   |   ΑΦΜ: 094043269   |   ΔΟΥ ΚΕΦΟΔΕ Αττικής")
 
     c.save()
     with open(pdf_filename, "rb") as f:
         pdf_data = f.read()
     return pdf_data
 
-# --- UI ΕΦΑΡΜΟΓΗΣ STREAMLIT ---
+# ==============================================================================
+# UI ΕΦΑΡΜΟΓΗΣ STREAMLIT
+# ==============================================================================
 st.title("🚜 " + ("Kubota Quotation System" if is_english else "Σύστημα Προσφορών Kubota"))
-st.markdown("Δημιουργήστε οικονομικές προσφορές εύκολα από το PC ή το κινητό σας!" if not is_english else "Easily create commercial offers from your PC or mobile!")
+st.markdown("Δημιουργήστε οικονομικές προσφορές με αυτόματη σελιδοποίηση και αναλυτικά στοιχεία ανά προϊόν!" if not is_english else "Easily create commercial offers with auto-paging and per-item details!")
 
 with st.sidebar:
     st.header("👤 Στοιχεία Πωλητή / Συντάκτη" if not is_english else "👤 Salesperson Details")
@@ -385,7 +414,7 @@ with st.sidebar:
     offer_date = st.date_input("Ημερομηνία Προσφοράς" if not is_english else "Offer Date", value=datetime.today())
     vat_rate = st.selectbox("Ποσοστό ΦΠΑ (%)" if not is_english else "VAT Rate (%)", [13, 24], index=0)
 
-with st.expander("👤 1. Στοιχεία Πελάτη (Συμπληρώστε τα στοιχεία)" if not is_english else "👤 1. Client Details (Fill in details)", expanded=True):
+with st.expander("👤 1. Στοιχεία Πελάτη", expanded=True):
     company_options = ["Πετρόπουλος", "Φίλης", "Κάμπος"]
     if is_english:
         company_ui = st.selectbox("Company / Εταιρεία", ["Petropoulos", "Filis", "Kampos"])
@@ -402,7 +431,7 @@ with st.expander("👤 1. Στοιχεία Πελάτη (Συμπληρώστε 
         client_phone = st.text_input("Phone / Τηλέφωνο", value="")
     client_address = st.text_input("Address / Διεύθυνση", value="")
 
-with st.expander("⚙️ 2. Επιλογή Προϊόντος & Χαρακτηριστικά" if not is_english else "⚙️ 2. Product Selection & Features", expanded=True):
+with st.expander("⚙️ 2. Επιλογή Προϊόντος & Ανεξάρτητου Εξοπλισμού", expanded=True):
     raw_categories = sorted(list(set(item["cat"] for item in database.values())))
     if is_english:
         cat_map = {"Τρακτέρ": "Tractor", "Χωματουργικό": "Excavator", "Μανέζ Λοζάνο": "Manez Lozano", "Νιούμπο": "Niubo", "Κοπροδιανομείς ID DAVID": "ID DAVID Manure Spreaders"}
@@ -435,24 +464,27 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος & Χαρακτηρ
         auto_desc = generate_auto_description(selected_model, current_item, is_english)
         
         st.markdown(f"**{'Model Price' if is_english else 'Τιμή Μοντέλου'}:** :red[{current_item['price']:,.2f} EUR]")
-        custom_desc = st.text_area("Αναλυτική Περιγραφή Μηχανήματος στο PDF (Προσαρμόζεται αυτόματα)" if not is_english else "Detailed Machine Description in PDF (Auto-adapts)", value=auto_desc, height=120)
+        custom_desc = st.text_area("Αναλυτική Περιγραφή Μηχανήματος στο PDF", value=auto_desc, height=100)
     else:
         custom_desc = ""
 
-    default_opt_eq = "Υδραυλική τιράντα\nΥδραυλικό ραντάρ\nΑντίβαρα στους πίσω τροχούς\nΕμπρόσθια Υδραυλικά\nΑεροκάθισμα"
-    optional_equipment = st.text_area("Προαιρετικός Εξοπλισμός (ένα σε κάθε γραμμή)" if not is_english else "Optional Equipment (one per line)", value=default_opt_eq)
+    # Προαιρετικός εξοπλισμός αποκλειστικά για ΤΟ ΣΥΓΚΕΚΡΙΜΕΝΟ προϊόν που προσθέτεις τώρα
+    default_opt_eq = "Υδραυλική τιράντα\nΥδραυλικό ραντάρ\nΑντίβαρα στους πίσω τροχούς"
+    item_optional_equipment = st.text_area("Προαιρετικός Εξοπλισμός για ΑΥΤΟ το προϊόν (ένα σε κάθε γραμμή)", value=default_opt_eq, height=80)
 
     if st.button("➕ " + ("Add to Quote" if is_english else "Προσθήκη στην Προσφορά")):
         if selected_model:
+            final_item_eq = translate_optional_equipment(item_optional_equipment, is_english)
             st.session_state.cart.append({
                 "model": selected_model,
                 "cat": current_item["cat"],
                 "series": current_item["series"],
                 "price": current_item["price"],
                 "info": current_item["info"],
-                "desc": custom_desc
+                "desc": custom_desc,
+                "optional_eq": final_item_eq
             })
-            st.success("Product added!" if is_english else f"Το προϊόν {selected_model} προστέθηκε στην προσφορά!")
+            st.success("Product added with its options!" if is_english else f"Το προϊόν {selected_model} προστέθηκε με τον εξοπλισμό του!")
         else:
             st.error("Select valid model." if is_english else "Επιλέξτε έγκυρο μοντέλο.")
 
@@ -467,6 +499,8 @@ with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Ε�
             col_a, col_b = st.columns([4, 1])
             with col_a:
                 st.write(f"**{idx+1}. {display_cat} | {cart_item['model']}** — {cart_item['price']:,.2f} EUR")
+                if cart_item['optional_eq']:
+                    st.caption(f"Εξοπλισμός: {cart_item['optional_eq'].replace(chr(10), ' | ')}")
             with col_b:
                 if st.button("❌", key=f"del_{idx}"):
                     st.session_state.cart.pop(idx)
@@ -496,9 +530,7 @@ if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιου�
             "name": seller_name, "title": seller_title, "email": seller_email
         }
         
-        final_optional_eq = translate_optional_equipment(optional_equipment, is_english)
-
-        pdf_data = generate_pdf_bytes(client_data, seller_data, st.session_state.cart, company, is_english, offer_date, vat_rate, final_optional_eq)
+        pdf_data = generate_pdf_bytes(client_data, seller_data, st.session_state.cart, company, is_english, offer_date, vat_rate)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         safe_company = (company if not is_english else ("Petropoulos" if company == "Πετρόπουλος" else ("Filis" if company == "Φίλης" else "Kampos"))).replace(" ", "_")
         safe_client = client_name.replace(" ", "_")
