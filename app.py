@@ -109,7 +109,7 @@ database = {
 
     # --- 6. ΚΟΠΡΟΔΙΑΝΟΜΕΙΣ ID DAVID ---
     "DES-2525-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 13700, "info": "Κοπροδιανομέας SURFEED 2.5m³", "desc": "Κοπροδιανομέας SURFEED 2.5m³ — Πλάτος 1.46m — 40 HP."},
-    "DES-4535-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 15200, "info": "Ψεκαστικό/Κοπροδιανομέας SURFEED 3.5m³", "desc": "Κοπροδιανομέας SURFEED 3.5m³ — Πλάτος 1.50m — 50 HP."},
+    "DES-4535-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 15200, "info": "Κοπροδιανομέας SURFEED 3.5m³", "desc": "Κοπροδιανομέας SURFEED 3.5m³ — Πλάτος 1.50m — 50 HP."},
     "DES-5540-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 16800, "info": "Κοπροδιανομέας SURFEED 4.0m³", "desc": "Κοπροδιανομέας SURFEED 4.0m³ — Πλάτος 1.80m — 55 HP."},
     "DES-7560-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 21800, "info": "Κοπροδιανομέας SURFEED 6.0m³", "desc": "Κοπροδιανομέας SURFEED 6.0m³ — Πλάτος 2.04m — 75 HP."},
     "ID_TOUCHSCREEN": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1500, "info": "Touchscreen 7\"", "desc": "Touchscreen Οθόνη Αφής 7\" με υπολογιστή επεξεργασίας δεδομένων."}
@@ -245,7 +245,7 @@ if "cart" not in st.session_state:
     st.session_state.cart = []
 
 # ==============================================================================
-# ΓΕΝΝΗΤΡΙΑ PDF ΜΕ MULTI-PAGE & ΑΝΑΛΥΤΙΚΑ ΠΙΝΑΚΑΚΙΑ ΑΝΑ ΠΡΟΪΟΝ
+# ΓΕΝΝΗΤΡΙΑ PDF ΜΕ SMART MULTI-PAGE (ΛΟΓΟΤΥΠΑ ΜΟΝΟ ΣΤΗΝ 1Η ΣΕΛΙΔΑ)
 # ==============================================================================
 def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date, vat_rate):
     pdf_filename = "temp_profora.pdf"
@@ -258,28 +258,35 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
     def draw_header_footer():
         nonlocal page_num
-        # Λογότυπα στην κορυφή (Μόνο για Πετρόπουλος)
-        if company in ["Πετρόπουλος", "Petropoulos"]:
-            logo2_path = "PETROPOULOS_GROUP_Logo_Colour-1.jpg"
-            if os.path.exists(logo2_path):
-                c.drawImage(logo2_path, 50, height - 60, width=120, height=35, preserveAspectRatio=True, mask='auto')
-            
-            logo1_path = "ΕΛΞΙΣ-03.png"
-            if os.path.exists(logo1_path):
-                c.drawImage(logo1_path, width - 290, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
-
-        # Στοιχεία Επικοινωνίας / Πωλητή (Δεξιά)
-        c.setFont(font_reg, 9)
-        c.drawRightString(width - 50, height - 35, "Τηλέφωνα : 210 - 3499333")
-        c.drawRightString(width - 50, height - 48, f"E-mail : {seller_data['email']}")
-        formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
-        c.drawRightString(width - 50, height - 62, formatted_date_str)
         
-        c.setStrokeColorRGB(0.2, 0.3, 0.5)
-        c.setLineWidth(1)
-        c.line(50, height - 78, width - 50, height - 78)
+        # --- ΛΟΓΟΤΥΠΑ & ΣΤΟΙΧΕΙΑ ΜΟΝΟ ΣΤΗΝ 1Η ΣΕΛΙΔΑ ---
+        if page_num == 1:
+            if company in ["Πετρόπουλος", "Petropoulos"]:
+                logo2_path = "PETROPOULOS_GROUP_Logo_Colour-1.jpg"
+                if os.path.exists(logo2_path):
+                    c.drawImage(logo2_path, 50, height - 60, width=120, height=35, preserveAspectRatio=True, mask='auto')
+                
+                logo1_path = "ΕΛΞΙΣ-03.png"
+                if os.path.exists(logo1_path):
+                    c.drawImage(logo1_path, width - 290, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
 
-        # Footer (Σε κάθε σελίδα)
+            # Στοιχεία Επικοινωνίας / Πωλητή (Δεξιά)
+            c.setFont(font_reg, 9)
+            c.drawRightString(width - 50, height - 35, "Τηλέφωνα : 210 - 3499333")
+            c.drawRightString(width - 50, height - 48, f"E-mail : {seller_data['email']}")
+            formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
+            c.drawRightString(width - 50, height - 62, formatted_date_str)
+            
+            c.setStrokeColorRGB(0.2, 0.3, 0.5)
+            c.setLineWidth(1)
+            c.line(50, height - 78, width - 50, height - 78)
+        else:
+            # Στις επόμενες σελίδες βάζουμε απλώς μια καθαρή λεπτή γραμμή στην κορυφή
+            c.setStrokeColorRGB(0.7, 0.7, 0.7)
+            c.setLineWidth(0.5)
+            c.line(50, height - 40, width - 50, height - 40)
+
+        # Footer (Σε όλες τις σελίδες)
         c.setStrokeColorRGB(0.7, 0.7, 0.7)
         c.setLineWidth(0.5)
         c.line(50, 45, width - 50, 45)
@@ -290,7 +297,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     # Σχεδίαση Header Πρώτης Σελίδας
     draw_header_footer()
     
-    # Στοιχεία Πελάτη
+    # Στοιχεία Πελάτη (Μόνο στην 1η Σελίδα)
     c.setFont(font_bld, 11)
     c.drawString(50, height - 98, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:" if not is_english else "CLIENT DETAILS:")
     c.setFont(font_reg, 9)
@@ -327,7 +334,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
             c.showPage()
             page_num += 1
             draw_header_footer()
-            y = height - 90  # Επαναφορά ύψους στην νέα σελίδα
+            y = height - 60  # Στις επόμενες σελίδες ξεκινάμε πιο ψηλά αφού δεν υπάρχουν λογότυπα
 
     # Εκτύπωση κάθε προϊόντος με το δικό του πινακάκι και εξοπλισμό
     for idx, item in enumerate(cart_items, 1):
