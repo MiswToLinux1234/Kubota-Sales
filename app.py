@@ -13,7 +13,7 @@ st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_i
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (ΟΛﺎ ΤΑ ΜΗΧΑΝΗΜΑΤΑ ΧΩΡΙΣ ΚΑΜΙΑ ΠΑΡΑΛΕΙΨΗ)
+# ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (ΟΛΑ ΤΑ ΜΗΧΑΝΗΜΑΤΑ ΧΩΡΙΣ ΚΑΜΙΑ ΠΑΡΑΛΕΙΨΗ)
 database = {
     # --- 1. ΝΕΑ ΤΡΑΚΤΕΡ & ΟΧΗΜΑΤΑ (από τις φωτογραφίες σου) ---
     "B1181": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 17.00, "price": 14500, "info": "17.00 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1181."},
@@ -251,32 +251,36 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     c = canvas.Canvas(pdf_filename, pagesize=letter)
     width, height = letter
     
-    comp_display = "Petropoulos" if (is_english and company == "Πετρόπουλος") else company
-
+    # ----------------------------------------------------
+    # ΔΙΑΧΕΙΡΙΣΗ ΛΟΓΟΤΥΠΩΝ ΣΤΗΝ ΚΟΡΥΦΗ (ΠΕΤΡΟΠΟΥΛΟΣ)
+    # ----------------------------------------------------
     if company in ["Πετρόπουλος", "Petropoulos"]:
-        logo_path = "petropoulos_logo.jpeg"
-        if os.path.exists(logo_path):
-            c.drawImage(logo_path, width - 180, height - 70, width=130, height=45, preserveAspectRatio=True, mask='auto')
+        # 1. Το δεύτερο λογότυπο (PETROPOULOS GROUP) πάνω αριστερά
+        logo2_path = "PETROPOULOS_GROUP_Logo_Colour-1.jpg"
+        if os.path.exists(logo2_path):
+            c.drawImage(logo2_path, 50, height - 60, width=120, height=35, preserveAspectRatio=True, mask='auto')
+        
+        # 2. Το πρώτο λογότυπο (ΕΛΞΙΣ) πάνω δεξιά (πιο αριστερά από την ημερομηνία)
+        logo1_path = "ΕΛΞΙΣ-03.png"
+        if os.path.exists(logo1_path):
+            c.drawImage(logo1_path, width - 290, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
 
-    c.setFont(font_bld, 14)
-    c.drawString(50, height - 40, "ΠΕΤΡΟΣ ΠΕΤΡΟΠΟΥΛΟΣ ΑΕΒΕ" if not is_english else comp_display)
-    
+    # Στοιχεία Επικοινωνίας / Πωλητή (Δεξιά)
     c.setFont(font_reg, 9)
-    c.drawString(50, height - 55, "Τμήμα Γεωργικών & Χωματουργικών Μηχανημάτων" if not is_english else "Machinery Department")
-    
-    c.drawRightString(width - 50, height - 40, "Τηλέφωνα : 210 - 3499333")
-    c.drawRightString(width - 50, height - 55, f"E-mail : {seller_data['email']}")
+    c.drawRightString(width - 50, height - 35, "Τηλέφωνα : 210 - 3499333")
+    c.drawRightString(width - 50, height - 48, f"E-mail : {seller_data['email']}")
     formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
-    c.drawRightString(width - 50, height - 70, formatted_date_str)
+    c.drawRightString(width - 50, height - 62, formatted_date_str)
     
     c.setStrokeColorRGB(0.2, 0.3, 0.5)
     c.setLineWidth(1)
-    c.line(50, height - 80, width - 50, height - 80)
+    c.line(50, height - 78, width - 50, height - 78)
     
+    # Στοιχεία Πελάτη
     c.setFont(font_bld, 11)
-    c.drawString(50, height - 102, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:" if not is_english else "CLIENT DETAILS:")
+    c.drawString(50, height - 98, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:" if not is_english else "CLIENT DETAILS:")
     c.setFont(font_reg, 9)
-    y_client = height - 116
+    y_client = height - 112
     c.drawString(50, y_client, f"ΠΡΟΣ: {client_data['name'].upper()}" if not is_english else f"TO: {client_data['name'].upper()}")
     y_client -= 14
     c.drawString(50, y_client, f"ΔΙΕΥΘΥΝΣΗ: {client_data['address'].upper()}" if not is_english else f"ADDRESS: {client_data['address'].upper()}")
@@ -290,11 +294,11 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     c.setLineWidth(0.5)
     c.line(50, y_client, width - 50, y_client)
     
-    y = y_client - 20
+    y = y_client - 18
     c.setFont(font_bld, 12)
     c.drawCentredString(width / 2.0, y, "ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ" if not is_english else "COMMERCIAL OFFER")
     
-    y -= 20
+    y -= 18
     c.setFont(font_reg, 9)
     c.drawString(50, y, f"Αξιότιμε/η κ. {client_data['name']}," if not is_english else f"Dear {client_data['name']},")
     y -= 14
