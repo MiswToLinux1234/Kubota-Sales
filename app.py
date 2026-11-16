@@ -99,7 +99,7 @@ database = {
     "RANT720": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 390, "info": "Πλέγμα προστασίας από D720", "desc": "Πλέγμα προστασίας από D720."},
     "KITFRENR": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 770, "info": "Υδραυλικά φρένα με ρυθμιστική βαλβίδα", "desc": "Υδραυλικά φρένα με ρυθμιστική βαλβίδα."},
 
-    # --- 5. ΚΑΤΑΣΤΡΟΦΕΙΣ NIUBO (ΒΑΣΕΙ ΤΩΝ ΝΕΩΝ ΤΙΜΟΚΑΤΑΛΟΓΩΝ)[cite: 4, 5, 6, 7] ---
+    # --- 5. ΚΑΤΑΣΤΡΟΦΕΙΣ NIUBO ---
     "TLG120": {"cat": "Νιούμπο", "series": "LIGHT", "hp": "25-35", "price": 4150, "info": "Πλάτος 1200mm — 25-35 Hp", "desc": "Καταστροφέας LIGHT 1200mm."},
     "TLG140": {"cat": "Νιούμπο", "series": "LIGHT", "hp": "25-35", "price": 4200, "info": "Πλάτος 1400mm — 25-35 Hp", "desc": "Καταστροφέας LIGHT 1400mm."},
     "TLG160": {"cat": "Νιούμπο", "series": "LIGHT", "hp": "30-40", "price": 4300, "info": "Πλάτος 1600mm — 30-40 Hp", "desc": "Καταστροφέας LIGHT 1600mm."},
@@ -278,9 +278,9 @@ if "cart" not in st.session_state:
     st.session_state.cart = []
 
 # ==============================================================================
-# ΓΕΝΝΗΤΡΙΑ PDF (ΛΟΓΟΤΥΠΟ ΕΛΞΙΣ ΤΕΡΜΑ ΔΕΞΙΑ - ΣΤΟΙΧΕΙΑ ΑΚΡΙΒΩΣ ΔΙΠΛΑ ΑΡΙΣΤΕΡΑ)
+# ΓΕΝΝΗΤΡΙΑ PDF (ΜΕ ΚΙΝΗΤΟ ΠΩΛΗΤΗ & ΦΠΑ/ΤΙΜΗ ΑΝΑ ΠΡΟΪΟΝ)
 # ==============================================================================
-def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date, vat_rate):
+def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date):
     pdf_filename = "temp_profora.pdf"
     font_reg, font_bld = get_company_fonts(company)
 
@@ -304,12 +304,12 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
                 if os.path.exists(logo1_path):
                     c.drawImage(logo1_path, width - 145, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
 
-            # 3. Στοιχεία & Ημερομηνία ΑΚΡΙΒΩΣ ΑΡΙΣΤΕΡΑ από το λογότυπο της ΕΛΞΙΣ
+            # 3. Στοιχεία, Κινητό & Ημερομηνία ΑΚΡΙΒΩΣ ΑΡΙΣΤΕΡΑ από το λογότυπο της ΕΛΞΙΣ
             c.setFont(font_reg, 9)
-            c.drawRightString(width - 155, height - 35, "Τηλέφωνα : 210 - 3499333")
-            c.drawRightString(width - 155, height - 48, f"E-mail : {seller_data['email']}")
+            c.drawRightString(width - 155, height - 30, f"Τηλ / Κινητό : {seller_data['phone']}")
+            c.drawRightString(width - 155, height - 43, f"E-mail : {seller_data['email']}")
             formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
-            c.drawRightString(width - 155, height - 62, formatted_date_str)
+            c.drawRightString(width - 155, height - 56, formatted_date_str)
             
             c.setStrokeColorRGB(0.2, 0.3, 0.5)
             c.setLineWidth(1)
@@ -336,7 +336,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     y_client -= 14
     c.drawString(50, y_client, f"ΔΙΕΥΘΥΝΣΗ: {client_data['address'].upper()}" if not is_english else f"ADDRESS: {client_data['address'].upper()}")
     y_client -= 14
-    c.drawString(50, y_client, f"ΑΦΜ: {client_data['afm']}  |  ΤΗΛΕΦΩΝΟ: {client_data['phone']}" if not is_english else f"VAT: {client_data['afm']}  |  PHONE: {client_data['phone']}")
+    c.drawString(50, y_client, f"ΑΦΜ: {client_data['afm']}  |  ΤΗΛΕΦΩΝΟ: {client_data['phone_client']}" if not is_english else f"VAT: {client_data['afm']}  |  PHONE: {client_data['phone_client']}")
     y_client -= 14
     c.drawString(50, y_client, f"ΕΠΑΓΓΕΛΜΑ: {client_data['profession'].upper()}" if not is_english else f"PROFESSION: {client_data['profession'].upper()}")
         
@@ -405,7 +405,8 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
         check_new_page(50)
         net_val = item['price']
-        v_amount = net_val * (vat_rate / 100.0)
+        item_vat = item['vat']
+        v_amount = net_val * (item_vat / 100.0)
         tot_val = net_val + v_amount
 
         c.setStrokeColorRGB(0.3, 0.4, 0.6)
@@ -414,7 +415,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
         c.setFont(font_bld, 8)
         c.drawString(80, y - 3, "Καθαρή Αξία" if not is_english else "Net Value")
-        c.drawString(230, y - 3, f"ΦΠΑ {vat_rate}%")
+        c.drawString(230, y - 3, f"ΦΠΑ {item_vat}%")
         c.drawString(380, y - 3, "Σύνολο" if not is_english else "Total")
 
         c.setFont(font_reg, 9)
@@ -451,8 +452,8 @@ with st.sidebar:
     seller_name = st.text_input("Ονοματεπώνυμο Πωλητή" if not is_english else "Salesperson Name", value="")
     seller_title = st.text_input("Τίτλος Θέσης" if not is_english else "Job Title", value="")
     seller_email = st.text_input("Email Πωλητή" if not is_english else "Salesperson Email", value="")
+    seller_phone = st.text_input("Τηλέφωνο / Κινητό Πωλητή" if not is_english else "Salesperson Mobile/Phone", value="")
     offer_date = st.date_input("Ημερομηνία Προσφοράς" if not is_english else "Offer Date", value=datetime.today())
-    vat_rate = st.selectbox("Ποσοστό ΦΠΑ (%)" if not is_english else "VAT Rate (%)", [13, 24], index=0)
 
 with st.expander("👤 1. Στοιχεία Πελάτη", expanded=True):
     company_options = ["Πετρόπουλος", "Φίλης", "Κάμπος"]
@@ -471,7 +472,7 @@ with st.expander("👤 1. Στοιχεία Πελάτη", expanded=True):
         client_phone = st.text_input("Phone / Τηλέφωνο", value="")
     client_address = st.text_input("Address / Διεύθυνση", value="")
 
-with st.expander("⚙️ 2. Επιλογή Προϊόντος & Ανεξάρτητου Εξοπλισμού", expanded=True):
+with st.expander("⚙️ 2. Επιλογή Προϊόντος, Τιμής, ΦΠΑ & Εξοπλισμού", expanded=True):
     raw_categories = sorted(list(set(item["cat"] for item in database.values())))
     if is_english:
         cat_map = {"Τρακτέρ": "Tractor", "Χωματουργικό": "Excavator", "Μανέζ Λοζάνο": "Manez Lozano", "Νιούμπο": "Niubo", "Κοπροδιανομείς ID DAVID": "ID DAVID Manure Spreaders"}
@@ -503,9 +504,17 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος & Ανεξάρτη
         current_item = database[selected_model]
         auto_desc = generate_auto_description(selected_model, current_item, is_english)
         
-        st.markdown(f"**{'Model Price' if is_english else 'Τιμή Μοντέλου'}:** :red[{current_item['price']:,.2f} EUR]")
+        # ΔΥΝΑΤΟΤΗΤΑ ΠΕΙΡΑΓΜΑΤΟΣ ΤΙΜΗΣ & ΕΠΙΛΟΓΗΣ ΦΠΑ ΑΝΑ ΠΡΟΪΟΝ
+        col_p1, col_p2 = st.columns(2)
+        with col_p1:
+            custom_price = st.number_input("Τιμή Μοντέλου (€)", value=float(current_item['price']), step=100.0)
+        with col_p2:
+            item_vat_rate = st.selectbox("ΦΠΑ Προϊόντος (%)", [13, 24], index=0)
+
         custom_desc = st.text_area("Αναλυτική Περιγραφή Μηχανήματος στο PDF", value=auto_desc, height=100)
     else:
+        custom_price = 0.0
+        item_vat_rate = 13
         custom_desc = ""
 
     default_opt_eq = "Υδραυλική τιράντα\nΥδραυλικό ραντάρ\nΑντίβαρα στους πίσω τροχούς"
@@ -518,12 +527,13 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος & Ανεξάρτη
                 "model": selected_model,
                 "cat": current_item["cat"],
                 "series": current_item["series"],
-                "price": current_item["price"],
+                "price": custom_price,
+                "vat": item_vat_rate,
                 "info": current_item["info"],
                 "desc": custom_desc,
                 "optional_eq": final_item_eq
             })
-            st.success("Product added with its options!" if is_english else f"Το προϊόν {selected_model} προστέθηκε με τον εξοπλισμό του!")
+            st.success("Product added with its options and custom price!" if is_english else f"Το προϊόν {selected_model} προστέθηκε με επιτυχία!")
         else:
             st.error("Select valid model." if is_english else "Επιλέξτε έγκυρο μοντέλο.")
 
@@ -537,7 +547,7 @@ with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Ε�
                 
             col_a, col_b = st.columns([4, 1])
             with col_a:
-                st.write(f"**{idx+1}. {display_cat} | {cart_item['model']}** — {cart_item['price']:,.2f} EUR")
+                st.write(f"**{idx+1}. {display_cat} | {cart_item['model']}** — {cart_item['price']:,.2f} EUR (ΦΠΑ: {cart_item['vat']}%)")
                 if cart_item['optional_eq']:
                     st.caption(f"Εξοπλισμός: {cart_item['optional_eq'].replace(chr(10), ' | ')}")
             with col_b:
@@ -562,14 +572,14 @@ if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιου�
             "name": client_name,
             "profession": client_profession,
             "afm": client_afm,
-            "phone": client_phone,
+            "phone_client": client_phone,
             "address": client_address
         }
         seller_data = {
-            "name": seller_name, "title": seller_title, "email": seller_email
+            "name": seller_name, "title": seller_title, "email": seller_email, "phone": seller_phone
         }
         
-        pdf_data = generate_pdf_bytes(client_data, seller_data, st.session_state.cart, company, is_english, offer_date, vat_rate)
+        pdf_data = generate_pdf_bytes(client_data, seller_data, st.session_state.cart, company, is_english, offer_date)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         safe_company = (company if not is_english else ("Petropoulos" if company == "Πετρόπουλος" else ("Filis" if company == "Φίλης" else "Kampos"))).replace(" ", "_")
         safe_client = client_name.replace(" ", "_")
