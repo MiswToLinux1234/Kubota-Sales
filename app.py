@@ -13,7 +13,7 @@ st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_i
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (ΟΛΑ ΤΑ ΜΗΧΑΝΗΜΑΤΑ)
+# ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (ΟΛΑ ΤΑ ΜΗΧΑΝΗΜΑΤΑ ΧΩΡΙΣ ΚΑΜΙΑ ΠΑΡΑΛΕΙΨΗ)
 database = {
     # --- 1. ΝΕΑ ΤΡΑΚΤΕΡ & ΟΧΗΜΑΤΑ ---
     "B1181": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 17.00, "price": 14500, "info": "17.00 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1181."},
@@ -73,7 +73,7 @@ database = {
     "L2552DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 54, "price": 50000, "info": "54 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2552DHC με καμπίνα."},
     "L2622DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 62, "price": 58000, "info": "62 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2622DHC με καμπίνα."},
     "M5072N": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 74, "price": 57500, "info": "74 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072N."},
-    "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου M5092N36-EC με αψίδα προστασίας εγκεκριμένου τύπου. Διαθέτει διπλό διαφορικό, τετρακύλινδρο κινητήρα diesel κατηγορίας ρύπων φάση V, υδρόψυκτο, με ισχύ κινητήρα 94hp, σασμάν 6 ταχυτήτων με 3 ομάδες και Hi-Lo συνολικών ταχυτήτων 36/36 (εμπρός/πίσω). Ηλεκτρο-υδραυλική ρεβέρσα, ηλεκτρο-υδραυλική εμπλοκή μπροστινού διαφορικού και ηλεκτρο-υδραυλική ενεργοποίηση δυναμοδότη (PTO). 2 μνήμες στροφών και σύστημα σταθεροποίησης στροφών."},
+    "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου M5092N36-EC με αψίδα προστασίας εγκεκριμένου τύπου."},
     "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-112NQ-EC."},
     "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 DTH."},
     "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 DTH."},
@@ -99,13 +99,48 @@ database = {
     "RANT720": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 390, "info": "Πλέγμα προστασίας από D720", "desc": "Πλέγμα προστασίας από D720."},
     "KITFRENR": {"cat": "Μανέζ Λοζάνο", "series": "Παρελκόμενα & Αξεσουάρ", "price": 770, "info": "Υδραυλικά φρένα με ρυθμιστική βαλβίδα", "desc": "Υδραυλικά φρένα με ρυθμιστική βαλβίδα."},
 
-    # --- 5. ΝΙΟΥΜΠΟ (Καταστροφείς) ---
-    "TLG120": {"cat": "Νιούμπο", "series": "LIGHT", "price": 4150, "info": "Καταστροφέας LIGHT 1200mm", "desc": "Καταστροφέας LIGHT 1200mm — 320kg — 25-35 Hp."},
-    "TLG140": {"cat": "Νιούμπο", "series": "LIGHT", "price": 4200, "info": "Καταστροφέας LIGHT 1400mm", "desc": "Καταστροφέας LIGHT 1400mm — 350kg — 25-35 Hp."},
-    "TLG160": {"cat": "Νιούμπο", "series": "LIGHT", "price": 4300, "info": "Καταστροφέας LIGHT 1600mm", "desc": "Καταστροφέας LIGHT 1600mm — 370kg — 30-40 Hp."},
-    "TLG180": {"cat": "Νιούμπο", "series": "LIGHT", "price": 4400, "info": "Καταστροφέας LIGHT 1800mm", "desc": "Καταστροφέας LIGHT 1800mm — 390kg — 35-50 Hp."},
-    "TGD130": {"cat": "Νιούμπο", "series": "GLIDER", "price": 5100, "info": "Καταστροφέας GLIDER 1300mm", "desc": "Καταστροφέας GLIDER 1300mm — 420kg — 28-38 Hp."},
-    "TGD160": {"cat": "Νιούμπο", "series": "GLIDER", "price": 5300, "info": "Καταστροφέας GLIDER 1600mm", "desc": "Καταστροφέας GLIDER 1600mm — 450kg — 48-58 Hp."},
+    # --- 5. ΚΑΤΑΣΤΡΟΦΕΙΣ NIUBO (ΒΑΣΕΙ ΤΩΝ ΝΕΩΝ ΤΙΜΟΚΑΤΑΛΟΓΩΝ)[cite: 4, 5, 6, 7] ---
+    # LIGHT[cite: 4]
+    "TLG120": {"cat": "Νιούμπο", "series": "LIGHT", "hp": "25-35", "price": 4150, "info": "Πλάτος 1200mm — 25-35 Hp", "desc": "Καταστροφέας LIGHT 1200mm."},
+    "TLG140": {"cat": "Νιούμπο", "series": "LIGHT", "hp": "25-35", "price": 4200, "info": "Πλάτος 1400mm — 25-35 Hp", "desc": "Καταστροφέας LIGHT 1400mm."},
+    "TLG160": {"cat": "Νιούμπο", "series": "LIGHT", "hp": "30-40", "price": 4300, "info": "Πλάτος 1600mm — 30-40 Hp", "desc": "Καταστροφέας LIGHT 1600mm."},
+    "TLG180": {"cat": "Νιούμπο", "series": "LIGHT", "hp": "35-50", "price": 4400, "info": "Πλάτος 1800mm — 35-50 Hp", "desc": "Καταστροφέας LIGHT 1800mm."},
+
+    # GLIDER[cite: 4]
+    "TGD130": {"cat": "Νιούμπο", "series": "GLIDER", "hp": "28-38", "price": 5100, "info": "Πλάτος 1300mm — 28-38 Hp", "desc": "Καταστροφέας GLIDER 1300mm."},
+    "TGD160": {"cat": "Νιούμπο", "series": "GLIDER", "hp": "48-58", "price": 5300, "info": "Πλάτος 1600mm — 48-58 Hp", "desc": "Καταστροφέας GLIDER 1600mm."},
+    "TGD180": {"cat": "Νιούμπο", "series": "GLIDER", "hp": "50-60", "price": 5500, "info": "Πλάτος 1800mm — 50-60 Hp", "desc": "Καταστροφέας GLIDER 1800mm."},
+    "TGD200": {"cat": "Νιούμπο", "series": "GLIDER", "hp": "55-65", "price": 5700, "info": "Πλάτος 2000mm — 55-65 Hp", "desc": "Καταστροφέας GLIDER 2000mm."},
+
+    # SPEED[cite: 5]
+    "TSP150": {"cat": "Νιούμπο", "series": "SPEED", "hp": "38-48", "price": 5550, "info": "Πλάτος 1500mm — 38-48 Hp", "desc": "Καταστροφέας SPEED 1500mm."},
+    "TSP180": {"cat": "Νιούμπο", "series": "SPEED", "hp": "55-68", "price": 5780, "info": "Πλάτος 1800mm — 55-68 Hp", "desc": "Καταστροφέας SPEED 1800mm."},
+    "TSP200": {"cat": "Νιούμπο", "series": "SPEED", "hp": "65-70", "price": 5890, "info": "Πλάτος 2000mm — 65-70 Hp", "desc": "Καταστροφέας SPEED 2000mm."},
+    "TSP220": {"cat": "Νιούμπο", "series": "SPEED", "hp": "75-85", "price": 6220, "info": "Πλάτος 2200mm — 75-85 Hp", "desc": "Καταστροφέας SPEED 2200mm."},
+
+    # DRAGON PLUS[cite: 6]
+    "TDP140": {"cat": "Νιούμπο", "series": "DRAGON PLUS", "hp": "40-60", "price": 5800, "info": "Πλάτος 1400mm — 40-60 Hp", "desc": "Καταστροφέας DRAGON PLUS 1400mm."},
+    "TDP160": {"cat": "Νιούμπο", "series": "DRAGON PLUS", "hp": "40-60", "price": 6000, "info": "Πλάτος 1600mm — 40-60 Hp", "desc": "Καταστροφέας DRAGON PLUS 1600mm."},
+    "TDP180": {"cat": "Νιούμπο", "series": "DRAGON PLUS", "hp": "40-60", "price": 6200, "info": "Πλάτος 1800mm — 40-60 Hp", "desc": "Καταστροφέας DRAGON PLUS 1800mm."},
+
+    # KOMPACT[cite: 6]
+    "TKM130": {"cat": "Νιούμπο", "series": "KOMPACT", "hp": "38-48", "price": 7800, "info": "Πλάτος 1300mm — 38-48 Hp", "desc": "Καταστροφέας KOMPACT 1300mm."},
+    "TKM150": {"cat": "Νιούμπο", "series": "KOMPACT", "hp": "48-58", "price": 7900, "info": "Πλάτος 1500mm — 48-58 Hp", "desc": "Καταστροφέας KOMPACT 1500mm."},
+    "TKM160": {"cat": "Νιούμπο", "series": "KOMPACT", "hp": "55-68", "price": 7950, "info": "Πλάτος 1600mm — 55-68 Hp", "desc": "Καταστροφέας KOMPACT 1600mm."},
+    "TKM180": {"cat": "Νιούμπο", "series": "KOMPACT", "hp": "65-70", "price": 8200, "info": "Πλάτος 1800mm — 65-70 Hp", "desc": "Καταστροφέας KOMPACT 1800mm."},
+    "TKM200": {"cat": "Νιούμπο", "series": "KOMPACT", "hp": "70-85", "price": 8400, "info": "Πλάτος 2000mm — 70-85 Hp", "desc": "Καταστροφέας KOMPACT 2000mm."},
+    "TKM220": {"cat": "Νιούμπο", "series": "KOMPACT", "hp": "85-90", "price": 8700, "info": "Πλάτος 2200mm — 85-90 Hp", "desc": "Καταστροφέας KOMPACT 2200mm."},
+    "TKM250": {"cat": "Νιούμπο", "series": "KOMPACT", "hp": "90-95", "price": 8900, "info": "Πλάτος 2500mm — 90-95 Hp", "desc": "Καταστροφέας KOMPACT 2500mm."},
+
+    # MAX FRUIT[cite: 7]
+    "TXM150": {"cat": "Νιούμπο", "series": "MAX FRUIT", "hp": "70-100", "price": 15200, "info": "Πλάτος 1500mm — 70-100 Hp", "desc": "Καταστροφέας MAX FRUIT 1500mm."},
+    "TXM175": {"cat": "Νιούμπο", "series": "MAX FRUIT", "hp": "90-100", "price": 15900, "info": "Πλάτος 1750mm — 90-100 Hp", "desc": "Καταστροφέας MAX FRUIT 1750mm."},
+    "TXM200": {"cat": "Νιούμπο", "series": "MAX FRUIT", "hp": "90-110", "price": 16600, "info": "Πλάτος 2000mm — 90-110 Hp", "desc": "Καταστροφέας MAX FRUIT 2000mm."},
+
+    # JOLLY-E[cite: 7]
+    "TJE160": {"cat": "Νιούμπο", "series": "JOLLY-E", "hp": "40-90", "price": 8850, "info": "Πλάτος 1600mm — 40-90 Hp", "desc": "Πλευρικός καταστροφέας JOLLY-E 1600mm."},
+    "TJE180": {"cat": "Νιούμπο", "series": "JOLLY-E", "hp": "40-90", "price": 8960, "info": "Πλάτος 1800mm — 40-90 Hp", "desc": "Πλευρικός καταστροφέας JOLLY-E 1800mm."},
+    "TJE200": {"cat": "Νιούμπο", "series": "JOLLY-E", "hp": "50-100", "price": 9630, "info": "Πλάτος 2000mm — 50-100 Hp", "desc": "Πλευρικός καταστροφέας JOLLY-E 2000mm."},
 
     # --- 6. ΚΟΠΡΟΔΙΑΝΟΜΕΙΣ ID DAVID ---
     "DES-2525-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 13700, "info": "Κοπροδιανομέας SURFEED 2.5m³", "desc": "Κοπροδιανομέας SURFEED 2.5m³ — Πλάτος 1.46m — 40 HP."},
@@ -120,6 +155,7 @@ def generate_auto_description(model_key, item_data, is_en=False):
     cat_name = item_data.get("cat", "Μηχάνημα")
     series_name = item_data.get("series", "")
     info_text = item_data.get("info", "")
+    hp_val = item_data.get("hp", "")
 
     if is_en:
         if cat_name == "Τρακτέρ":
@@ -137,6 +173,8 @@ def generate_auto_description(model_key, item_data, is_en=False):
 
         text = f"A {mach_desc} equipped with an approved safety roll-bar/cab. "
         text += f"It features standard equipment of series {series_name} and technical specifications: {info_text}."
+        if cat_name == "Νιούμπο" and hp_val:
+            text += f" This machine requires at least {hp_val} HP."
     else:
         if cat_name == "Τρακτέρ":
             mach_desc = f"γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου {model_key}"
@@ -153,6 +191,8 @@ def generate_auto_description(model_key, item_data, is_en=False):
 
         text = f"Ένα καινούριο και αμεταχείριστό {mach_desc} με αψίδα προστασίας εγκεκριμένου τύπου. "
         text += f"Διαθέτει βασικό εξοπλισμό σειράς {series_name} και τεχνικά χαρακτηριστικά: {info_text}."
+        if cat_name == "Νιούμπο" and hp_val:
+            text += f" Το μηχάνημα απαιτεί τουλάχιστον {hp_val} ιππους."
 
     return text
 
@@ -245,7 +285,7 @@ if "cart" not in st.session_state:
     st.session_state.cart = []
 
 # ==============================================================================
-# ΓΕΝΝΗΤΡΙΑ PDF ΜΕ SMART MULTI-PAGE (ΛΟΓΟΤΥΠΑ ΜΟΝΟ ΣΤΗΝ 1Η ΣΕΛΙΔΑ)
+# ΓΕΝΝΗΤΡΙΑ PDF ΜΕ CE & ΣΩΣΤΕΣ ΘΕΣΕΙΣ ΛΟΓΟΤΥΠΩΝ
 # ==============================================================================
 def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date, vat_rate):
     pdf_filename = "temp_profora.pdf"
@@ -259,18 +299,18 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     def draw_header_footer():
         nonlocal page_num
         
-        # --- ΛΟΓΟΤΥΠΑ & ΣΤΟΙΧΕΙΑ ΜΟΝΟ ΣΤΗΝ 1Η ΣΕΛΙΔΑ ---
         if page_num == 1:
             if company in ["Πετρόπουλος", "Petropoulos"]:
+                # PETROPOULOS GROUP πάνω αριστερά
                 logo2_path = "PETROPOULOS_GROUP_Logo_Colour-1.jpg"
                 if os.path.exists(logo2_path):
                     c.drawImage(logo2_path, 50, height - 60, width=120, height=35, preserveAspectRatio=True, mask='auto')
                 
+                # ΕΛΞΙΣ πάνω δεξιά
                 logo1_path = "ΕΛΞΙΣ-03.png"
                 if os.path.exists(logo1_path):
                     c.drawImage(logo1_path, width - 290, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
 
-            # Στοιχεία Επικοινωνίας / Πωλητή (Δεξιά)
             c.setFont(font_reg, 9)
             c.drawRightString(width - 50, height - 35, "Τηλέφωνα : 210 - 3499333")
             c.drawRightString(width - 50, height - 48, f"E-mail : {seller_data['email']}")
@@ -281,12 +321,10 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
             c.setLineWidth(1)
             c.line(50, height - 78, width - 50, height - 78)
         else:
-            # Στις επόμενες σελίδες βάζουμε απλώς μια καθαρή λεπτή γραμμή στην κορυφή
             c.setStrokeColorRGB(0.7, 0.7, 0.7)
             c.setLineWidth(0.5)
             c.line(50, height - 40, width - 50, height - 40)
 
-        # Footer (Σε όλες τις σελίδες)
         c.setStrokeColorRGB(0.7, 0.7, 0.7)
         c.setLineWidth(0.5)
         c.line(50, 45, width - 50, 45)
@@ -294,10 +332,8 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
         c.drawString(50, 32, "Πέτρος Πετρόπουλος ΑΕΒΕ   |   Ιερά Οδός 96-104, 10447 Αθήνα   |   Τηλ: 2103499200   |   ΑΦΜ: 094043269")
         c.drawRightString(width - 50, 32, f"Σελίδα {page_num}" if not is_english else f"Page {page_num}")
 
-    # Σχεδίαση Header Πρώτης Σελίδας
     draw_header_footer()
     
-    # Στοιχεία Πελάτη (Μόνο στην 1η Σελίδα)
     c.setFont(font_bld, 11)
     c.drawString(50, height - 98, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:" if not is_english else "CLIENT DETAILS:")
     c.setFont(font_reg, 9)
@@ -327,18 +363,16 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     
     y -= 15
 
-    # Συνάρτηση ελέγχου χώρου για αλλαγή σελίδας
     def check_new_page(needed_space=100):
         nonlocal y, page_num
         if y < needed_space:
             c.showPage()
             page_num += 1
             draw_header_footer()
-            y = height - 60  # Στις επόμενες σελίδες ξεκινάμε πιο ψηλά αφού δεν υπάρχουν λογότυπα
+            y = height - 60
 
-    # Εκτύπωση κάθε προϊόντος με το δικό του πινακάκι και εξοπλισμό
     for idx, item in enumerate(cart_items, 1):
-        check_new_page(120)
+        check_new_page(130)
         
         c.setFont(font_bld, 10)
         model_title = f"{idx}) Μοντέλο: {item['model']}" if not is_english else f"{idx}) Model: {item['model']}"
@@ -347,28 +381,34 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
         
         c.setFont(font_reg, 9)
         desc_full = item.get('desc', item['info'])
-        c.drawString(65, y, desc_full[:110])
-        if len(desc_full) > 110:
+        if len(desc_full) > 105:
+            c.drawString(65, y, desc_full[:105])
             y -= 12
-            c.drawString(65, y, desc_full[110:])
-        y -= 10
+            c.drawString(65, y, desc_full[105:])
+            y -= 12
+        else:
+            c.drawString(65, y, desc_full)
+            y -= 12
 
-        # Προαιρετικός εξοπλισμός συγκεκριμένα για ΑΥΤΟ το προϊόν
+        ce_text = "• Το μηχάνημα είναι καινούργιο και αμεταχείριστο και διαθέτει πιστοποιητικό CE." if not is_english else "• The machine is brand new and unused and has a CE certificate."
+        c.setFont(font_reg, 8)
+        c.drawString(65, y, ce_text)
+        y -= 14
+
         opt_eq = item.get('optional_eq', '')
         if opt_eq:
-            check_new_page(60)
+            check_new_page(50)
             c.setFont(font_bld, 9)
             c.drawString(65, y, "Προαιρετικός Εξοπλισμός:" if not is_english else "Optional Equipment:")
             y -= 12
             for line in opt_eq.split('\n'):
                 if line.strip():
-                    check_new_page(40)
+                    check_new_page(30)
                     c.setFont(font_reg, 9)
                     c.drawString(80, y, f"- {line.strip()}")
                     y -= 12
             y -= 4
 
-        # Αναλυτικό Πινακάκι Αξίας & ΦΠΑ για ΤΟ ΣΥΓΚΕΚΡΙΜΕΝΟ προϊόν
         check_new_page(50)
         net_val = item['price']
         v_amount = net_val * (vat_rate / 100.0)
@@ -390,7 +430,6 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
         y -= 35
 
-    # Σημείωση & Υπογραφή στο τέλος
     check_new_page(80)
     y -= 10
     c.setFont(font_reg, 8)
@@ -411,13 +450,13 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 # UI ΕΦΑΡΜΟΓΗΣ STREAMLIT
 # ==============================================================================
 st.title("🚜 " + ("Kubota Quotation System" if is_english else "Σύστημα Προσφορών Kubota"))
-st.markdown("Δημιουργήστε οικονομικές προσφορές με αυτόματη σελιδοποίηση και αναλυτικά στοιχεία ανά προϊόν!" if not is_english else "Easily create commercial offers with auto-paging and per-item details!")
+st.markdown("Δημιουργήστε οικονομικές προσφορές εύκολα από το PC ή το κινητό σας!" if not is_english else "Easily create commercial offers from your PC or mobile!")
 
 with st.sidebar:
     st.header("👤 Στοιχεία Πωλητή / Συντάκτη" if not is_english else "👤 Salesperson Details")
-    seller_name = st.text_input("Ονοματεπώνυμο Πωλητή" if not is_english else "Salesperson Name", value="Νικήτας Μπάρλας")
-    seller_title = st.text_input("Τίτλος Θέσης" if not is_english else "Job Title", value="Επιθεωρητής Πωλήσεων" if not is_english else "Sales Inspector")
-    seller_email = st.text_input("Email Πωλητή" if not is_english else "Salesperson Email", value="nikitasb@petropoulos.com")
+    seller_name = st.text_input("Ονοματεπώνυμο Πωλητή" if not is_english else "Salesperson Name", value="")
+    seller_title = st.text_input("Τίτλος Θέσης" if not is_english else "Job Title", value="")
+    seller_email = st.text_input("Email Πωλητή" if not is_english else "Salesperson Email", value="")
     offer_date = st.date_input("Ημερομηνία Προσφοράς" if not is_english else "Offer Date", value=datetime.today())
     vat_rate = st.selectbox("Ποσοστό ΦΠΑ (%)" if not is_english else "VAT Rate (%)", [13, 24], index=0)
 
@@ -475,7 +514,6 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος & Ανεξάρτη
     else:
         custom_desc = ""
 
-    # Προαιρετικός εξοπλισμός αποκλειστικά για ΤΟ ΣΥΓΚΕΚΡΙΜΕΝΟ προϊόν που προσθέτεις τώρα
     default_opt_eq = "Υδραυλική τιράντα\nΥδραυλικό ραντάρ\nΑντίβαρα στους πίσω τροχούς"
     item_optional_equipment = st.text_area("Προαιρετικός Εξοπλισμός για ΑΥΤΟ το προϊόν (ένα σε κάθε γραμμή)", value=default_opt_eq, height=80)
 
