@@ -5,6 +5,9 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_LEFT
 
 # ΡΥΘΜΙΣΗ ΣΕΛΙΔΑΣ (PWA Icon & Τίτλος)
 st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_icon="KUBOTA ICON.png", layout="centered")
@@ -13,7 +16,7 @@ st.set_page_config(page_title="Σύστημα Προσφορών Kubota", page_i
 lang_option = st.selectbox("Επιλογή Γλώσσας / Language", ["Ελληνικά", "English"])
 is_english = (lang_option == "English")
 
-# ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ (ΟΛΑ ΤΑ ΜΗΧΑΝΗΜΑΤΑ ΧΩΡΙΣ ΚΑΜΙΑ ΠΑΡΑΛΕΙΨΗ)
+# ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ
 database = {
     # --- 1. ΝΕΑ ΤΡΑΚΤΕΡ & ΟΧΗΜΑΤΑ ---
     "B1181": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 17.00, "price": 14500, "info": "17.00 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1181."},
@@ -137,14 +140,13 @@ database = {
     "ID_TOUCHSCREEN": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1500, "info": "Touchscreen 7\"", "desc": "Touchscreen Οθόνη Αφής 7\" με υπολογιστή επεξεργασίας δεδομένων."}
 }
 
-# --- ΕΞΥΠΝΗ ΑΥΤΟΜΑΤΗ ΔΗΜΙΟΥΡΓΙΑ ΠΕΡΙΓΡΑΦΗΣ ΜΕ ΤΟ ΜΗΝΥΜΑ T1a / T2a ---
+# --- ΕΞΥΠΝΗ ΑΥΤΟΜΑΤΗ ΔΗΜΙΟΥΡΓΙΑ ΠΕΡΙΓΡΑΦΗΣ ---
 def generate_auto_description(model_key, item_data, is_en=False):
     cat_name = item_data.get("cat", "Μηχάνημα")
     series_name = item_data.get("series", "")
     info_text = item_data.get("info", "")
     hp_val = item_data.get("hp", "")
 
-    # Εντοπισμός κατηγορίας T1a ή T2a
     t_category = ""
     full_search_text = f"{series_name} {info_text}".upper()
     if "T1A" in full_search_text:
@@ -195,7 +197,6 @@ def generate_auto_description(model_key, item_data, is_en=False):
 
     return text
 
-# Λεξικό μετάφρασης προαιρετικού εξοπλισμού
 optional_equipment_translations = {
     "Υδραυλική τιράντα": "Hydraulic top link",
     "Υδραυλικό ραντάρ": "Hydraulic radar",
@@ -284,7 +285,7 @@ if "cart" not in st.session_state:
     st.session_state.cart = []
 
 # ==============================================================================
-# ΓΕΝΝΗΤΡΙΑ PDF
+# ΓΕΝΝΗΤΡΙΑ PDF (ΜΕ AUTO-WRAP ΓΙΑ ΑΠΟΦΥΓΗ ΚΟΨΙΜΑΤΟΣ ΚΕΙΜΕΝΟΥ)
 # ==============================================================================
 def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date):
     pdf_filename = "temp_profora.pdf"
@@ -360,6 +361,22 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     
     y -= 15
 
+    # Στυλ Παραγράφων για Αυτόματο τύλιγμα (Word Wrap)
+    body_p_style = ParagraphStyle(
+        'PdfBody',
+        fontName=font_reg,
+        fontSize=9,
+        leading=12,
+        alignment=TA_LEFT
+    )
+    title_p_style = ParagraphStyle(
+        'PdfTitle',
+        fontName=font_bld,
+        fontSize=10,
+        leading=14,
+        alignment=TA_LEFT
+    )
+
     def check_new_page(needed_space=100):
         nonlocal y, page_num
         if y < needed_space:
@@ -371,39 +388,43 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     for idx, item in enumerate(cart_items, 1):
         check_new_page(130)
         
-        c.setFont(font_bld, 10)
+        # 1. Τίτλος Μοντέλου
         model_title = f"{idx}) Μοντέλο: {item['model']}" if not is_english else f"{idx}) Model: {item['model']}"
-        c.drawString(50, y, model_title)
-        y -= 14
+        p_title = Paragraph(model_title, title_p_style)
+        p_title.wrap(width - 100, 40)
+        p_title.drawOn(c, 50, y - p_title.height)
+        y -= (p_title.height + 6)
         
-        c.setFont(font_reg, 9)
+        # 2. Περιγραφή (Με αυτόματο τύλιγμα, δεν κόβεται ποτέ!)
         desc_full = item.get('desc', item['info'])
-        if len(desc_full) > 105:
-            c.drawString(65, y, desc_full[:105])
-            y -= 12
-            c.drawString(65, y, desc_full[105:])
-            y -= 12
-        else:
-            c.drawString(65, y, desc_full)
-            y -= 12
+        p_desc = Paragraph(desc_full, body_p_style)
+        p_desc.wrap(width - 115, 100)
+        p_desc.drawOn(c, 65, y - p_desc.height)
+        y -= (p_desc.height + 6)
 
+        # 3. Πιστοποιητικό CE
         ce_text = "• Το μηχάνημα είναι καινούργιο και αμεταχείριστο και διαθέτει πιστοποιητικό CE." if not is_english else "• The machine is brand new and unused and has a CE certificate."
-        c.setFont(font_reg, 8)
-        c.drawString(65, y, ce_text)
-        y -= 14
+        p_ce = Paragraph(ce_text, body_p_style)
+        p_ce.wrap(width - 115, 40)
+        p_ce.drawOn(c, 65, y - p_ce.height)
+        y -= (p_ce.height + 6)
 
+        # 4. Προαιρετικός Εξοπλισμός
         opt_eq = item.get('optional_eq', '')
         if opt_eq:
             check_new_page(50)
-            c.setFont(font_bld, 9)
-            c.drawString(65, y, "Προαιρετικός Εξοπλισμός:" if not is_english else "Optional Equipment:")
-            y -= 12
+            p_opt_title = Paragraph("<b>Προαιρετικός Εξοπλισμός:</b>" if not is_english else "<b>Optional Equipment:</b>", body_p_style)
+            p_opt_title.wrap(width - 115, 40)
+            p_opt_title.drawOn(c, 65, y - p_opt_title.height)
+            y -= (p_opt_title.height + 4)
+
             for line in opt_eq.split('\n'):
                 if line.strip():
                     check_new_page(30)
-                    c.setFont(font_reg, 9)
-                    c.drawString(80, y, f"- {line.strip()}")
-                    y -= 12
+                    p_line = Paragraph(f"- {line.strip()}", body_p_style)
+                    p_line.wrap(width - 130, 40)
+                    p_line.drawOn(c, 80, y - p_line.height)
+                    y -= (p_line.height + 4)
             y -= 4
 
         check_new_page(50)
@@ -430,9 +451,9 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
     check_new_page(80)
     y -= 10
-    c.setFont(font_reg, 8)
-    note_text = "• Ο εξοπλισμός διαθέτει ελληνική και ευρωπαϊκή έγκριση τύπου & καλύπτεται από εργοστασιακή εγγύηση ενός έτους." if not is_english else "• The equipment has Greek and European type approval & is covered by a one-year factory warranty."
-    c.drawString(50, y, note_text)
+    p_note = Paragraph("• Ο εξοπλισμός διαθέτει ελληνική και ευρωπαϊκή έγκριση τύπου & καλύπτεται από εργοστασιακή εγγύηση ενός έτους." if not is_english else "• The equipment has Greek and European type approval & is covered by a one-year factory warranty.", body_p_style)
+    p_note.wrap(width - 100, 40)
+    p_note.drawOn(c, 50, y - p_note.height)
 
     y -= 30
     check_new_page(50)
@@ -594,4 +615,4 @@ if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιου�
             mime="application/pdf",
             use_container_width=True
         )
-
+        
