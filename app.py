@@ -5,8 +5,8 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import Paragraph
+from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT
 
 # ΡΥΘΜΙΣΗ ΣΕΛΙΔΑΣ (PWA Icon & Τίτλος)
@@ -29,14 +29,15 @@ database = {
     "L2522": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 50.86, "price": 37500, "info": "50.86 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2522."},
     "L2552": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 54.54, "price": 50000, "info": "54.54 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2552."},
     "L2622": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 61.34, "price": 58000, "info": "61.34 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2622."},
-    
+
     "M4063R": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 66.37, "price": 47500, "info": "66.37 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 R."},
     "M4063C": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 66.37, "price": 50500, "info": "66.37 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 C."},
     "M4073R": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 74.26, "price": 51500, "info": "74.26 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 R."},
     "M4073C": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 74.26, "price": 54500, "info": "74.26 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 C."},
-    
+
     "M5072NR": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 57500, "info": "73.58 HP - T2a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072N R."},
     "M5072NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 60500, "info": "73.58 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072N C."},
+    "M5072NQ": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 60500, "info": "73.58 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072NQ."},
     "M5082NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 87.45, "price": 63500, "info": "87.45 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5082N C."},
     "M5092NR": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 93.30, "price": 67500, "info": "93.30 HP - T2a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5092N R."},
     "M5092NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 94.38, "price": 70500, "info": "94.38 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5092N C."},
@@ -48,15 +49,15 @@ database = {
     "M5092C": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 96.42, "price": 67500, "info": "96.42 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5092 C."},
     "M5112R": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 107.17, "price": 68500, "info": "107.17 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5112 R."},
     "M5112C": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 114.78, "price": 72000, "info": "114.78 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5112 C."},
-    
+
     "M6121U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 123.49, "price": 89000, "info": "123.49 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6121 U."},
     "M6131U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 133.42, "price": 93000, "info": "133.42 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6131 U."},
     "M6141U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 143.48, "price": 97000, "info": "143.48 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6141 U."},
-    
+
     "M6122": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 123.50, "price": 90000, "info": "123.50 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6122."},
     "M6132": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 133.40, "price": 94000, "info": "133.40 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6132."},
     "M6142": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 143.40, "price": 98000, "info": "143.40 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6142."},
-    
+
     "RTV-X1110": {"cat": "Τρακτέρ", "series": "Utility - T1a", "hp": 21.62, "price": 22000, "info": "21.62 HP - T1a Utility", "desc": "Ένα καινούριο και αμεταχειριστό μηχάνημα KUBOTA RTV-X1110."},
 
     # --- 2. ΥΠΟΛΟΙΠΑ ΚΛΑΣΙΚΑ ΜΟΝΤΕΛΑ KUBOTA ---
@@ -77,7 +78,7 @@ database = {
     "L2622DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 62, "price": 58000, "info": "62 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2622DHC με καμπίνα."},
     "M5072N": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 74, "price": 57500, "info": "74 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072N."},
     "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου M5092N36-EC με αψίδα προστασίας εγκεκριμένου τύπου."},
-    "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-112NQ-EC."},
+    "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36 (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-112NQ-EC."},
     "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 DTH."},
     "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 DTH."},
     "M5-092 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 94, "price": 64500, "info": "94 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-092 DTH."},
@@ -140,8 +141,65 @@ database = {
     "ID_TOUCHSCREEN": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1500, "info": "Touchscreen 7\"", "desc": "Touchscreen Οθόνη Αφής 7\" με υπολογιστή επεξεργασίας δεδομένων."}
 }
 
+def is_narrow_tractor(model_key, item_data):
+    if item_data.get("cat") != "Τρακτέρ":
+        return False
+    combined = f"{model_key} {item_data.get('series', '')} {item_data.get('info', '')}".upper()
+    return ("NARROW" in combined) or ("NQ" in model_key.upper()) or ("NR" in model_key.upper()) or ("NC" in model_key.upper()) or (model_key.upper().endswith("N"))
+
+def is_cab_model(model_key, item_data):
+    combined = f"{model_key} {item_data.get('info', '')}".upper()
+    return ("CAB" in combined) or ("ΚΑΜΠΙΝ" in combined) or ("NQ" in model_key.upper()) or (model_key.upper().endswith("C"))
+
+def format_hp_gr(hp_val):
+    if isinstance(hp_val, float):
+        return f"{hp_val:.2f}".replace(".", ",") + "hp"
+    return f"{hp_val}hp"
+
+def get_front_linkage_text(company_gr, is_en=False):
+    if is_en:
+        if company_gr == "Πετρόπουλος":
+            return "With 3-stage front linkage."
+        elif company_gr == "Φίλης":
+            return "With front linkage."
+        else:
+            return "With adjustable front linkage."
+    else:
+        if company_gr == "Πετρόπουλος":
+            return "Με εμπρόσθια ανάρτηση 3ων σταδίων."
+        elif company_gr == "Φίλης":
+            return "Με εμπρόσθια ανάρτηση."
+        else:
+            return "Με ρυθμιζόμενη εμπρόσθια ανάρτηση."
+
+def get_includes_block_text(has_cab, is_en=False):
+    if is_en:
+        lines = [
+            "Includes:",
+            "- Complete set of front and rear wheel ballast weights",
+            "- Hydraulic radar",
+            "- 3 sets of double-acting hydraulic valves with flow control",
+            "- Fender control for hydraulic lift height adjustment",
+            "- Seat with adjustable suspension"
+        ]
+        if has_cab:
+            lines.append("- Dust and charcoal cabin filters")
+        return "\n".join(lines)
+    else:
+        lines = [
+            "Περιλαμβάνει:",
+            "- Πλήρες σετ αντιβάρων εμπρός και στους πίσω τροχούς",
+            "- Υδραυλικό ραντάρ",
+            "- 3 σετ υδραυλικά χειριστήρια διπλής παροχής με ελεγχόμενη ροή",
+            "- Χειριστήριο στο φτερό για ρύθμιση ύψους των υδραυλικών (μπράτσων)",
+            "- Κάθισμα με ρυθμιζόμενη ανάρτηση"
+        ]
+        if has_cab:
+            lines.append("- Φίλτρα σκόνης και άνθρακα για την καμπίνα")
+        return "\n".join(lines)
+
 # --- ΕΞΥΠΝΗ ΑΥΤΟΜΑΤΗ ΔΗΜΙΟΥΡΓΙΑ ΠΕΡΙΓΡΑΦΗΣ ---
-def generate_auto_description(model_key, item_data, is_en=False):
+def generate_auto_description(model_key, item_data, company_gr="Πετρόπουλος", has_front_linkage=False, include_extras_block=False, is_en=False):
     cat_name = item_data.get("cat", "Μηχάνημα")
     series_name = item_data.get("series", "")
     info_text = item_data.get("info", "")
@@ -154,46 +212,154 @@ def generate_auto_description(model_key, item_data, is_en=False):
     elif "T2A" in full_search_text:
         t_category = "T2a"
 
+    if cat_name == "Τρακτέρ" and is_narrow_tractor(model_key, item_data):
+        has_cab = is_cab_model(model_key, item_data)
+        hp_gr = format_hp_gr(hp_val) if hp_val != "" else ""
+
+        if is_en:
+            if company_gr == "Πετρόπουλος":
+                if has_cab:
+                    base = (
+                        f"A brand new and unused agricultural tractor manufactured by KUBOTA Japan type {model_key} with cabin. "
+                        f"Features twin differential, four-cylinder Stage V liquid-cooled diesel engine with {hp_val} HP, "
+                        f"6-speed transmission with 3 ranges and Hi-Lo for 36/36 total speeds (forward/reverse). "
+                        f"Electro-hydraulic shuttle, electro-hydraulic front differential lock and electro-hydraulic PTO engagement. "
+                        f"2 engine speed memories and engine speed stabilization system. With safety cabin with A/C, Bluetooth radio."
+                    )
+                else:
+                    base = (
+                        f"A brand new and unused agricultural tractor manufactured by KUBOTA Japan type {model_key}. "
+                        f"Features twin differential, four-cylinder Stage V liquid-cooled diesel engine with {hp_val} HP, "
+                        f"6-speed gearbox with 3 ranges and Hi-Lo for 36/36 total speeds (forward/reverse). "
+                        f"Electro-hydraulic shuttle, electro-hydraulic front differential lock and electro-hydraulic PTO engagement. "
+                        f"2 engine speed memories and engine speed stabilization system. With approved type safety roll-bar."
+                    )
+            elif company_gr == "Φίλης":
+                if has_cab:
+                    base = (
+                        f"A brand new and unused KUBOTA agricultural tractor type {model_key}, {hp_val} HP. "
+                        f"With electro-hydraulic shuttle and PTO engagement. 36/36 speeds gearbox, "
+                        f"with approved type safety cabin with Air Condition."
+                    )
+                else:
+                    base = (
+                        f"A brand new and unused KUBOTA agricultural tractor type {model_key} with safety roll-bar, {hp_val} HP. "
+                        f"With electro-hydraulic shuttle and PTO engagement. 36/36 speeds gearbox."
+                    )
+            else:  # Κάμπος
+                if has_cab:
+                    base = (
+                        f"Brand new and unused KUBOTA tractor type {model_key} with {hp_val} HP engine, 36/36 speeds gearbox. "
+                        f"With cabin and air-condition."
+                    )
+                else:
+                    base = (
+                        f"Brand new and unused KUBOTA tractor type {model_key} with {hp_val} HP engine, 36/36 speeds gearbox. "
+                        f"With approved safety bar."
+                    )
+
+            if t_category:
+                base += f" It is category {t_category}."
+            if has_front_linkage:
+                base += f" {get_front_linkage_text(company_gr, is_en=True)}"
+            if include_extras_block:
+                base += f"\n{get_includes_block_text(has_cab, is_en=True)}"
+            return base
+        else:
+            if company_gr == "Πετρόπουλος":
+                if has_cab:
+                    base = (
+                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου {model_key} με καμπίνα. "
+                        f"Διαθέτει διπλό διαφορικό, τετρακύλινδρο κινητήρα diesel κατηγορίας ρύπων φάση V, υδρόψυκτο, με ισχύ κινητήρα {hp_gr}, "
+                        f"σασμάν 6 ταχυτήτων με 3 ομάδες και Hi-Lo συνολικών ταχυτήτων 36/36 (εμπρός/πίσω). "
+                        f"Ηλεκτρο-υδραυλική ρεβέρσα, ηλεκτρο-υδραυλική εμπλοκή μπροστινού διαφορικού και ηλεκτρο-υδραυλική ενεργοποίηση δυναμοδότη (PTO). "
+                        f"2 μνήμες στροφών και σύστημα σταθεροποίησης στροφών. Με καμπίνα ασφαλείας με A/C, ράδιο με Bluetooth."
+                    )
+                else:
+                    base = (
+                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου {model_key}. "
+                        f"Διαθέτει διπλό διαφορικό, τετρακύλινδρο κινητήρα diesel κατηγορίας ρύπων φάση V, υδρόψυκτο, με ισχύ κινητήρα {hp_gr}, "
+                        f"κιβώτιο 6 ταχυτήτων με 3 ομάδες και Hi-Lo συνολικών ταχυτήτων 36/36 (εμπρός/πίσω). "
+                        f"Ηλεκτρο-υδραυλική ρεβέρσα, ηλεκτρο-υδραυλική εμπλοκή μπροστινού διαφορικού και ηλεκτρο-υδραυλική ενεργοποίηση δυναμοδότη (PTO). "
+                        f"2 μνήμες στροφών και σύστημα σταθεροποίησης στροφών. Με αψίδα προστασίας εγκεκριμένου τύπου."
+                    )
+            elif company_gr == "Φίλης":
+                if has_cab:
+                    base = (
+                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα KUBOTA τύπου {model_key}, ισχύος {hp_gr}. "
+                        f"Με ηλεκτροϋδραυλική αλλαγή κατεύθυνσης (ρεβέρσα) και εμπλοκή PTO. Σασμάν 36/36 ταχυτήτων, "
+                        f"Με καμπίνα ασφαλείας εγκεκριμένου τύπου με Air Condition."
+                    )
+                else:
+                    base = (
+                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα KUBOTA τύπου {model_key} με αψίδα προστασίας, ισχύος {hp_gr}. "
+                        f"Με ηλεκτροϋδραυλική αλλαγή κατεύθυνσης (ρεβέρσα) και εμπλοκή PTO. Σασμάν 36/36 ταχυτήτων."
+                    )
+            else:  # Κάμπος
+                if has_cab:
+                    base = (
+                        f"Καινούργιο και αμεταχείριστο τρακτέρ KUBOTA τύπου {model_key} με κινητήρα ισχύος {hp_gr}, σασμάν 36/36 ταχυτήτων. "
+                        f"Με καμπίνα με air-condition."
+                    )
+                else:
+                    base = (
+                        f"Καινούργιο και αμεταχείριστο τρακτέρ KUBOTA τύπου {model_key} με κινητήρα ισχύος {hp_gr}, σασμάν 36/36 ταχυτήτων. "
+                        f"Με εγκεκριμένη μπάρα ασφαλείας."
+                    )
+
+            if t_category:
+                base += f" Είναι κατηγορίας {t_category}."
+            if has_front_linkage:
+                base += f" {get_front_linkage_text(company_gr, is_en=False)}"
+            if include_extras_block:
+                base += f"\n{get_includes_block_text(has_cab, is_en=False)}"
+            return base
+
+    # --- ΓΕΝΙΚΗ ΑΥΤΟΜΑΤΗ ΠΕΡΙΓΡΑΦΗ ΓΙΑ ΤΑ ΥΠΟΛΟΙΠΑ ΜΟΝΤΕΛΑ ---
     if is_en:
         if cat_name == "Τρακτέρ":
-            mach_desc = f"brand new and unused KUBOTA agricultural tractor type {model_key}"
+            hp_str = f"with a diesel engine stage V, power of {hp_val} HP" if hp_val else ""
+            text = f"A brand new and unused agricultural tractor manufactured by KUBOTA Japan type {model_key} {hp_str}, equipped with an approved safety roll-bar. "
+            text += f"It features standard equipment of series {series_name}."
+            if t_category:
+                text += f" It is category {t_category}."
         elif cat_name == "Χωματουργικό":
-            mach_desc = f"brand new and unused KUBOTA excavation machine type {model_key}"
+            text = f"A brand new and unused KUBOTA excavation machine type {model_key} ({info_text})."
         elif cat_name == "Μανέζ Λοζάνο":
-            mach_desc = f"brand new and unused Manez Lozano sprayer type {model_key} ({info_text})"
+            text = f"A brand new and unused Manez Lozano sprayer type {model_key} ({info_text})."
         elif cat_name == "Νιούμπο":
-            mach_desc = f"brand new and unused Niubo shredder type {model_key} ({info_text})"
+            hp_req = f" This machine requires at least {hp_val} HP." if hp_val else ""
+            text = f"A brand new and unused Niubo shredder type {model_key} ({info_text}).{hp_req}"
         elif cat_name == "Κοπροδιανομείς ID DAVID":
-            mach_desc = f"brand new and unused ID DAVID manure spreader type {model_key} ({info_text})"
+            text = f"A brand new and unused ID DAVID manure spreader type {model_key} ({info_text})."
         else:
-            mach_desc = f"machine {model_key}"
-
-        text = f"A {mach_desc} equipped with an approved safety roll-bar/cab. "
-        text += f"It features standard equipment of series {series_name} and technical specifications: {info_text}."
-        if cat_name == "Τρακτέρ" and t_category:
-            text += f" It is category {t_category}."
-        if cat_name == "Νιούμπο" and hp_val:
-            text += f" This machine requires at least {hp_val} HP."
+            text = f"Machine {model_key} ({info_text})."
+        if has_front_linkage:
+            text += f" {get_front_linkage_text(company_gr, is_en=True)}"
+        if include_extras_block:
+            text += f"\n{get_includes_block_text(is_cab_model(model_key, item_data), is_en=True)}"
     else:
         if cat_name == "Τρακτέρ":
-            mach_desc = f"γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου {model_key}"
+            hp_str = f"με κινητήρα diesel stage V, ισχύος {hp_val} HP" if hp_val else ""
+            text = f"Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου {model_key} {hp_str} και αψίδα προστασίας εγκεκριμένου τύπου. "
+            text += f"Διαθέτει βασικό εξοπλισμό σειράς {series_name}."
+            if t_category:
+                text += f" Είναι κατηγορίας {t_category}."
         elif cat_name == "Χωματουργικό":
-            mach_desc = f"χωματουργικό μηχάνημα KUBOTA τύπου {model_key}"
+            text = f"Ένα καινούριο και αμεταχείριστό χωματουργικό μηχάνημα KUBOTA τύπου {model_key} ({info_text})."
         elif cat_name == "Μανέζ Λοζάνο":
-            mach_desc = f"ψεκαστικό μηχάνημα Manez Lozano τύπου {model_key} ({info_text})"
+            text = f"Ψεκαστικό μηχάνημα Manez Lozano τύπου {model_key} ({info_text})."
         elif cat_name == "Νιούμπο":
-            mach_desc = f"καταστροφέα Niubo τύπου {model_key} ({info_text})"
+            hp_req = f" Το μηχάνημα απαιτεί τουλάχιστον {hp_val} ιππους." if hp_val else ""
+            text = f"Καταστροφέας Niubo τύπου {model_key} ({info_text}).{hp_req}"
         elif cat_name == "Κοπροδιανομείς ID DAVID":
-            mach_desc = f"κοπροδιανομέα ID DAVID τύπου {model_key} ({info_text})"
+            text = f"Κοπροδιανομέας ID DAVID τύπου {model_key} ({info_text})."
         else:
-            mach_desc = f"μηχάνημα {model_key}"
-
-        text = f"Ένα καινούριο και αμεταχείριστό {mach_desc} με αψίδα προστασίας εγκεκριμένου τύπου. "
-        text += f"Διαθέτει βασικό εξοπλισμό σειράς {series_name} και τεχνικά χαρακτηριστικά: {info_text}."
-        if cat_name == "Τρακτέρ" and t_category:
-            text += f" Είναι κατηγορίας {t_category}."
-        if cat_name == "Νιούμπο" and hp_val:
-            text += f" Το μηχάνημα απαιτεί τουλάχιστον {hp_val} ιππους."
+            text = f"Μηχάνημα {model_key} ({info_text})."
+        if has_front_linkage:
+            text += f" {get_front_linkage_text(company_gr, is_en=False)}"
+        if include_extras_block:
+            text += f"\n{get_includes_block_text(is_cab_model(model_key, item_data), is_en=False)}"
 
     return text
 
@@ -285,7 +451,7 @@ if "cart" not in st.session_state:
     st.session_state.cart = []
 
 # ==============================================================================
-# ΓΕΝΝΗΤΡΙΑ PDF (ΜΕ AUTO-WRAP ΓΙΑ ΑΠΟΦΥΓΗ ΚΟΨΙΜΑΤΟΣ ΚΕΙΜΕΝΟΥ)
+# ΓΕΝΝΗΤΡΙΑ PDF
 # ==============================================================================
 def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date):
     pdf_filename = "temp_profora.pdf"
@@ -293,18 +459,18 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
     c = canvas.Canvas(pdf_filename, pagesize=letter)
     width, height = letter
-    
+
     page_num = 1
 
     def draw_header_footer():
         nonlocal page_num
-        
+
         if page_num == 1:
             if company in ["Πετρόπουλος", "Petropoulos"]:
                 logo2_path = "PETROPOULOS_GROUP_Logo_Colour-1.jpg"
                 if os.path.exists(logo2_path):
                     c.drawImage(logo2_path, 50, height - 60, width=120, height=35, preserveAspectRatio=True, mask='auto')
-                
+
                 logo1_path = "ΕΛΞΙΣ-03.png"
                 if os.path.exists(logo1_path):
                     c.drawImage(logo1_path, width - 145, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
@@ -314,7 +480,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
             c.drawRightString(width - 155, height - 43, f"E-mail : {seller_data['email']}")
             formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
             c.drawRightString(width - 155, height - 56, formatted_date_str)
-            
+
             c.setStrokeColorRGB(0.2, 0.3, 0.5)
             c.setLineWidth(1)
             c.line(50, height - 78, width - 50, height - 78)
@@ -331,7 +497,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
         c.drawRightString(width - 50, 32, f"Σελίδα {page_num}" if not is_english else f"Page {page_num}")
 
     draw_header_footer()
-    
+
     c.setFont(font_bld, 11)
     c.drawString(50, height - 98, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:" if not is_english else "CLIENT DETAILS:")
     c.setFont(font_reg, 9)
@@ -343,25 +509,24 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     c.drawString(50, y_client, f"ΑΦΜ: {client_data['afm']}  |  ΤΗΛΕΦΩΝΟ: {client_data['phone_client']}" if not is_english else f"VAT: {client_data['afm']}  |  PHONE: {client_data['phone_client']}")
     y_client -= 14
     c.drawString(50, y_client, f"ΕΠΑΓΓΕΛΜΑ: {client_data['profession'].upper()}" if not is_english else f"PROFESSION: {client_data['profession'].upper()}")
-        
+
     y_client -= 14
     c.setStrokeColorRGB(0.7, 0.7, 0.7)
     c.setLineWidth(0.5)
     c.line(50, y_client, width - 50, y_client)
-    
+
     y = y_client - 18
     c.setFont(font_bld, 12)
     c.drawCentredString(width / 2.0, y, "ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ" if not is_english else "COMMERCIAL OFFER")
-    
+
     y -= 18
     c.setFont(font_reg, 9)
     c.drawString(50, y, f"Αξιότιμε/η κ. {client_data['name']}," if not is_english else f"Dear {client_data['name']},")
     y -= 14
     c.drawString(50, y, "Κατόπιν επιθυμίας σας για την αγορά εξοπλισμού από την εταιρεία μας είμαστε στην ευχάριστη θέση να σας προσφέρουμε τα εξής:" if not is_english else "Following your request for equipment purchase, we are pleased to offer you the following:")
-    
+
     y -= 15
 
-    # Στυλ Παραγράφων για Αυτόματο τύλιγμα (Word Wrap)
     body_p_style = ParagraphStyle(
         'PdfBody',
         fontName=font_reg,
@@ -387,29 +552,29 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
     for idx, item in enumerate(cart_items, 1):
         check_new_page(130)
-        
-        # 1. Τίτλος Μοντέλου
+
         model_title = f"{idx}) Μοντέλο: {item['model']}" if not is_english else f"{idx}) Model: {item['model']}"
         p_title = Paragraph(model_title, title_p_style)
         p_title.wrap(width - 100, 40)
         p_title.drawOn(c, 50, y - p_title.height)
         y -= (p_title.height + 6)
-        
-        # 2. Περιγραφή (Με αυτόματο τύλιγμα, δεν κόβεται ποτέ!)
-        desc_full = item.get('desc', item['info'])
-        p_desc = Paragraph(desc_full, body_p_style)
-        p_desc.wrap(width - 115, 100)
-        p_desc.drawOn(c, 65, y - p_desc.height)
-        y -= (p_desc.height + 6)
 
-        # 3. Πιστοποιητικό CE
+        desc_full = item.get('desc', item['info'])
+        for desc_line in desc_full.split('\n'):
+            if desc_line.strip():
+                check_new_page(40)
+                p_desc = Paragraph(desc_line.strip(), body_p_style)
+                p_desc.wrap(width - 115, 250)
+                p_desc.drawOn(c, 65, y - p_desc.height)
+                y -= (p_desc.height + 4)
+        y -= 2
+
         ce_text = "• Το μηχάνημα είναι καινούργιο και αμεταχείριστο και διαθέτει πιστοποιητικό CE." if not is_english else "• The machine is brand new and unused and has a CE certificate."
         p_ce = Paragraph(ce_text, body_p_style)
         p_ce.wrap(width - 115, 40)
         p_ce.drawOn(c, 65, y - p_ce.height)
         y -= (p_ce.height + 6)
 
-        # 4. Προαιρετικός Εξοπλισμός
         opt_eq = item.get('optional_eq', '')
         if opt_eq:
             check_new_page(50)
@@ -503,38 +668,60 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος, Τιμής, ΦΠ�
         categories = [cat_map.get(c, c) for c in raw_categories]
     else:
         categories = raw_categories
-        
+
     selected_cat_ui = st.selectbox("Category / Κατηγορία", categories)
-    
+
     if is_english:
         inv_cat_map = {"Tractor": "Τρακτέρ", "Excavator": "Χωματουργικό", "Manez Lozano": "Μανέζ Λοζάνο", "Niubo": "Νιούμπο", "ID DAVID Manure Spreaders": "Κοπροδιανομείς ID DAVID"}
         selected_cat = inv_cat_map.get(selected_cat_ui, selected_cat_ui)
     else:
         selected_cat = selected_cat_ui
-    
+
     series_list = sorted(list(set(item["series"] for item in database.values() if item["cat"] == selected_cat)))
     if is_english:
         display_series_list = [translate_info(s, True) for s in series_list]
     else:
         display_series_list = series_list
-        
+
     selected_series_ui = st.selectbox("Series / Σειρά", display_series_list)
     selected_series = series_list[display_series_list.index(selected_series_ui)]
-    
+
     model_list = [model for model, item in database.items() if item["cat"] == selected_cat and item["series"] == selected_series]
     selected_model = st.selectbox("Model / Μοντέλο", model_list)
-    
+
     if selected_model:
         current_item = database[selected_model]
-        auto_desc = generate_auto_description(selected_model, current_item, is_english)
-        
+
+        col_opt1, col_opt2 = st.columns(2)
+        with col_opt1:
+            has_front_linkage = st.checkbox(
+                "Front Linkage / Εμπρόσθια Ανάρτηση" if is_english else "Εμπρόσθια Ανάρτηση",
+                value=False,
+                key=f"front_link_{selected_model}"
+            )
+        with col_opt2:
+            include_extras_block = st.checkbox(
+                "Include 'Includes:' block (more detailed offer)" if is_english else "Προσθήκη μπλοκ «Περιλαμβάνει:» (πιο πλήρης εμφάνιση)",
+                value=False,
+                key=f"inc_block_{selected_model}"
+            )
+
+        auto_desc = generate_auto_description(
+            selected_model,
+            current_item,
+            company_gr=company,
+            has_front_linkage=has_front_linkage,
+            include_extras_block=include_extras_block,
+            is_en=is_english
+        )
+
         col_p1, col_p2 = st.columns(2)
         with col_p1:
             custom_price = st.number_input("Τιμή Μοντέλου (€)", value=float(current_item['price']), step=100.0)
         with col_p2:
             item_vat_rate = st.selectbox("ΦΠΑ Προϊόντος (%)", [13, 24], index=0)
 
-        custom_desc = st.text_area("Αναλυτική Περιγραφή Μηχανήματος στο PDF", value=auto_desc, height=100)
+        custom_desc = st.text_area("Αναλυτική Περιγραφή Μηχανήματος στο PDF", value=auto_desc, height=160)
     else:
         custom_price = 0.0
         item_vat_rate = 13
@@ -567,7 +754,7 @@ with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Ε�
                 display_cat = "Tractor" if cart_item['cat'] == "Τρακτέρ" else ("Excavator" if cart_item['cat'] == "Χωματουργικό" else ("Manez Lozano" if cart_item['cat'] == "Μανέζ Λοζάνο" else ("Niubo" if cart_item['cat'] == "Νιούμπο" else "ID David Spreader")))
             else:
                 display_cat = cart_item['cat']
-                
+
             col_a, col_b = st.columns([4, 1])
             with col_a:
                 st.write(f"**{idx+1}. {display_cat} | {cart_item['model']}** — {cart_item['price']:,.2f} EUR (ΦΠΑ: {cart_item['vat']}%)")
@@ -577,7 +764,7 @@ with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Ε�
                 if st.button("❌", key=f"del_{idx}"):
                     st.session_state.cart.pop(idx)
                     st.rerun()
-        
+
         if st.button("🗑️ " + ("Clear Cart" if is_english else "Εκκαθάριση Καλαθιού")):
             st.session_state.cart = []
             st.rerun()
@@ -601,13 +788,13 @@ if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιου�
         seller_data = {
             "name": seller_name, "title": seller_title, "email": seller_email, "phone": seller_phone
         }
-        
+
         pdf_data = generate_pdf_bytes(client_data, seller_data, st.session_state.cart, company, is_english, offer_date)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         safe_company = (company if not is_english else ("Petropoulos" if company == "Πετρόπουλος" else ("Filis" if company == "Φίλης" else "Kampos"))).replace(" ", "_")
         safe_client = client_name.replace(" ", "_")
         pdf_filename = f"Profora_{safe_company}_{safe_client}_{timestamp}.pdf"
-        
+
         st.download_button(
             label="📥 " + ("Download PDF File" if is_english else "Λήψη Αρχείου PDF"),
             data=pdf_data,
