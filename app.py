@@ -82,7 +82,7 @@ database = {
     "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 DTH."},
     "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 DTH."},
     "M5-092 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 94, "price": 64500, "info": "94 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-092 DTH."},
-    "M5-112 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 107, "price": 65500, "info": "107 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-112 DTH."},
+    "M5-112 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 107, "price": 65500, "info": "107 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-112 DTH."},
     "M6-121-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 131, "price": 89000, "info": "131 HP - Κιβώτιο Powershift, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6-121-DTC."},
     "M6-141-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 142, "price": 96000, "info": "142 HP - Κιβώτιο Powershift, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6-141-DTC."},
 
@@ -451,7 +451,7 @@ if "cart" not in st.session_state:
     st.session_state.cart = []
 
 # ==============================================================================
-# ΓΕΝΝΗΤΡΙΑ PDF
+# ΓΕΝΝΗΤΡΙΑ PDF ΜΕ ΔΙΑΦΟΡΕΤΙΚΗ ΔΟΜΗ ΑΝΑ ΕΤΑΙΡΕΙΑ
 # ==============================================================================
 def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english, offer_date):
     pdf_filename = "temp_profora.pdf"
@@ -466,7 +466,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
         nonlocal page_num
 
         if page_num == 1:
-            if company in ["Πετρόπουλος", "Petropoulos"]:
+            if company == "Πετρόπουλος":
                 logo2_path = "PETROPOULOS_GROUP_Logo_Colour-1.jpg"
                 if os.path.exists(logo2_path):
                     c.drawImage(logo2_path, 50, height - 60, width=120, height=35, preserveAspectRatio=True, mask='auto')
@@ -475,57 +475,123 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
                 if os.path.exists(logo1_path):
                     c.drawImage(logo1_path, width - 145, height - 70, width=95, height=45, preserveAspectRatio=True, mask='auto')
 
-            c.setFont(font_reg, 9)
-            c.drawRightString(width - 155, height - 30, f"Τηλ / Κινητό : {seller_data['phone']}")
-            c.drawRightString(width - 155, height - 43, f"E-mail : {seller_data['email']}")
-            formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
-            c.drawRightString(width - 155, height - 56, formatted_date_str)
+                c.setFont(font_reg, 9)
+                c.drawRightString(width - 155, height - 30, f"Τηλ / Κινητό : {seller_data['phone']}")
+                c.drawRightString(width - 155, height - 43, f"E-mail : {seller_data['email']}")
+                formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
+                c.drawRightString(width - 155, height - 56, formatted_date_str)
 
-            c.setStrokeColorRGB(0.2, 0.3, 0.5)
-            c.setLineWidth(1)
-            c.line(50, height - 78, width - 50, height - 78)
+                c.setStrokeColorRGB(0.2, 0.3, 0.5)
+                c.setLineWidth(1)
+                c.line(50, height - 78, width - 50, height - 78)
+
+            elif company == "Φίλης":
+                c.setFont(font_bld, 13)
+                c.setFillColorRGB(0.1, 0.2, 0.45)
+                c.drawString(50, height - 42, "ΦΙΛΗΣ - ΓΕΩΡΓΙΚΟΣ ΕΞΟΠΛΙΣΜΟΣ" if not is_english else "FILIS - AGRICULTURAL EQUIPMENT")
+                c.setFillColorRGB(0, 0, 0)
+
+                c.setFont(font_reg, 9)
+                formatted_date_str = offer_date.strftime("%d/%m/%Y")
+                c.drawRightString(width - 50, height - 34, f"Ημερομηνία: {formatted_date_str}" if not is_english else f"Date: {formatted_date_str}")
+                if seller_data['phone']:
+                    c.drawRightString(width - 50, height - 47, f"Τηλ: {seller_data['phone']}")
+                if seller_data['email']:
+                    c.drawRightString(width - 50, height - 60, f"Email: {seller_data['email']}")
+
+                c.setStrokeColorRGB(0.1, 0.2, 0.45)
+                c.setLineWidth(1.2)
+                c.line(50, height - 74, width - 50, height - 74)
+
+            else:  # Κάμπος
+                formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
+                c.setFont(font_reg, 9)
+                c.drawString(50, height - 36, formatted_date_str)
+                if seller_data['phone'] or seller_data['email']:
+                    contact_line = " | ".join([x for x in [seller_data['phone'], seller_data['email']] if x])
+                    c.drawString(50, height - 50, contact_line)
+
+                c.setFont(font_bld, 13)
+                c.setFillColorRGB(0.45, 0.1, 0.5)
+                c.drawRightString(width - 50, height - 42, "ΚΑΜΠΟΣ" if not is_english else "KAMPOS")
+                c.setFillColorRGB(0, 0, 0)
+
+                c.setStrokeColorRGB(0.45, 0.1, 0.5)
+                c.setLineWidth(0.8)
+                c.line(50, height - 68, width - 50, height - 68)
         else:
             c.setStrokeColorRGB(0.7, 0.7, 0.7)
             c.setLineWidth(0.5)
             c.line(50, height - 40, width - 50, height - 40)
 
+        # Υποσέλιδο ανά εταιρεία
         c.setStrokeColorRGB(0.7, 0.7, 0.7)
         c.setLineWidth(0.5)
         c.line(50, 45, width - 50, 45)
         c.setFont(font_reg, 7)
-        c.drawString(50, 32, "Πέτρος Πετρόπουλος ΑΕΒΕ   |   Ιερά Οδός 96-104, 10447 Αθήνα   |   Τηλ: 2103499200   |   ΑΦΜ: 094043269")
+
+        if company == "Πετρόπουλος":
+            c.drawString(50, 32, "Πέτρος Πετρόπουλος ΑΕΒΕ   |   Ιερά Οδός 96-104, 10447 Αθήνα   |   Τηλ: 2103499200   |   ΑΦΜ: 094043269")
+        elif company == "Φίλης":
+            c.drawString(50, 32, "Εταιρεία Φίλης — Εμπορία Αγροτικού Εξοπλισμού" if not is_english else "Filis — Agricultural Equipment")
+        else:
+            c.drawString(50, 32, "Εταιρεία Κάμπος — Γεωργικά Μηχανήματα" if not is_english else "Kampos — Agricultural Machinery")
+
         c.drawRightString(width - 50, 32, f"Σελίδα {page_num}" if not is_english else f"Page {page_num}")
 
     draw_header_footer()
 
-    c.setFont(font_bld, 11)
-    c.drawString(50, height - 98, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:" if not is_english else "CLIENT DETAILS:")
-    c.setFont(font_reg, 9)
-    y_client = height - 112
-    c.drawString(50, y_client, f"ΠΡΟΣ: {client_data['name'].upper()}" if not is_english else f"TO: {client_data['name'].upper()}")
-    y_client -= 14
-    c.drawString(50, y_client, f"ΔΙΕΥΘΥΝΣΗ: {client_data['address'].upper()}" if not is_english else f"ADDRESS: {client_data['address'].upper()}")
-    y_client -= 14
-    c.drawString(50, y_client, f"ΑΦΜ: {client_data['afm']}  |  ΤΗΛΕΦΩΝΟ: {client_data['phone_client']}" if not is_english else f"VAT: {client_data['afm']}  |  PHONE: {client_data['phone_client']}")
-    y_client -= 14
-    c.drawString(50, y_client, f"ΕΠΑΓΓΕΛΜΑ: {client_data['profession'].upper()}" if not is_english else f"PROFESSION: {client_data['profession'].upper()}")
+    if company == "Κάμπος":
+        # Διαφορετική διάταξη στοιχείων πελάτη σε δύο στήλες για Κάμπος
+        c.setFont(font_bld, 10)
+        c.drawString(50, height - 92, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ" if not is_english else "CLIENT DETAILS")
+        c.setFont(font_reg, 9)
+        c.drawString(50, height - 108, f"Πελάτης: {client_data['name'].upper()}" if not is_english else f"Client: {client_data['name'].upper()}")
+        c.drawString(50, height - 122, f"Διεύθυνση: {client_data['address'].upper()}" if not is_english else f"Address: {client_data['address'].upper()}")
+        c.drawString(310, height - 108, f"ΑΦΜ: {client_data['afm']}" if not is_english else f"VAT: {client_data['afm']}")
+        c.drawString(310, height - 122, f"Τηλ: {client_data['phone_client']} | Επ.: {client_data['profession'].upper()}" if not is_english else f"Tel: {client_data['phone_client']} | Prof.: {client_data['profession'].upper()}")
 
-    y_client -= 14
-    c.setStrokeColorRGB(0.7, 0.7, 0.7)
-    c.setLineWidth(0.5)
-    c.line(50, y_client, width - 50, y_client)
+        y_sep = height - 136
+        c.setStrokeColorRGB(0.7, 0.7, 0.7)
+        c.setLineWidth(0.5)
+        c.line(50, y_sep, width - 50, y_sep)
 
-    y = y_client - 18
-    c.setFont(font_bld, 12)
-    c.drawCentredString(width / 2.0, y, "ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ" if not is_english else "COMMERCIAL OFFER")
+        y = y_sep - 20
+        c.setFont(font_bld, 12)
+        c.drawString(50, y, "ΠΡΟΤΑΣΗ ΕΞΟΠΛΙΣΜΟΥ" if not is_english else "EQUIPMENT PROPOSAL")
+        y -= 18
+        c.setFont(font_reg, 9)
+        c.drawString(50, y, f"Αξιότιμε/η κ. {client_data['name']}, παρακάτω ακολουθούν οι επιλογές εξοπλισμού:" if not is_english else f"Dear {client_data['name']}, please find the equipment options below:")
+        y -= 18
+    else:
+        c.setFont(font_bld, 11)
+        c.drawString(50, height - 98, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ:" if not is_english else "CLIENT DETAILS:")
+        c.setFont(font_reg, 9)
+        y_client = height - 112
+        c.drawString(50, y_client, f"ΠΡΟΣ: {client_data['name'].upper()}" if not is_english else f"TO: {client_data['name'].upper()}")
+        y_client -= 14
+        c.drawString(50, y_client, f"ΔΙΕΥΘΥΝΣΗ: {client_data['address'].upper()}" if not is_english else f"ADDRESS: {client_data['address'].upper()}")
+        y_client -= 14
+        c.drawString(50, y_client, f"ΑΦΜ: {client_data['afm']}  |  ΤΗΛΕΦΩΝΟ: {client_data['phone_client']}" if not is_english else f"VAT: {client_data['afm']}  |  PHONE: {client_data['phone_client']}")
+        y_client -= 14
+        c.drawString(50, y_client, f"ΕΠΑΓΓΕΛΜΑ: {client_data['profession'].upper()}" if not is_english else f"PROFESSION: {client_data['profession'].upper()}")
 
-    y -= 18
-    c.setFont(font_reg, 9)
-    c.drawString(50, y, f"Αξιότιμε/η κ. {client_data['name']}," if not is_english else f"Dear {client_data['name']},")
-    y -= 14
-    c.drawString(50, y, "Κατόπιν επιθυμίας σας για την αγορά εξοπλισμού από την εταιρεία μας είμαστε στην ευχάριστη θέση να σας προσφέρουμε τα εξής:" if not is_english else "Following your request for equipment purchase, we are pleased to offer you the following:")
+        y_client -= 14
+        c.setStrokeColorRGB(0.7, 0.7, 0.7)
+        c.setLineWidth(0.5)
+        c.line(50, y_client, width - 50, y_client)
 
-    y -= 15
+        y = y_client - 18
+        c.setFont(font_bld, 12)
+        c.drawCentredString(width / 2.0, y, "ΟΙΚΟΝΟΜΙΚΗ ΠΡΟΣΦΟΡΑ" if not is_english else "COMMERCIAL OFFER")
+
+        y -= 18
+        c.setFont(font_reg, 9)
+        c.drawString(50, y, f"Αξιότιμε/η κ. {client_data['name']}," if not is_english else f"Dear {client_data['name']},")
+        y -= 14
+        c.drawString(50, y, "Κατόπιν επιθυμίας σας για την αγορά εξοπλισμού από την εταιρεία μας είμαστε στην ευχάριστη θέση να σας προσφέρουμε τα εξής:" if not is_english else "Following your request for equipment purchase, we are pleased to offer you the following:")
+
+        y -= 15
 
     body_p_style = ParagraphStyle(
         'PdfBody',
@@ -553,7 +619,13 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     for idx, item in enumerate(cart_items, 1):
         check_new_page(130)
 
-        model_title = f"{idx}) Μοντέλο: {item['model']}" if not is_english else f"{idx}) Model: {item['model']}"
+        if company == "Φίλης":
+            model_title = f"Είδος {idx} — {item['model']}" if not is_english else f"Item {idx} — {item['model']}"
+        elif company == "Κάμπος":
+            model_title = f"[{idx}] {item['model']}"
+        else:
+            model_title = f"{idx}) Μοντέλο: {item['model']}" if not is_english else f"{idx}) Model: {item['model']}"
+
         p_title = Paragraph(model_title, title_p_style)
         p_title.wrap(width - 100, 40)
         p_title.drawOn(c, 50, y - p_title.height)
@@ -598,21 +670,47 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
         v_amount = net_val * (item_vat / 100.0)
         tot_val = net_val + v_amount
 
-        c.setStrokeColorRGB(0.3, 0.4, 0.6)
-        c.setLineWidth(0.75)
-        c.rect(65, y - 18, width - 130, 24)
+        if company == "Πετρόπουλος":
+            # Τετραγωνάκι αξιών μόνο για Πετρόπουλος
+            c.setStrokeColorRGB(0.3, 0.4, 0.6)
+            c.setLineWidth(0.75)
+            c.rect(65, y - 18, width - 130, 24)
 
-        c.setFont(font_bld, 8)
-        c.drawString(80, y - 3, "Καθαρή Αξία" if not is_english else "Net Value")
-        c.drawString(230, y - 3, f"ΦΠΑ {item_vat}%")
-        c.drawString(380, y - 3, "Σύνολο" if not is_english else "Total")
+            c.setFont(font_bld, 8)
+            c.drawString(80, y - 3, "Καθαρή Αξία" if not is_english else "Net Value")
+            c.drawString(230, y - 3, f"ΦΠΑ {item_vat}%")
+            c.drawString(380, y - 3, "Σύνολο" if not is_english else "Total")
 
-        c.setFont(font_reg, 9)
-        c.drawString(80, y - 14, f"{net_val:,.2f} €")
-        c.drawString(230, y - 14, f"{v_amount:,.2f} €")
-        c.drawString(380, y - 14, f"{tot_val:,.2f} €")
+            c.setFont(font_reg, 9)
+            c.drawString(80, y - 14, f"{net_val:,.2f} €")
+            c.drawString(230, y - 14, f"{v_amount:,.2f} €")
+            c.drawString(380, y - 14, f"{tot_val:,.2f} €")
+            y -= 35
 
-        y -= 35
+        elif company == "Φίλης":
+            # Καθαρή γραμμή τιμών χωρίς τετραγωνάκι για Φίλης
+            c.setStrokeColorRGB(0.75, 0.75, 0.75)
+            c.setLineWidth(0.6)
+            c.line(65, y + 4, width - 65, y + 4)
+
+            c.setFont(font_bld, 9)
+            net_lbl = "Καθαρή Αξία:" if not is_english else "Net:"
+            vat_lbl = f"ΦΠΑ {item_vat}%:" if not is_english else f"VAT {item_vat}%:"
+            tot_lbl = "Σύνολο:" if not is_english else "Total:"
+            c.drawString(65, y - 10, f"{net_lbl} {net_val:,.2f} €   |   {vat_lbl} {v_amount:,.2f} €   |   {tot_lbl} {tot_val:,.2f} €")
+
+            c.line(65, y - 18, width - 65, y - 18)
+            y -= 32
+
+        else:  # Κάμπος — λίστα τιμών χωρίς τετραγωνάκι
+            c.setFont(font_bld, 9)
+            c.drawString(65, y - 8, ("Οικονομικά Στοιχεία:" if not is_english else "Pricing Details:"))
+            c.setFont(font_reg, 9)
+            c.drawString(80, y - 20, f"• {'Καθαρή Αξία' if not is_english else 'Net Value'}: {net_val:,.2f} €")
+            c.drawString(80, y - 32, f"• {'ΦΠΑ' if not is_english else 'VAT'} ({item_vat}%): {v_amount:,.2f} €")
+            c.setFont(font_bld, 9)
+            c.drawString(80, y - 44, f"• {'Τελικό Σύνολο' if not is_english else 'Total'}: {tot_val:,.2f} €")
+            y -= 58
 
     check_new_page(80)
     y -= 10
@@ -623,7 +721,8 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     y -= 30
     check_new_page(50)
     c.setFont(font_bld, 9)
-    c.drawString(50, y, f"{seller_data['name']} - {seller_data['title']}")
+    if seller_data['name'] or seller_data['title']:
+        c.drawString(50, y, f"{seller_data['name']} - {seller_data['title']}".strip(" -"))
 
     c.save()
     with open(pdf_filename, "rb") as f:
