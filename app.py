@@ -81,7 +81,7 @@ database = {
     "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36 (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5-112NQ-EC."},
     "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M4063 DTH."},
     "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M4073 DTH."},
-    "M5-092 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 94, "price": 64500, "info": "94 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5-092 DTH."},
+    "M5-092 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 94, "price": 64500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5-092 DTH."},
     "M5-112 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 107, "price": 65500, "info": "107 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5-112 DTH."},
     "M6-121-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 131, "price": 89000, "info": "131 HP - Κιβώτιο Powershift, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6-121-DTC."},
     "M6-141-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 142, "price": 96000, "info": "142 HP - Κιβώτιο Powershift, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6-141-DTC."},
@@ -246,7 +246,7 @@ def generate_auto_description(model_key, item_data, company_gr="Πετρόπου
                         f"A brand new and unused KUBOTA agricultural tractor {model_key} with safety roll-bar, {hp_val} HP. "
                         f"With electro-hydraulic shuttle and PTO engagement. 36/36 speeds gearbox."
                     )
-            else:  # Κάμπος
+            else:  # Σούρτζης
                 if has_cab:
                     base = (
                         f"Brand new and unused KUBOTA tractor type {model_key} with {hp_val} HP engine, 36/36 speeds gearbox. "
@@ -295,7 +295,7 @@ def generate_auto_description(model_key, item_data, company_gr="Πετρόπου
                         f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα KUBOTA {model_key} με αψίδα προστασίας, ισχύος {hp_gr}. "
                         f"Με ηλεκτροϋδραυλική αλλαγή κατεύθυνσης (ρεβέρσα) και εμπλοκή PTO. Σασμάν 36/36 ταχυτήτων."
                     )
-            else:  # Κάμπος
+            else:  # Σούρτζης
                 if has_cab:
                     base = (
                         f"Καινούργιο και αμεταχείριστο τρακτέρ KUBOTA τύπου {model_key} με κινητήρα ισχύος {hp_gr}, σασμάν 36/36 ταχυτήτων. "
@@ -503,54 +503,90 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
                 c.setLineWidth(1.2)
                 c.line(50, height - 74, width - 50, height - 74)
 
-            else:  # Κάμπος
-                formatted_date_str = offer_date.strftime("Αθήνα, %d %B %Y") if not is_english else offer_date.strftime("Athens, %B %d, %Y")
-                c.setFont(font_reg, 9)
-                c.drawString(50, height - 36, formatted_date_str)
+            else:  # Σούρτζης
+                sourtzis_top_logo = None
+                for candidate_top in [
+                    "sourtzis banner.jpg", "sourtzis banner.jpeg", "sourtzis banner.png",
+                    "sourtzis_banner.jpg", "sourtzis_banner.png",
+                    "sourtzis_header.png", "sourtzis_header.jpg", "image_7335d5.png"
+                ]:
+                    if os.path.exists(candidate_top):
+                        sourtzis_top_logo = candidate_top
+                        break
+
+                if sourtzis_top_logo:
+                    c.drawImage(sourtzis_top_logo, 50, height - 72, width=width - 100, height=48, preserveAspectRatio=True, mask='auto')
+                else:
+                    c.setFont(font_bld, 12)
+                    c.setFillColorRGB(0.8, 0.15, 0.05)
+                    c.drawString(50, height - 42, "ΤΡΑΚΤΕΜΠΟΡΙΚΗ ΣΟΥΡΤΖΗΣ Μον. Ι.Κ.Ε." if not is_english else "TRACTEBORIKI SOURTZIS Single Member I.K.E.")
+                    c.setFillColorRGB(0, 0, 0)
+
+                formatted_date_str = offer_date.strftime("%d/%m/%Y")
+                c.setFont(font_reg, 8)
+                date_line = f"{'Ημερομηνία' if not is_english else 'Date'}: {formatted_date_str}"
                 if seller_data['phone'] or seller_data['email']:
-                    contact_line = " | ".join([x for x in [seller_data['phone'], seller_data['email']] if x])
-                    c.drawString(50, height - 50, contact_line)
+                    extra_contact = " | ".join([x for x in [seller_data['phone'], seller_data['email']] if x])
+                    date_line += f"   |   {extra_contact}"
+                c.drawRightString(width - 50, height - 83, date_line)
 
-                c.setFont(font_bld, 13)
-                c.setFillColorRGB(0.45, 0.1, 0.5)
-                c.drawRightString(width - 50, height - 42, "ΚΑΜΠΟΣ" if not is_english else "KAMPOS")
-                c.setFillColorRGB(0, 0, 0)
-
-                c.setStrokeColorRGB(0.45, 0.1, 0.5)
-                c.setLineWidth(0.8)
-                c.line(50, height - 68, width - 50, height - 68)
+                c.setStrokeColorRGB(0.8, 0.15, 0.05)
+                c.setLineWidth(0.9)
+                c.line(50, height - 88, width - 50, height - 88)
         else:
             c.setStrokeColorRGB(0.7, 0.7, 0.7)
             c.setLineWidth(0.5)
             c.line(50, height - 40, width - 50, height - 40)
 
         # Υποσέλιδο ανά εταιρεία
-        c.setStrokeColorRGB(0.7, 0.7, 0.7)
-        c.setLineWidth(0.5)
-        c.line(50, 45, width - 50, 45)
-        c.setFont(font_reg, 7)
+        if company == "Σούρτζης":
+            sourtzis_sig_logo = None
+            for candidate_sig in [
+                "sourtzis ypografh.jpg", "sourtzis ypografh.jpeg", "sourtzis ypografh.png",
+                "sourtzis_ypografh.jpg", "sourtzis_ypografh.png",
+                "sourtzis_signature.jpg", "sourtzis_signature.png"
+            ]:
+                if os.path.exists(candidate_sig):
+                    sourtzis_sig_logo = candidate_sig
+                    break
 
-        if company == "Πετρόπουλος":
-            c.drawString(50, 32, "Πέτρος Πετρόπουλος ΑΕΒΕ   |   Ιερά Οδός 96-104, 10447 Αθήνα   |   Τηλ: 2103499200   |   ΑΦΜ: 094043269")
-        elif company == "Φίλης":
-            c.drawString(50, 32, "Εταιρεία Φίλης — Εμπορία Αγροτικού Εξοπλισμού" if not is_english else "Filis — Agricultural Equipment")
+            c.setStrokeColorRGB(0.7, 0.7, 0.7)
+            c.setLineWidth(0.5)
+            c.line(50, 82, width - 50, 82)
+
+            if sourtzis_sig_logo:
+                c.drawImage(sourtzis_sig_logo, 50, 22, width=210, height=55, preserveAspectRatio=True, mask='auto')
+            else:
+                c.setFont(font_reg, 7)
+                c.drawString(50, 32, "ΤΡΑΚΤΕΜΠΟΡΙΚΗ ΣΟΥΡΤΖΗΣ ΜΟΝ ΙΚΕ — ΑΝΤΙΠΡΟΣΩΠΟΙ: KUBOTA")
+
+            c.setFont(font_reg, 7)
+            c.drawRightString(width - 50, 32, f"Σελίδα {page_num}" if not is_english else f"Page {page_num}")
         else:
-            c.drawString(50, 32, "Εταιρεία Κάμπος — Γεωργικά Μηχανήματα" if not is_english else "Kampos — Agricultural Machinery")
+            c.setStrokeColorRGB(0.7, 0.7, 0.7)
+            c.setLineWidth(0.5)
+            c.line(50, 45, width - 50, 45)
+            c.setFont(font_reg, 7)
 
-        c.drawRightString(width - 50, 32, f"Σελίδα {page_num}" if not is_english else f"Page {page_num}")
+            if company == "Πετρόπουλος":
+                c.drawString(50, 32, "Πέτρος Πετρόπουλος ΑΕΒΕ   |   Ιερά Οδός 96-104, 10447 Αθήνα   |   Τηλ: 2103499200   |   ΑΦΜ: 094043269")
+            elif company == "Φίλης":
+                c.drawString(50, 32, "Εταιρεία Φίλης — Εμπορία Αγροτικού Εξοπλισμού" if not is_english else "Filis — Agricultural Equipment")
+
+            c.drawRightString(width - 50, 32, f"Σελίδα {page_num}" if not is_english else f"Page {page_num}")
 
     draw_header_footer()
 
-    if company == "Κάμπος":
+    if company == "Σούρτζης":
         c.setFont(font_bld, 10)
-        c.drawString(50, height - 92, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ" if not is_english else "CLIENT DETAILS")
+        c.drawString(50, height - 104, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ" if not is_english else "CLIENT DETAILS")
         c.setFont(font_reg, 9)
-        c.drawString(50, height - 108, f"Πελάτης: {client_data['name'].upper()}" if not is_english else f"Client: {client_data['name'].upper()}")
-        c.drawString(50, height - 122, f"Διεύθυνση: {client_data['address'].upper()}" if not is_english else f"Address: {client_data['address'].upper()}")
-        c.drawString(310, height - 108, f"ΑΦΜ: {client_data['afm']}" if not is_english else f"VAT: {client_data['afm']}")
-        c.drawString(310, height - 122, f"Τηλ: {client_data['phone_client']} | Επ.: {client_data['profession'].upper()}" if not is_english else f"Tel: {client_data['phone_client']} | Prof.: {client_data['profession'].upper()}")
+        c.drawString(50, height - 120, f"Πελάτης: {client_data['name'].upper()}" if not is_english else f"Client: {client_data['name'].upper()}")
+        c.drawString(50, height - 134, f"Διεύθυνση: {client_data['address'].upper()}" if not is_english else f"Address: {client_data['address'].upper()}")
+        c.drawString(310, height - 120, f"ΑΦΜ: {client_data['afm']}" if not is_english else f"VAT: {client_data['afm']}")
+        c.drawString(310, height - 134, f"Τηλ: {client_data['phone_client']} | Επ.: {client_data['profession'].upper()}" if not is_english else f"Tel: {client_data['phone_client']} | Prof.: {client_data['profession'].upper()}")
 
-        y_sep = height - 136
+        y_sep = height - 148
         c.setStrokeColorRGB(0.7, 0.7, 0.7)
         c.setLineWidth(0.5)
         c.line(50, y_sep, width - 50, y_sep)
@@ -607,9 +643,11 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
         alignment=TA_LEFT
     )
 
+    bottom_margin = 95 if company == "Σούρτζης" else 60
+
     def check_new_page(needed_space=100):
         nonlocal y, page_num
-        if y < needed_space:
+        if y < max(needed_space, bottom_margin + 20):
             c.showPage()
             page_num += 1
             draw_header_footer()
@@ -620,7 +658,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
         if company == "Φίλης":
             model_title = f"Είδος {idx} — {item['model']}" if not is_english else f"Item {idx} — {item['model']}"
-        elif company == "Κάμπος":
+        elif company == "Σούρτζης":
             model_title = f"[{idx}] {item['model']}"
         else:
             model_title = f"{idx}) Μοντέλο: {item['model']}" if not is_english else f"{idx}) Model: {item['model']}"
@@ -701,7 +739,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
             c.line(65, y - 18, width - 65, y - 18)
             y -= 32
 
-        else:  # Κάμπος
+        else:  # Σούρτζης
             c.setFont(font_bld, 9)
             c.drawString(65, y - 8, ("Οικονομικά Στοιχεία:" if not is_english else "Pricing Details:"))
             c.setFont(font_reg, 9)
@@ -743,10 +781,10 @@ with st.sidebar:
     offer_date = st.date_input("Ημερομηνία Προσφοράς" if not is_english else "Offer Date", value=datetime.today())
 
 with st.expander("👤 1. Στοιχεία Πελάτη", expanded=True):
-    company_options = ["Πετρόπουλος", "Φίλης", "Κάμπος"]
+    company_options = ["Πετρόπουλος", "Φίλης", "Σούρτζης"]
     if is_english:
-        company_ui = st.selectbox("Company / Εταιρεία", ["Petropoulos", "Filis", "Kampos"])
-        company = "Πετρόπουλος" if company_ui == "Petropoulos" else ("Φίλης" if company_ui == "Filis" else "Κάμπος")
+        company_ui = st.selectbox("Company / Εταιρεία", ["Petropoulos", "Filis", "Sourtzis"])
+        company = "Πετρόπουλος" if company_ui == "Petropoulos" else ("Φίλης" if company_ui == "Filis" else "Σούρτζης")
     else:
         company = st.selectbox("Company / Εταιρεία", company_options)
 
@@ -897,7 +935,7 @@ if st.button("📄 " + ("Generate Summary PDF" if is_english else "Δημιου�
 
         pdf_data = generate_pdf_bytes(client_data, seller_data, st.session_state.cart, company, is_english, offer_date)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        safe_company = (company if not is_english else ("Petropoulos" if company == "Πετρόπουλος" else ("Filis" if company == "Φίλης" else "Kampos"))).replace(" ", "_")
+        safe_company = (company if not is_english else ("Petropoulos" if company == "Πετρόπουλος" else ("Filis" if company == "Φίλης" else "Sourtzis"))).replace(" ", "_")
         safe_client = client_name.replace(" ", "_")
         pdf_filename = f"Profora_{safe_company}_{safe_client}_{timestamp}.pdf"
 
