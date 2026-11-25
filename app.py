@@ -138,7 +138,24 @@ database = {
     "DES-4535-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 15200, "info": "Κοπροδιανομέας SURFEED 3.5m³", "desc": "Κοπροδιανομέας SURFEED 3.5m³ — Πλάτος 1.50m — 50 HP."},
     "DES-5540-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 16800, "info": "Κοπροδιανομέας SURFEED 4.0m³", "desc": "Κοπροδιανομέας SURFEED 4.0m³ — Πλάτος 1.80m — 55 HP."},
     "DES-7560-T": {"cat": "Κοπροδιανομείς ID DAVID", "series": "SURFEED", "price": 21800, "info": "Κοπροδιανομέας SURFEED 6.0m³", "desc": "Κοπροδιανομέας SURFEED 6.0m³ — Πλάτος 2.04m — 75 HP."},
-    "ID_TOUCHSCREEN": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1500, "info": "Touchscreen 7\"", "desc": "Touchscreen Οθόνη Αφής 7\" με υπολογιστή επεξεργασίας δεδομένων."}
+    "ID_TOUCHSCREEN": {"cat": "Κοπροδιανομείς ID DAVID", "series": "Εξοπλισμός / Χειριστήρια", "price": 1500, "info": "Touchscreen 7\"", "desc": "Touchscreen Οθόνη Αφής 7\" με υπολογιστή επεξεργασίας δεδομένων."},
+
+    # --- 7. ΤΡΥΓΗΤΙΚΕΣ ΜΗΧΑΝΕΣ GREGOIRE ---
+    "GT1": {
+        "cat": "Τρυγητικές Μηχανές",
+        "series": "GREGOIRE GT",
+        "price": 0.0,
+        "info": "Συρόμενη Τρυγητική Αμπέλων — 2x1650L (3300L), 2x800cm3",
+        "desc": (
+            "Μία καινούργια και αμεταχείριστη συρόμενη μηχανή συγκομιδής αμπέλων (τρυγητική) "
+            "εργοστασίου κατασκευής GREGOIRE Γαλλίας, τύπου GT1 με 2 υδραυλικούς κινητήρες "
+            "στους τροχούς 800cm3, δύο δεξαμενές των 1650λίτρων (3300l σύνολο), 2 φυσητήρες "
+            "αφαίρεσης φύλλων και 2 κάθετους εκτροπείς αφαίρεσης ξυλοειδών, υδραυλική μονάδα "
+            "προσαρμόσιμη στα 3 σημεία ζεύξης του ελκυστήρα και σπαστή υδραυλική κοτσαδούρα. "
+            "Όλες οι λειτουργίες και ρυθμίσεις ταχύτητας λειτουργειών πραγματοποιούνται από ένα "
+            "Joystick και έγχρωμη οθόνη μέσα από τον ελκυστήρα."
+        )
+    }
 }
 
 def is_narrow_tractor(model_key, item_data):
@@ -211,6 +228,62 @@ def generate_auto_description(model_key, item_data, company_gr="Πετρόπου
         t_category = "T1a"
     elif "T2A" in full_search_text:
         t_category = "T2a"
+
+    if cat_name == "Τρυγητικές Μηχανές":
+        if is_en:
+            if company_gr == "Πετρόπουλος":
+                base = (
+                    f"A brand new and unused trailed vineyard harvester manufactured by GREGOIRE France, type {model_key}, "
+                    f"with 2 hydraulic wheel motors of 800cm3, two tanks of 1650 liters (3300l total), "
+                    f"2 leaf removal blowers and 2 vertical wood/cane deflectors, hydraulic unit adaptable to the "
+                    f"3-point linkage of the tractor and folding hydraulic drawbar. All functions and operating speed "
+                    f"adjustments are carried out from a Joystick and color screen inside the tractor."
+                )
+            elif company_gr == "Φίλης":
+                base = (
+                    f"A brand new and unused GREGOIRE {model_key} trailed grape harvester with dual 800cm3 wheel hydraulic drive, "
+                    f"total tank capacity of 3300 liters (2x1650l), cleaning system with 2 leaf blowers and 2 vertical "
+                    f"wood deflectors, 3-point hydraulic unit and folding hydraulic drawbar, operated via Joystick and "
+                    f"color display inside the tractor cab."
+                )
+            else:  # Σούρτζης
+                base = (
+                    f"Brand new and unused GREGOIRE {model_key} trailed vineyard harvester with 800cm3 wheel motors, "
+                    f"2x1650l tanks (3300l), 2 leaf blowers and 2 vertical wood deflectors, 3-point hydraulic unit, "
+                    f"folding hydraulic drawbar and control/speed adjustment from Joystick and color screen in the tractor."
+                )
+        else:
+            if company_gr == "Πετρόπουλος":
+                base = (
+                    f"Μία καινούργια και αμεταχείριστη συρόμενη μηχανή συγκομιδής αμπέλων (τρυγητική) "
+                    f"εργοστασίου κατασκευής GREGOIRE Γαλλίας, τύπου {model_key} με 2 υδραυλικούς κινητήρες "
+                    f"στους τροχούς 800cm3, δύο δεξαμενές των 1650λίτρων (3300l σύνολο), 2 φυσητήρες "
+                    f"αφαίρεσης φύλλων και 2 κάθετους εκτροπείς αφαίρεσης ξυλοειδών, υδραυλική μονάδα "
+                    f"προσαρμόσιμη στα 3 σημεία ζεύξης του ελκυστήρα και σπαστή υδραυλική κοτσαδούρα. "
+                    f"Όλες οι λειτουργίες και ρυθμίσεις ταχύτητας λειτουργειών πραγματοποιούνται από ένα "
+                    f"Joystick και έγχρωμη οθόνη μέσα από τον ελκυστήρα."
+                )
+            elif company_gr == "Φίλης":
+                base = (
+                    f"Καινούργια και αμεταχείριστη συρόμενη τρυγητική μηχανή αμπέλων GREGOIRE {model_key} "
+                    f"με υδραυλική κίνηση τροχών 800cm3, συνολική χωρητικότητα δεξαμενών 3300 λίτρων (2x1650l), "
+                    f"σύστημα καθαρισμού με 2 φυσητήρες αφαίρεσης φύλλων και 2 κάθετους εκτροπείς ξυλοειδών, "
+                    f"υδραυλική μονάδα τριών σημείων και σπαστή υδραυλική κοτσαδούρα, με χειριστήριο Joystick "
+                    f"και έγχρωμη οθόνη ελέγχου μέσα από τον ελκυστήρα."
+                )
+            else:  # Σούρτζης
+                base = (
+                    f"Καινούργια συρόμενη τρυγητική αμπέλων GREGOIRE τύπου {model_key} με υδραυλικούς κινητήρες "
+                    f"800cm3 στους τροχούς, δεξαμενές 2x1650l (3300l), 2 φυσητήρες φύλλων και 2 κάθετους "
+                    f"εκτροπείς ξυλοειδών, υδραυλική μονάδα 3 σημείων, σπαστή υδραυλική κοτσαδούρα και "
+                    f"χειρισμό/ρύθμιση ταχύτητας λειτουργιών από Joystick και έγχρωμη οθόνη μέσα από το τρακτέρ."
+                )
+
+        if has_front_linkage:
+            base += f" {get_front_linkage_text(company_gr, is_en=is_en)}"
+        if include_extras_block:
+            base += f"\n{get_includes_block_text(False, is_en=is_en)}"
+        return base
 
     if cat_name == "Τρακτέρ" and is_narrow_tractor(model_key, item_data):
         has_cab = is_cab_model(model_key, item_data)
@@ -751,8 +824,13 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
 
     check_new_page(80)
     y -= 10
-    p_note = Paragraph("• Ο εξοπλισμός διαθέτει ελληνική και ευρωπαϊκή έγκριση τύπου & καλύπτεται από εργοστασιακή εγγύηση ενός έτους." if not is_english else "• The equipment has Greek and European type approval & is covered by a one-year factory warranty.", body_p_style)
-    p_note.wrap(width - 100, 40)
+    note_text = (
+        "• Ο εξοπλισμός διαθέτει ελληνική και ευρωπαϊκή έγκριση τύπου, σήμανση CE, είναι σύμφωνος με τον Κ.Ο.Κ. και τις ελληνικές και ευρωπαϊκές διατάξεις που τον διέπουν & καλύπτεται από εργοστασιακή εγγύηση ενός έτους."
+        if not is_english else
+        "• The equipment has Greek and European type approval, CE marking, complies with the Highway Code (K.O.K.) and applicable Greek and European regulations & is covered by a one-year factory warranty."
+    )
+    p_note = Paragraph(note_text, body_p_style)
+    p_note.wrap(width - 100, 50)
     p_note.drawOn(c, 50, y - p_note.height)
 
     y -= 30
@@ -799,8 +877,15 @@ with st.expander("👤 1. Στοιχεία Πελάτη", expanded=True):
 
 with st.expander("⚙️ 2. Επιλογή Προϊόντος, Τιμής, ΦΠΑ & Εξοπλισμού", expanded=True):
     raw_categories = sorted(list(set(item["cat"] for item in database.values())))
+    cat_map = {
+        "Τρακτέρ": "Tractor",
+        "Χωματουργικό": "Excavator",
+        "Μανέζ Λοζάνο": "Manez Lozano",
+        "Νιούμπο": "Niubo",
+        "Κοπροδιανομείς ID DAVID": "ID DAVID Manure Spreaders",
+        "Τρυγητικές Μηχανές": "Grape Harvesters"
+    }
     if is_english:
-        cat_map = {"Τρακτέρ": "Tractor", "Χωματουργικό": "Excavator", "Μανέζ Λοζάνο": "Manez Lozano", "Νιούμπο": "Niubo", "Κοπροδιανομείς ID DAVID": "ID DAVID Manure Spreaders"}
         categories = [cat_map.get(c, c) for c in raw_categories]
     else:
         categories = raw_categories
@@ -808,7 +893,7 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος, Τιμής, ΦΠ�
     selected_cat_ui = st.selectbox("Category / Κατηγορία", categories)
 
     if is_english:
-        inv_cat_map = {"Tractor": "Τρακτέρ", "Excavator": "Χωματουργικό", "Manez Lozano": "Μανέζ Λοζάνο", "Niubo": "Νιούμπο", "ID DAVID Manure Spreaders": "Κοπροδιανομείς ID DAVID"}
+        inv_cat_map = {v: k for k, v in cat_map.items()}
         selected_cat = inv_cat_map.get(selected_cat_ui, selected_cat_ui)
     else:
         selected_cat = selected_cat_ui
@@ -895,7 +980,15 @@ with st.expander("🛒 " + ("3. Selected Quote Items" if is_english else "3. Ε�
     if st.session_state.cart:
         for idx, cart_item in enumerate(st.session_state.cart):
             if is_english:
-                display_cat = "Tractor" if cart_item['cat'] == "Τρακτέρ" else ("Excavator" if cart_item['cat'] == "Χωματουργικό" else ("Manez Lozano" if cart_item['cat'] == "Μανέζ Λοζάνο" else ("Niubo" if cart_item['cat'] == "Νιούμπο" else "ID David Spreader")))
+                en_cat_display = {
+                    "Τρακτέρ": "Tractor",
+                    "Χωματουργικό": "Excavator",
+                    "Μανέζ Λοζάνο": "Manez Lozano",
+                    "Νιούμπο": "Niubo",
+                    "Κοπροδιανομείς ID DAVID": "ID David Spreader",
+                    "Τρυγητικές Μηχανές": "Grape Harvester"
+                }
+                display_cat = en_cat_display.get(cart_item['cat'], cart_item['cat'])
             else:
                 display_cat = cart_item['cat']
 
