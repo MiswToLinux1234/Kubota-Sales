@@ -19,78 +19,78 @@ is_english = (lang_option == "English")
 # ΠΛΗΡΗΣ ΚΑΙ ΕΝΙΑΙΑ ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ
 database = {
     # --- 1. ΝΕΑ ΤΡΑΚΤΕΡ & ΟΧΗΜΑΤΑ ---
-    "B1181": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 17.00, "price": 14500, "info": "17.00 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1181."},
-    "B1241": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 21.35, "price": 15500, "info": "21.35 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1241."},
-    "B2261": {"cat": "Τρακτέρ", "series": "Σειρά B2 - T2a", "hp": 24.75, "price": 17500, "info": "24.75 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B2261."},
-    "LX351": {"cat": "Τρακτέρ", "series": "Σειρά LX - T2a", "hp": 34.82, "price": 33500, "info": "34.82 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA LX351."},
-    "LX401": {"cat": "Τρακτέρ", "series": "Σειρά LX - T2a", "hp": 39.85, "price": 43500, "info": "39.85 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA LX401."},
-    "L2372": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 36.58, "price": 35500, "info": "36.58 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2372."},
-    "L2452": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 44.88, "price": 36500, "info": "44.88 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2452."},
-    "L2522": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 50.86, "price": 37500, "info": "50.86 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2522."},
-    "L2552": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 54.54, "price": 50000, "info": "54.54 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2552."},
-    "L2622": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 61.34, "price": 58000, "info": "61.34 HP - T2a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2622."},
+    "B1181": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 17.00, "price": 14500, "info": "17.00 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1181."},
+    "B1241": {"cat": "Τρακτέρ", "series": "Σειρά B1 - T2a", "hp": 21.35, "price": 15500, "info": "21.35 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1241."},
+    "B2261": {"cat": "Τρακτέρ", "series": "Σειρά B2 - T2a", "hp": 24.75, "price": 17500, "info": "24.75 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B2261."},
+    "LX351": {"cat": "Τρακτέρ", "series": "Σειρά LX - T2a", "hp": 34.82, "price": 33500, "info": "34.82 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA LX351."},
+    "LX401": {"cat": "Τρακτέρ", "series": "Σειρά LX - T2a", "hp": 39.85, "price": 43500, "info": "39.85 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA LX401."},
+    "L2372": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 36.58, "price": 35500, "info": "36.58 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2372."},
+    "L2452": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 44.88, "price": 36500, "info": "44.88 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2452."},
+    "L2522": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 50.86, "price": 37500, "info": "50.86 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2522."},
+    "L2552": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 54.54, "price": 50000, "info": "54.54 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2552."},
+    "L2622": {"cat": "Τρακτέρ", "series": "Σειρά L2 - T2a", "hp": 61.34, "price": 58000, "info": "61.34 HP - T2a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2622."},
 
-    "M4063R": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 66.37, "price": 47500, "info": "66.37 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 R."},
-    "M4063C": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 66.37, "price": 50500, "info": "66.37 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 C."},
-    "M4073R": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 74.26, "price": 51500, "info": "74.26 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 R."},
-    "M4073C": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 74.26, "price": 54500, "info": "74.26 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 C."},
+    "M4063R": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 66.37, "price": 47500, "info": "66.37 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M4063 R."},
+    "M4063C": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 66.37, "price": 50500, "info": "66.37 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M4063 C."},
+    "M4073R": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 74.26, "price": 51500, "info": "74.26 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M4073 R."},
+    "M4073C": {"cat": "Τρακτέρ", "series": "Σειρά M4 - T1a", "hp": 74.26, "price": 54500, "info": "74.26 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M4073 C."},
 
-    "M5072NR": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 57500, "info": "73.58 HP - T2a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072N R."},
-    "M5072NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 60500, "info": "73.58 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072N C."},
-    "M5072NQ": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 60500, "info": "73.58 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072NQ."},
-    "M5082NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 87.45, "price": 63500, "info": "87.45 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5082N C."},
-    "M5092NR": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 93.30, "price": 67500, "info": "93.30 HP - T2a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5092N R."},
-    "M5092NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 94.38, "price": 70500, "info": "94.38 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5092N C."},
-    "M5010NR": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 104.31, "price": 74000, "info": "104.31 HP - T2a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5010N R."},
-    "M5010NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 105.94, "price": 77000, "info": "105.94 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5010N C."},
-    "M5112NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 114.78, "price": 80000, "info": "114.78 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5112N C."},
+    "M5072NR": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 57500, "info": "73.58 HP - T2a (ROPS)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5072N R."},
+    "M5072NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 60500, "info": "73.58 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5072N C."},
+    "M5072NQ": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 73.58, "price": 60500, "info": "73.58 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5072NQ."},
+    "M5082NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 87.45, "price": 63500, "info": "87.45 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5082N C."},
+    "M5092NR": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 93.30, "price": 67500, "info": "93.30 HP - T2a (ROPS)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5092N R."},
+    "M5092NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 94.38, "price": 70500, "info": "94.38 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5092N C."},
+    "M5010NR": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 104.31, "price": 74000, "info": "104.31 HP - T2a (ROPS)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5010N R."},
+    "M5010NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 105.94, "price": 77000, "info": "105.94 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5010N C."},
+    "M5112NC": {"cat": "Τρακτέρ", "series": "Σειρά M5 Narrow - T2a", "hp": 114.78, "price": 80000, "info": "114.78 HP - T2a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5112N C."},
 
-    "M5092R": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 93.84, "price": 64500, "info": "93.84 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5092 R."},
-    "M5092C": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 96.42, "price": 67500, "info": "96.42 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5092 C."},
-    "M5112R": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 107.17, "price": 68500, "info": "107.17 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5112 R."},
-    "M5112C": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 114.78, "price": 72000, "info": "114.78 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5112 C."},
+    "M5092R": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 93.84, "price": 64500, "info": "93.84 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5092 R."},
+    "M5092C": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 96.42, "price": 67500, "info": "96.42 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5092 C."},
+    "M5112R": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 107.17, "price": 68500, "info": "107.17 HP - T1a (ROPS)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5112 R."},
+    "M5112C": {"cat": "Τρακτέρ", "series": "Σειρά M5 - T1a", "hp": 114.78, "price": 72000, "info": "114.78 HP - T1a (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5112 C."},
 
-    "M6121U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 123.49, "price": 89000, "info": "123.49 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6121 U."},
-    "M6131U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 133.42, "price": 93000, "info": "133.42 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6131 U."},
-    "M6141U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 143.48, "price": 97000, "info": "143.48 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6141 U."},
+    "M6121U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 123.49, "price": 89000, "info": "123.49 HP - T1a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6121 U."},
+    "M6131U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 133.42, "price": 93000, "info": "133.42 HP - T1a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6131 U."},
+    "M6141U": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 143.48, "price": 97000, "info": "143.48 HP - T1a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6141 U."},
 
-    "M6122": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 123.50, "price": 90000, "info": "123.50 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6122."},
-    "M6132": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 133.40, "price": 94000, "info": "133.40 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6132."},
-    "M6142": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 143.40, "price": 98000, "info": "143.40 HP - T1a", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6142."},
+    "M6122": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 123.50, "price": 90000, "info": "123.50 HP - T1a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6122."},
+    "M6132": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 133.40, "price": 94000, "info": "133.40 HP - T1a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6132."},
+    "M6142": {"cat": "Τρακτέρ", "series": "Σειρά M6 - T1a", "hp": 143.40, "price": 98000, "info": "143.40 HP - T1a", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6142."},
 
-    "RTV-X1110": {"cat": "Τρακτέρ", "series": "Utility - T1a", "hp": 21.62, "price": 22000, "info": "21.62 HP - T1a Utility", "desc": "Ένα καινούριο και αμεταχειριστό μηχάνημα KUBOTA RTV-X1110."},
+    "RTV-X1110": {"cat": "Τρακτέρ", "series": "Utility - T1a", "hp": 21.62, "price": 22000, "info": "21.62 HP - T1a Utility", "desc": "Ένα καινούριο και αμεταχείριστό μηχάνημα KUBOTA RTV-X1110."},
 
     # --- 2. ΥΠΟΛΟΙΠΑ ΚΛΑΣΙΚΑ ΜΟΝΤΕΛΑ KUBOTA ---
-    "B1181D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 17, "price": 14500, "info": "17 HP - Σειρά B1", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1181D-EC."},
-    "B1241D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 22, "price": 15500, "info": "22 HP - Mid ROPS", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1241D-EC με αψίδα προστασίας εγκεκριμένου τύπου."},
-    "B2261DB-M5-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 17500, "info": "25 HP - Σειρά B2", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B2261DB-M5-S5."},
-    "B2261 HDB-C-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 27000, "info": "25 HP - Υδροστατικό, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA B2261 HDB-C-S5 με υδροστατικό κιβώτιο ταχυτήτων και εργοστασιακή καμπίνα."},
-    "LX351-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 33500, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA LX351-F-R με υδροστατικό κιβώτιο ταχυτήτων και ROPS."},
-    "LX351-M": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 29500, "info": "35 HP - 12/12 Mid ROPS", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA LX351-M 12/12."},
-    "LX351-C-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 40000, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA LX351-C-R με καμπίνα."},
-    "LX401-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 40, "price": 43500, "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA LX401-F-R."},
-    "LX401-C-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 40, "price": 50000, "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA LX401-C-R με καμπίνα."},
-    "L2372DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 37, "price": 35500, "info": "37 HP - (16/16)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2372DM (16/16)."},
-    "L2452DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 45, "price": 36500, "info": "45 HP - (16/16)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2452DM (16/16)."},
-    "L2522DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 52, "price": 37500, "info": "52 HP - (16/16)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2522DM (16/16)."},
-    "L2452DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 47, "price": 45000, "info": "47 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2452DHC με καμπίνα."},
-    "L2552DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 54, "price": 50000, "info": "54 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2552DHC με καμπίνα."},
-    "L2622DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 62, "price": 58000, "info": "62 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA L2622DHC με καμπίνα."},
-    "M5072N": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 74, "price": 57500, "info": "74 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5072N."},
-    "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου M5092N36-EC με αψίδα προστασίας εγκεκριμένου τύπου."},
-    "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36 (Cab)", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-112NQ-EC."},
-    "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4063 DTH."},
-    "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M4073 DTH."},
-    "M5-092 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 94, "price": 64500, "info": "94 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-092 DTH."},
-    "M5-112 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 107, "price": 65500, "info": "107 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M5-112 DTH."},
-    "M6-121-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 131, "price": 89000, "info": "131 HP - Κιβώτιο Powershift, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6-121-DTC."},
-    "M6-141-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 142, "price": 96000, "info": "142 HP - Κιβώτιο Powershift, Καμπίνα", "desc": "Ένα καινούριο και αμεταχειριστό γεωργικό ελκυστήρα KUBOTA M6-141-DTC."},
+    "B1181D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 17, "price": 14500, "info": "17 HP - Σειρά B1", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1181D-EC."},
+    "B1241D-EC": {"cat": "Τρακτέρ", "series": "Σειρά B1 - Stage V", "hp": 22, "price": 15500, "info": "22 HP - Mid ROPS", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B1241D-EC με αψίδα προστασίας εγκεκριμένου τύπου."},
+    "B2261DB-M5-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 17500, "info": "25 HP - Σειρά B2", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου B2261DB-M5-S5."},
+    "B2261 HDB-C-S5": {"cat": "Τρακτέρ", "series": "Σειρά B2 - Stage V", "hp": 25, "price": 27000, "info": "25 HP - Υδροστατικό, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA B2261 HDB-C-S5 με υδροστατικό κιβώτιο ταχυτήτων και εργοστασιακή καμπίνα."},
+    "LX351-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 33500, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA LX351-F-R με υδροστατικό κιβώτιο ταχυτήτων και ROPS."},
+    "LX351-M": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 29500, "info": "35 HP - 12/12 Mid ROPS", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA LX351-M 12/12."},
+    "LX351-C-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 35, "price": 40000, "info": "35 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA LX351-C-R με καμπίνα."},
+    "LX401-F-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 40, "price": 43500, "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, ROPS", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA LX401-F-R."},
+    "LX401-C-R": {"cat": "Τρακτέρ", "series": "Σειρά LX - Stage V", "hp": 40, "price": 50000, "info": "40 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA LX401-C-R με καμπίνα."},
+    "L2372DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 37, "price": 35500, "info": "37 HP - (16/16)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2372DM (16/16)."},
+    "L2452DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 45, "price": 36500, "info": "45 HP - (16/16)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2452DM (16/16)."},
+    "L2522DM": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 52, "price": 37500, "info": "52 HP - (16/16)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2522DM (16/16)."},
+    "L2452DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 47, "price": 45000, "info": "47 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2452DHC με καμπίνα."},
+    "L2552DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 54, "price": 50000, "info": "54 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2552DHC με καμπίνα."},
+    "L2622DHC": {"cat": "Τρακτέρ", "series": "Νέα Σειρά L2 - Stage V", "hp": 62, "price": 58000, "info": "62 HP - Υδροστατικό κιβώτιο ταχυτήτων, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA L2622DHC με καμπίνα."},
+    "M5072N": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 74, "price": 57500, "info": "74 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5072N."},
+    "M5-092N36-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 94, "price": 67500, "info": "94 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου M5092N36-EC με αψίδα προστασίας εγκεκριμένου τύπου."},
+    "M5-112NQ-EC": {"cat": "Τρακτέρ", "series": "Σειρά M5002-NARROW - Stage V", "hp": 115, "price": 78000, "info": "115 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36 (Cab)", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5-112NQ-EC."},
+    "M4063 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 66, "price": 47500, "info": "66 HP - Ηλεκτρο-υδραυλική ρεβέρσα 18/18", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M4063 DTH."},
+    "M4073 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M4003 - Stage V", "hp": 74, "price": 51500, "info": "74 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M4073 DTH."},
+    "M5-092 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 94, "price": 64500, "info": "94 HP - Ηλεκτρο-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5-092 DTH."},
+    "M5-112 DTH": {"cat": "Τρακτέρ", "series": "Σειρά M5002 - Stage V", "hp": 107, "price": 65500, "info": "107 HP - Ηλεκτρό-υδραυλική ρεβέρσα 36/36", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M5-112 DTH."},
+    "M6-121-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 131, "price": 89000, "info": "131 HP - Κιβώτιο Powershift, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6-121-DTC."},
+    "M6-141-DTC": {"cat": "Τρακτέρ", "series": "Σειρά M6 - Stage V", "hp": 142, "price": 96000, "info": "142 HP - Κιβώτιο Powershift, Καμπίνα", "desc": "Ένα καινούριο και αμεταχείριστό γεωργικό ελκυστήρα KUBOTA M6-141-DTC."},
 
     # --- 3. ΧΩΜΑΤΟΥΡΓΙΚΑ ---
-    "K008-5 VHG": {"cat": "Χωματουργικό", "series": "Μικροί Εκσκαφείς", "weight": "975 kg", "price": 15700, "info": "Βασική Αξία Εκσκαφέα 975 kg", "desc": "Ένα καινούριο και αμεταχειριστό χωματουργικό μηχάνημα KUBOTA K008-5."},
-    "U10-5 VHG": {"cat": "Χωματουργικό", "series": "Μικροί Εκσκαφείς", "weight": "1050 kg", "price": 17600, "info": "Βασική Αξία Εκσκαφέα 1050 kg", "desc": "Ένα καινούριο και αμεταχειριστό χωματουργικό μηχάνημα KUBOTA U10-5."},
-    "U27-4 HGL": {"cat": "Χωματουργικό", "series": "Εκσκαφείς Μεσαίας Κατηγορίας", "weight": "2490 kg", "price": 32800, "info": "Σκέπαστρο 2490 kg", "desc": "Ένα καινούριο και αμεταχειριστό χωματουργικό μηχάνημα KUBOTA U27-4."},
-    "KX060-5": {"cat": "Χωματουργικό", "series": "Εκσκαφείς Μεσαίας Κατηγορίας", "weight": "5555 kg", "price": 62000, "info": "5555 kg - Καμπίνα, Υδραυλική Ταχυσύνδεση", "desc": "Ένα καινούριο και αμεταχειριστό χωματουργικό μηχάνημα KUBOTA KX060-5."},
+    "K008-5 VHG": {"cat": "Χωματουργικό", "series": "Μικροί Εκσκαφείς", "weight": "975 kg", "price": 15700, "info": "Βασική Αξία Εκσκαφέα 975 kg", "desc": "Ένα καινούριο και αμεταχείριστό χωματουργικό μηχάνημα KUBOTA K008-5."},
+    "U10-5 VHG": {"cat": "Χωματουργικό", "series": "Μικροί Εκσκαφείς", "weight": "1050 kg", "price": 17600, "info": "Βασική Αξία Εκσκαφέα 1050 kg", "desc": "Ένα καινούριο και αμεταχείριστό χωματουργικό μηχάνημα KUBOTA U10-5."},
+    "U27-4 HGL": {"cat": "Χωματουργικό", "series": "Εκσκαφείς Μεσαίας Κατηγορίας", "weight": "2490 kg", "price": 32800, "info": "Σκέπαστρο 2490 kg", "desc": "Ένα καινούριο και αμεταχείριστό χωματουργικό μηχάνημα KUBOTA U27-4."},
+    "KX060-5": {"cat": "Χωματουργικό", "series": "Εκσκαφείς Μεσαίας Κατηγορίας", "weight": "5555 kg", "price": 62000, "info": "5555 kg - Καμπίνα, Υδραυλική Ταχυσύνδεση", "desc": "Ένα καινούριο και αμεταχείριστό χωματουργικό μηχάνημα KUBOTA KX060-5."},
 
     # --- 4. ΜΑΝΕΖ ΛΟΖΑΝΟ ---
     "NTW10S/4": {"cat": "Μανέζ Λοζάνο", "series": "NARROW TW S4-S5", "price": 15400, "info": "Ψεκαστικό NARROW TW S4-S5 — Φτερωτή Ø 820 — 1000 λίτρα", "desc": "Ψεκαστικό NARROW TW S4-S5 — Φτερωτή Ø 820 — 1000 λίτρα."},
@@ -176,11 +176,11 @@ def get_includes_block_text(has_cab, is_en=False):
     if is_en:
         lines = [
             "Includes:",
-            "- Complete set of front and rear wheel ballast weights",
-            "- Hydraulic radar",
-            "- 3 sets of double-acting hydraulic valves with flow control",
-            "- Fender control for hydraulic lift height adjustment",
-            "- Seat with adjustable suspension"
+            "- One (1) complete set of front and rear wheel ballast weights",
+            "- One (1) hydraulic radar",
+            "- Three (3) sets of double-acting hydraulic valves with flow control",
+            "- One (1) fender control for hydraulic lift height adjustment",
+            "- One (1) seat with adjustable suspension"
         ]
         if has_cab:
             lines.append("- Dust and charcoal cabin filters")
@@ -188,11 +188,11 @@ def get_includes_block_text(has_cab, is_en=False):
     else:
         lines = [
             "Περιλαμβάνει:",
-            "- Πλήρες σετ αντιβάρων εμπρός και στους πίσω τροχούς",
-            "- Υδραυλικό ραντάρ",
-            "- 3 σετ υδραυλικά χειριστήρια διπλής παροχής με ελεγχόμενη ροή",
-            "- Χειριστήριο στο φτερό για ρύθμιση ύψους των υδραυλικών (μπράτσων)",
-            "- Κάθισμα με ρυθμιζόμενη ανάρτηση"
+            "- Ένα (1) πλήρες σετ αντιβάρων εμπρός και στους πίσω τροχούς",
+            "- Ένα (1) υδραυλικό ραντάρ",
+            "- Τρία (3) σετ υδραυλικά χειριστήρια διπλής παροχής με ελεγχόμενη ροή",
+            "- Ένα (1) χειριστήριο στο φτερό για ρύθμιση ύψους των υδραυλικών (μπράτσων)",
+            "- Ένα (1) κάθισμα με ρυθμιζόμενη ανάρτηση"
         ]
         if has_cab:
             lines.append("- Φίλτρα σκόνης και άνθρακα για την καμπίνα")
@@ -220,7 +220,7 @@ def generate_auto_description(model_key, item_data, company_gr="Πετρόπου
             if company_gr == "Πετρόπουλος":
                 if has_cab:
                     base = (
-                        f"A brand new and unused agricultural tractor manufactured by KUBOTA Japan type {model_key} with cabin. "
+                        f"A brand new and unused agricultural tractor manufactured by KUBOTA Japan type {model_key} with safety cabin. "
                         f"Features twin differential, four-cylinder Stage V liquid-cooled diesel engine with {hp_val} HP, "
                         f"6-speed transmission with 3 ranges and Hi-Lo for 36/36 total speeds (forward/reverse). "
                         f"Electro-hydraulic shuttle, electro-hydraulic front differential lock and electro-hydraulic PTO engagement. "
@@ -237,13 +237,13 @@ def generate_auto_description(model_key, item_data, company_gr="Πετρόπου
             elif company_gr == "Φίλης":
                 if has_cab:
                     base = (
-                        f"A brand new and unused KUBOTA agricultural tractor type {model_key}, {hp_val} HP. "
+                        f"A brand new and unused KUBOTA agricultural tractor {model_key}, {hp_val} HP. "
                         f"With electro-hydraulic shuttle and PTO engagement. 36/36 speeds gearbox, "
                         f"with approved type safety cabin with Air Condition."
                     )
                 else:
                     base = (
-                        f"A brand new and unused KUBOTA agricultural tractor type {model_key} with safety roll-bar, {hp_val} HP. "
+                        f"A brand new and unused KUBOTA agricultural tractor {model_key} with safety roll-bar, {hp_val} HP. "
                         f"With electro-hydraulic shuttle and PTO engagement. 36/36 speeds gearbox."
                     )
             else:  # Κάμπος
@@ -269,11 +269,11 @@ def generate_auto_description(model_key, item_data, company_gr="Πετρόπου
             if company_gr == "Πετρόπουλος":
                 if has_cab:
                     base = (
-                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου {model_key} με καμπίνα. "
+                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα εργοστασίου κατασκευής KUBOTA Ιαπωνίας τύπου {model_key} με θάλαμο ασφαλείας. "
                         f"Διαθέτει διπλό διαφορικό, τετρακύλινδρο κινητήρα diesel κατηγορίας ρύπων φάση V, υδρόψυκτο, με ισχύ κινητήρα {hp_gr}, "
                         f"σασμάν 6 ταχυτήτων με 3 ομάδες και Hi-Lo συνολικών ταχυτήτων 36/36 (εμπρός/πίσω). "
                         f"Ηλεκτρο-υδραυλική ρεβέρσα, ηλεκτρο-υδραυλική εμπλοκή μπροστινού διαφορικού και ηλεκτρο-υδραυλική ενεργοποίηση δυναμοδότη (PTO). "
-                        f"2 μνήμες στροφών και σύστημα σταθεροποίησης στροφών. Με καμπίνα ασφαλείας με A/C, ράδιο με Bluetooth."
+                        f"2 μνήμες στροφών και σύστημα σταθεροποίησης στροφών. Με θάλαμο ασφαλείας με A/C, ραδιόφωνο με Bluetooth."
                     )
                 else:
                     base = (
@@ -286,13 +286,13 @@ def generate_auto_description(model_key, item_data, company_gr="Πετρόπου
             elif company_gr == "Φίλης":
                 if has_cab:
                     base = (
-                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα KUBOTA τύπου {model_key}, ισχύος {hp_gr}. "
+                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα KUBOTA {model_key}, ισχύος {hp_gr}. "
                         f"Με ηλεκτροϋδραυλική αλλαγή κατεύθυνσης (ρεβέρσα) και εμπλοκή PTO. Σασμάν 36/36 ταχυτήτων, "
                         f"Με καμπίνα ασφαλείας εγκεκριμένου τύπου με Air Condition."
                     )
                 else:
                     base = (
-                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα KUBOTA τύπου {model_key} με αψίδα προστασίας, ισχύος {hp_gr}. "
+                        f"Ένα καινούριο και αμεταχείριστο γεωργικό ελκυστήρα KUBOTA {model_key} με αψίδα προστασίας, ισχύος {hp_gr}. "
                         f"Με ηλεκτροϋδραυλική αλλαγή κατεύθυνσης (ρεβέρσα) και εμπλοκή PTO. Σασμάν 36/36 ταχυτήτων."
                     )
             else:  # Κάμπος
@@ -542,7 +542,6 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
     draw_header_footer()
 
     if company == "Κάμπος":
-        # Διαφορετική διάταξη στοιχείων πελάτη σε δύο στήλες για Κάμπος
         c.setFont(font_bld, 10)
         c.drawString(50, height - 92, "ΣΤΟΙΧΕΙΑ ΠΕΛΑΤΗ" if not is_english else "CLIENT DETAILS")
         c.setFont(font_reg, 9)
@@ -641,11 +640,13 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
                 y -= (p_desc.height + 4)
         y -= 2
 
-        ce_text = "• Το μηχάνημα είναι καινούργιο και αμεταχείριστο και διαθέτει πιστοποιητικό CE." if not is_english else "• The machine is brand new and unused and has a CE certificate."
-        p_ce = Paragraph(ce_text, body_p_style)
-        p_ce.wrap(width - 115, 40)
-        p_ce.drawOn(c, 65, y - p_ce.height)
-        y -= (p_ce.height + 6)
+        if item.get('include_ce', False):
+            check_new_page(40)
+            ce_text = "• Το μηχάνημα είναι καινούργιο και αμεταχείριστο και διαθέτει πιστοποιητικό CE." if not is_english else "• The machine is brand new and unused and has a CE certificate."
+            p_ce = Paragraph(ce_text, body_p_style)
+            p_ce.wrap(width - 115, 40)
+            p_ce.drawOn(c, 65, y - p_ce.height)
+            y -= (p_ce.height + 6)
 
         opt_eq = item.get('optional_eq', '')
         if opt_eq:
@@ -671,7 +672,6 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
         tot_val = net_val + v_amount
 
         if company == "Πετρόπουλος":
-            # Τετραγωνάκι αξιών μόνο για Πετρόπουλος
             c.setStrokeColorRGB(0.3, 0.4, 0.6)
             c.setLineWidth(0.75)
             c.rect(65, y - 18, width - 130, 24)
@@ -688,7 +688,6 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
             y -= 35
 
         elif company == "Φίλης":
-            # Καθαρή γραμμή τιμών χωρίς τετραγωνάκι για Φίλης
             c.setStrokeColorRGB(0.75, 0.75, 0.75)
             c.setLineWidth(0.6)
             c.line(65, y + 4, width - 65, y + 4)
@@ -702,7 +701,7 @@ def generate_pdf_bytes(client_data, seller_data, cart_items, company, is_english
             c.line(65, y - 18, width - 65, y - 18)
             y -= 32
 
-        else:  # Κάμπος — λίστα τιμών χωρίς τετραγωνάκι
+        else:  # Κάμπος
             c.setFont(font_bld, 9)
             c.drawString(65, y - 8, ("Οικονομικά Στοιχεία:" if not is_english else "Pricing Details:"))
             c.setFont(font_reg, 9)
@@ -791,7 +790,7 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος, Τιμής, ΦΠ�
     if selected_model:
         current_item = database[selected_model]
 
-        col_opt1, col_opt2 = st.columns(2)
+        col_opt1, col_opt2, col_opt3 = st.columns(3)
         with col_opt1:
             has_front_linkage = st.checkbox(
                 "Front Linkage / Εμπρόσθια Ανάρτηση" if is_english else "Εμπρόσθια Ανάρτηση",
@@ -800,9 +799,15 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος, Τιμής, ΦΠ�
             )
         with col_opt2:
             include_extras_block = st.checkbox(
-                "Include 'Includes:' block (more detailed offer)" if is_english else "Προσθήκη μπλοκ «Περιλαμβάνει:» (πιο πλήρης εμφάνιση)",
+                "Include 'Includes:' block" if is_english else "Μπλοκ «Περιλαμβάνει:»",
                 value=False,
                 key=f"inc_block_{selected_model}"
+            )
+        with col_opt3:
+            include_ce_line = st.checkbox(
+                "CE & Brand New line" if is_english else "Γραμμή CE & Καινούργιο",
+                value=False,
+                key=f"ce_line_{selected_model}"
             )
 
         auto_desc = generate_auto_description(
@@ -825,6 +830,7 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος, Τιμής, ΦΠ�
         custom_price = 0.0
         item_vat_rate = 13
         custom_desc = ""
+        include_ce_line = False
 
     default_opt_eq = "Υδραυλική τιράντα\nΥδραυλικό ραντάρ\nΑντίβαρα στους πίσω τροχούς"
     item_optional_equipment = st.text_area("Προαιρετικός Εξοπλισμός για ΑΥΤΟ το προϊόν (ένα σε κάθε γραμμή)", value=default_opt_eq, height=80)
@@ -840,7 +846,8 @@ with st.expander("⚙️ 2. Επιλογή Προϊόντος, Τιμής, ΦΠ�
                 "vat": item_vat_rate,
                 "info": current_item["info"],
                 "desc": custom_desc,
-                "optional_eq": final_item_eq
+                "optional_eq": final_item_eq,
+                "include_ce": include_ce_line
             })
             st.success("Product added with its options and custom price!" if is_english else f"Το προϊόν {selected_model} προστέθηκε με επιτυχία!")
         else:
